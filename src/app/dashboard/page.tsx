@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
@@ -58,6 +59,18 @@ export default async function DashboardPage() {
           </button>
         </form>
       </div>
+
+      <section className="mb-8 flex gap-3">
+        <Link href="/receptions/new" className="btn-primary">
+          Nouvelle réception
+        </Link>
+        <Link
+          href="/receptions"
+          className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium"
+        >
+          Historique des réceptions
+        </Link>
+      </section>
 
       <section className="mb-8 rounded-lg border border-neutral-200 p-4">
         <h2 className="mb-2 text-sm font-medium text-neutral-500">

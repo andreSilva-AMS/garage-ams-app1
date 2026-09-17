@@ -51,9 +51,18 @@ export async function sendReceptionEmail(
   const resend = new Resend(process.env.RESEND_API_KEY);
   const filename = `Fiche-reception_${reception.vehicle_plate.replace(/\s+/g, "")}.pdf`;
 
+  // L'adresse technique d'envoi est toujours la même (celle du domaine vérifié
+  // sur Resend), mais le NOM affiché change pour chaque garage, et les
+  // réponses du client partent directement vers l'employé qui a envoyé la
+  // fiche — pas vers une boîte commune.
+  const fromAddress = (process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev").match(
+    /<([^>]+)>/,
+  )?.[1] ?? process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+
   const { error: sendError } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev",
+    from: `${garageName} <${fromAddress}>`,
     to: [reception.client_email],
+    replyTo: user.email ?? undefined,
     bcc: user.email ? [user.email] : undefined,
     subject: t.emailSubject(reception.vehicle_plate, garageName),
     text: t.emailBody(

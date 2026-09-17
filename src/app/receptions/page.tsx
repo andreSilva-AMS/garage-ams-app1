@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function ReceptionsPage() {
   const supabase = await createClient();
+  const t = await getTranslations("receptionsHistory");
+  const tNav = await getTranslations("nav");
 
   const {
     data: { user },
@@ -27,15 +30,13 @@ export default async function ReceptionsPage() {
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Historique des réceptions</h1>
+        <h1 className="text-xl font-semibold">{t("title")}</h1>
         <Link href="/receptions/new" className="btn-primary">
-          Nouvelle réception
+          {tNav("newReception")}
         </Link>
       </div>
 
-      {withUrls.length === 0 && (
-        <p className="text-sm text-neutral-500">Aucune fiche pour l&apos;instant.</p>
-      )}
+      {withUrls.length === 0 && <p className="text-sm text-neutral-500">{t("empty")}</p>}
 
       <ul className="flex flex-col gap-2">
         {withUrls.map((r) => (
@@ -49,12 +50,12 @@ export default async function ReceptionsPage() {
               </p>
               <p className="text-sm text-neutral-500">
                 {r.vehicle_brand_model || "—"} ·{" "}
-                {new Date(r.created_at).toLocaleString("fr-CH")}
+                {new Date(r.created_at).toLocaleString()}
               </p>
             </div>
             {r.pdfUrl && (
               <a href={r.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
-                PDF
+                {t("pdf")}
               </a>
             )}
           </li>
@@ -62,7 +63,7 @@ export default async function ReceptionsPage() {
       </ul>
 
       <Link href="/dashboard" className="mt-8 inline-block text-sm underline">
-        Retour au tableau de bord
+        {tNav("backToDashboard")}
       </Link>
     </main>
   );

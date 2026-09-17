@@ -17,11 +17,13 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
 
   const garageName = user.user_metadata?.garage_name as string | undefined;
   const fullName = user.user_metadata?.full_name as string | undefined;
+  const preferredLanguage = user.user_metadata?.preferred_language as string | undefined;
 
   if (!garageName) return;
 
   await supabase.rpc("create_garage_and_owner", {
     garage_name: garageName,
     owner_full_name: fullName ?? null,
+    garage_language: preferredLanguage ?? "fr",
   });
 }

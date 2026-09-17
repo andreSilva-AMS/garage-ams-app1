@@ -1,0 +1,120 @@
+{
+  "common": {
+    "back": "Volver",
+    "continue": "Continuar",
+    "save": "Guardar",
+    "saving": "Guardando…"
+  },
+  "nav": {
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión",
+    "newReception": "Nueva recepción",
+    "history": "Historial de recepciones",
+    "backToDashboard": "Volver al panel"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "submit": "Iniciar sesión",
+    "submitting": "Conectando…",
+    "noAccount": "¿Aún no tiene un taller?",
+    "signupLink": "Crear una cuenta"
+  },
+  "signup": {
+    "title": "Cree su taller",
+    "subtitle": "Esta cuenta será la cuenta propietaria de su taller.",
+    "garageName": "Nombre del taller",
+    "fullName": "Su nombre completo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "language": "Idioma de la aplicación",
+    "submit": "Crear mi taller",
+    "submitting": "Creando…",
+    "haveAccount": "¿Ya tiene una cuenta?",
+    "loginLink": "Iniciar sesión",
+    "pendingTitle": "Revise su correo",
+    "pendingBody": "Se ha enviado un enlace de confirmación a {email}. Haga clic en él y luego vuelva a iniciar sesión: su taller «{garageName}» se creará automáticamente.",
+    "goToLogin": "Ir a la página de inicio de sesión"
+  },
+  "dashboard": {
+    "connectedTo": "Conectado a",
+    "account": "Su cuenta",
+    "role": {
+      "owner": "Propietario",
+      "mechanic": "Mecánico",
+      "reception": "Recepción"
+    },
+    "team": "Equipo del taller ({count})",
+    "isolationNote": "garage_id: {id} — estos datos solo son visibles para los miembros de este taller (aislamiento aplicado a nivel de base de datos)."
+  },
+  "settings": {
+    "title": "Configuración del taller",
+    "ownerOnly": "Solo la cuenta propietaria puede modificar esta información.",
+    "logo": "Logotipo",
+    "garageName": "Nombre del taller",
+    "address": "Dirección",
+    "defaultLanguage": "Idioma predeterminado",
+    "defaultLanguageHint": "Se usa para la interfaz de la aplicación y, por defecto, para los documentos enviados a los clientes (modificable en cada ficha).",
+    "saved": "Configuración guardada."
+  },
+  "receptionsHistory": {
+    "title": "Historial de recepciones",
+    "empty": "Todavía no hay fichas.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Paso {step} / 5",
+    "step1Title": "Cliente y vehículo",
+    "clientName": "Nombre del cliente",
+    "phone": "Teléfono",
+    "clientEmail": "Correo del cliente",
+    "plate": "Matrícula",
+    "mileage": "Kilometraje",
+    "brandModel": "Marca / modelo",
+    "step2Title": "Fotos del vehículo",
+    "angleFront": "Delantera",
+    "angleBack": "Trasera",
+    "angleLeft": "Lado izquierdo",
+    "angleRight": "Lado derecho",
+    "cardGrey": "Permiso de circulación",
+    "cardGreyHint": "Foto del permiso de circulación",
+    "damageTitle": "Daños constatados en la recepción",
+    "damageSubtitle": "(protección del taller)",
+    "step3Title": "Trabajos solicitados",
+    "commonWork": "Intervenciones habituales",
+    "workDetails": "Detalles / otras solicitudes del cliente",
+    "step4Title": "Firma del cliente",
+    "clearSignature": "Borrar firma",
+    "consent": "Al firmar, el cliente certifica la exactitud de la información anterior y acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción.",
+    "step5Title": "Resumen",
+    "docLanguage": "Idioma del documento enviado al cliente",
+    "summary": {
+      "client": "Cliente",
+      "phone": "Teléfono",
+      "email": "Correo",
+      "vehicle": "Vehículo",
+      "plate": "Matrícula",
+      "mileage": "Kilometraje",
+      "work": "Trabajos",
+      "damage": "Daños constatados",
+      "none": "—"
+    },
+    "generate": "Generar la ficha PDF",
+    "generating": "Generando…",
+    "errors": {
+      "nameAndPlateRequired": "Nombre del cliente y matrícula requeridos",
+      "missingPhotos": "Faltan fotos del vehículo",
+      "workRequired": "Indique al menos una intervención",
+      "signatureRequired": "Firma requerida"
+    },
+    "doneTitle": "Ficha guardada",
+    "doneBody": "La ficha de recepción se ha creado y guardado para {garageName}.",
+    "sendEmail": "✉️ Enviar al cliente por correo",
+    "sending": "Enviando…",
+    "sent": "✓ Enviado al cliente",
+    "noClientEmail": "No se ha indicado el correo del cliente — use la descarga a continuación.",
+    "viewPdf": "Ver / descargar el PDF",
+    "newOne": "Nueva recepción"
+  }
+}

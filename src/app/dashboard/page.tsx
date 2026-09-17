@@ -1,17 +1,20 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
 import { signOut } from "./actions";
 
-const ROLE_LABELS: Record<string, string> = {
-  owner: "Propriétaire",
-  mechanic: "Mécanicien",
-  reception: "Réception",
-};
-
 export default async function DashboardPage() {
   const supabase = await createClient();
+  const t = await getTranslations("dashboard");
+  const tNav = await getTranslations("nav");
+
+  const ROLE_LABELS: Record<string, string> = {
+    owner: t("role.owner"),
+    mechanic: t("role.mechanic"),
+    reception: t("role.reception"),
+  };
 
   const {
     data: { user },
@@ -50,56 +53,56 @@ export default async function DashboardPage() {
     <main className="mx-auto max-w-2xl px-4 py-10">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <p className="text-sm text-neutral-500">Connecté à</p>
+          <p className="text-sm text-neutral-500">{t("connectedTo")}</p>
           <h1 className="text-2xl font-semibold">{garage?.name}</h1>
         </div>
-        <form action={signOut}>
-          <button type="submit" className="text-sm underline">
-            Se déconnecter
-          </button>
-        </form>
+        <div className="flex items-center gap-4">
+          <Link href="/settings" className="text-sm underline">
+            {tNav("settings")}
+          </Link>
+          <form action={signOut}>
+            <button type="submit" className="text-sm underline">
+              {tNav("signOut")}
+            </button>
+          </form>
+        </div>
       </div>
 
       <section className="mb-8 flex gap-3">
         <Link href="/receptions/new" className="btn-primary">
-          Nouvelle réception
+          {tNav("newReception")}
         </Link>
         <Link
           href="/receptions"
           className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium"
         >
-          Historique des réceptions
+          {tNav("history")}
         </Link>
       </section>
 
       <section className="mb-8 rounded-lg border border-neutral-200 p-4">
-        <h2 className="mb-2 text-sm font-medium text-neutral-500">
-          Votre compte
-        </h2>
+        <h2 className="mb-2 text-sm font-medium text-neutral-500">{t("account")}</h2>
         <p>{profile.full_name ?? user.email}</p>
         <p className="text-sm text-neutral-600">
-          Rôle : {ROLE_LABELS[profile.role] ?? profile.role}
+          {ROLE_LABELS[profile.role] ?? profile.role}
         </p>
       </section>
 
       <section className="rounded-lg border border-neutral-200 p-4">
         <h2 className="mb-2 text-sm font-medium text-neutral-500">
-          Équipe du garage ({teamMembers?.length ?? 0})
+          {t("team", { count: teamMembers?.length ?? 0 })}
         </h2>
         <ul className="flex flex-col gap-1">
           {teamMembers?.map((member) => (
             <li key={member.id} className="text-sm">
-              {member.full_name ?? "Sans nom"} —{" "}
-              {ROLE_LABELS[member.role] ?? member.role}
+              {member.full_name ?? "—"} — {ROLE_LABELS[member.role] ?? member.role}
             </li>
           ))}
         </ul>
       </section>
 
       <p className="mt-8 text-xs text-neutral-400">
-        garage_id : {garage?.id} — ces données ne sont visibles que par les
-        membres de ce garage (isolation appliquée au niveau de la base de
-        données).
+        {t("isolationNote", { id: garage?.id ?? "" })}
       </p>
     </main>
   );

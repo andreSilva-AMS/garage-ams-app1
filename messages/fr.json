@@ -1,0 +1,120 @@
+{
+  "common": {
+    "back": "Retour",
+    "continue": "Continuer",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…"
+  },
+  "nav": {
+    "settings": "Réglages",
+    "signOut": "Se déconnecter",
+    "newReception": "Nouvelle réception",
+    "history": "Historique des réceptions",
+    "backToDashboard": "Retour au tableau de bord"
+  },
+  "login": {
+    "title": "Connexion",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion…",
+    "noAccount": "Pas encore de garage ?",
+    "signupLink": "Créer un compte"
+  },
+  "signup": {
+    "title": "Créer votre garage",
+    "subtitle": "Ce compte sera le compte propriétaire de votre garage.",
+    "garageName": "Nom du garage",
+    "fullName": "Votre nom complet",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "language": "Langue de l'application",
+    "submit": "Créer mon garage",
+    "submitting": "Création en cours…",
+    "haveAccount": "Déjà un compte ?",
+    "loginLink": "Se connecter",
+    "pendingTitle": "Vérifiez votre boîte e-mail",
+    "pendingBody": "Un lien de confirmation a été envoyé à {email}. Cliquez dessus, puis revenez vous connecter : votre garage « {garageName} » sera créé automatiquement.",
+    "goToLogin": "Aller à la page de connexion"
+  },
+  "dashboard": {
+    "connectedTo": "Connecté à",
+    "account": "Votre compte",
+    "role": {
+      "owner": "Propriétaire",
+      "mechanic": "Mécanicien",
+      "reception": "Réception"
+    },
+    "team": "Équipe du garage ({count})",
+    "isolationNote": "garage_id : {id} — ces données ne sont visibles que par les membres de ce garage (isolation appliquée au niveau de la base de données)."
+  },
+  "settings": {
+    "title": "Réglages du garage",
+    "ownerOnly": "Seul le compte propriétaire peut modifier ces informations.",
+    "logo": "Logo",
+    "garageName": "Nom du garage",
+    "address": "Adresse",
+    "defaultLanguage": "Langue par défaut",
+    "defaultLanguageHint": "Utilisée pour l'interface de l'application et par défaut pour les documents envoyés aux clients (modifiable pour chaque fiche).",
+    "saved": "Réglages enregistrés."
+  },
+  "receptionsHistory": {
+    "title": "Historique des réceptions",
+    "empty": "Aucune fiche pour l'instant.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Étape {step} / 5",
+    "step1Title": "Client & véhicule",
+    "clientName": "Nom du client",
+    "phone": "Téléphone",
+    "clientEmail": "E-mail du client",
+    "plate": "Plaque d'immatriculation",
+    "mileage": "Kilométrage",
+    "brandModel": "Marque / modèle",
+    "step2Title": "Photos du véhicule",
+    "angleFront": "Avant",
+    "angleBack": "Arrière",
+    "angleLeft": "Côté gauche",
+    "angleRight": "Côté droit",
+    "cardGrey": "Carte grise",
+    "cardGreyHint": "Photo du permis de circulation",
+    "damageTitle": "Dommages constatés à la réception",
+    "damageSubtitle": "(protection du garage)",
+    "step3Title": "Travaux demandés",
+    "commonWork": "Interventions courantes",
+    "workDetails": "Détails / autres demandes du client",
+    "step4Title": "Signature du client",
+    "clearSignature": "Effacer la signature",
+    "consent": "En signant, le client certifie l'exactitude des informations ci-dessus et accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception.",
+    "step5Title": "Récapitulatif",
+    "docLanguage": "Langue du document envoyé au client",
+    "summary": {
+      "client": "Client",
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "vehicle": "Véhicule",
+      "plate": "Plaque",
+      "mileage": "Kilométrage",
+      "work": "Travaux",
+      "damage": "Dommages notés",
+      "none": "—"
+    },
+    "generate": "Générer la fiche PDF",
+    "generating": "Génération en cours…",
+    "errors": {
+      "nameAndPlateRequired": "Nom du client et plaque requis",
+      "missingPhotos": "Il manque des photos du véhicule",
+      "workRequired": "Précisez au moins une intervention",
+      "signatureRequired": "Signature requise"
+    },
+    "doneTitle": "Fiche enregistrée",
+    "doneBody": "La fiche de réception a été créée et sauvegardée pour {garageName}.",
+    "sendEmail": "✉️ Envoyer au client par e-mail",
+    "sending": "Envoi en cours…",
+    "sent": "✓ Envoyé au client",
+    "noClientEmail": "Aucun e-mail client renseigné — utilisez le téléchargement ci-dessous.",
+    "viewPdf": "Voir / télécharger le PDF",
+    "newOne": "Nouvelle réception"
+  }
+}

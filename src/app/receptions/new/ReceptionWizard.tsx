@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
 import { SignaturePad } from "@/components/SignaturePad";
@@ -10,10 +11,12 @@ import {
   Lang,
   DAMAGE_GROUPS,
   trDamageTag,
+  trCategoryTitle,
   WORK_TAGS,
   trWorkTag,
 } from "@/lib/receptions/i18n";
 import { buildReceptionPdf } from "@/lib/receptions/pdf";
+import { sendReceptionEmail } from "../actions";
 
 type Angle = "front" | "back" | "left" | "right";
 interface PhotoData {
@@ -24,14 +27,23 @@ interface Garage {
   id: string;
   name: string;
   address: string | null;
+  logo_url: string | null;
 }
 
-const ANGLE_LABELS: Record<Angle, string> = {
-  front: "Avant",
-  back: "Arrière",
-  left: "Côté gauche",
-  right: "Côté droit",
-};
+async function urlToDataUrl(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
 
 function Tag({
   active,
@@ -57,11 +69,22 @@ function Tag({
 
 export function ReceptionWizard({ garage }: { garage: Garage }) {
   const supabase = createClient();
+  const t = useTranslations("receptionWizard");
+  const tCommon = useTranslations("common");
+  const tNav = useTranslations("nav");
+  // Langue de l'interface (celle du garage) : utilisée pour afficher les
+  // étiquettes de dommages/travaux pendant la saisie. Distincte de `lang`
+  // ci-dessous, qui est la langue du DOCUMENT envoyé au client.
+  const appLocale = useLocale() as Lang;
 
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState<{ pdfUrl: string } | null>(null);
+  const [done, setDone] = useState<{ id: string; pdfUrl: string; hasClientEmail: boolean } | null>(
+    null,
+  );
+  const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const [client, setClient] = useState({
     name: "",
@@ -77,8 +100,15 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   const [damageText] = useState("");
   const [workTags, setWorkTags] = useState<Set<string>>(new Set());
   const [workText, setWorkText] = useState("");
-  const [lang, setLang] = useState<Lang>("fr");
+  const [lang, setLang] = useState<Lang>(appLocale);
   const [signatureDataUrl, setSignatureDataUrl] = useState<string | null>(null);
+
+  const ANGLE_LABELS: Record<Angle, string> = {
+    front: t("angleFront"),
+    back: t("angleBack"),
+    left: t("angleLeft"),
+    right: t("angleRight"),
+  };
 
   function toggle(set: Set<string>, setFn: (v: Set<string>) => void, value: string) {
     const next = new Set(set);
@@ -91,23 +121,23 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
     setError(null);
     if (step === 1) {
       if (!client.name.trim() || !client.plate.trim()) {
-        setError("Nom du client et plaque requis");
+        setError(t("errors.nameAndPlateRequired"));
         return false;
       }
     }
     if (step === 2) {
       const missing = (["front", "back", "left", "right"] as Angle[]).filter((a) => !photos[a]);
       if (missing.length) {
-        setError("Il manque des photos du véhicule");
+        setError(t("errors.missingPhotos"));
         return false;
       }
     }
     if (step === 3 && workTags.size === 0 && !workText.trim()) {
-      setError("Précisez au moins une intervention");
+      setError(t("errors.workRequired"));
       return false;
     }
     if (step === 4 && !signatureDataUrl) {
-      setError("Signature requise");
+      setError(t("errors.signatureRequired"));
       return false;
     }
     return true;
@@ -166,9 +196,12 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         ? await upload("signature.jpg", await (await fetch(signatureJpeg)).blob())
         : null;
 
+      const garageLogoDataUrl = garage.logo_url ? await urlToDataUrl(garage.logo_url) : null;
+
       const doc = buildReceptionPdf({
         garageName: garage.name,
         garageAddress: garage.address,
+        garageLogoDataUrl,
         client,
         workTags: [...workTags],
         workText,
@@ -209,7 +242,11 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       const { data: signed } = await supabase.storage
         .from("receptions")
         .createSignedUrl(pdfPath, 3600);
-      setDone({ pdfUrl: signed?.signedUrl ?? "" });
+      setDone({
+        id: receptionId,
+        pdfUrl: signed?.signedUrl ?? "",
+        hasClientEmail: Boolean(client.email),
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue");
     } finally {
@@ -220,19 +257,46 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   if (done) {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 text-center">
-        <h1 className="mb-4 text-xl font-semibold">Fiche enregistrée</h1>
+        <h1 className="mb-4 text-xl font-semibold">{t("doneTitle")}</h1>
         <p className="mb-6 text-sm text-neutral-600">
-          La fiche de réception a été créée et sauvegardée pour {garage.name}.
+          {t("doneBody", { garageName: garage.name })}
         </p>
         <div className="flex flex-col gap-3">
-          <a href={done.pdfUrl} target="_blank" rel="noreferrer" className="btn-primary">
-            Voir le PDF
+          {done.hasClientEmail ? (
+            <button
+              type="button"
+              disabled={emailStatus === "sending" || emailStatus === "sent"}
+              onClick={async () => {
+                setEmailStatus("sending");
+                setEmailError(null);
+                const result = await sendReceptionEmail(done.id);
+                if (result.ok) {
+                  setEmailStatus("sent");
+                } else {
+                  setEmailStatus("error");
+                  setEmailError(result.error);
+                }
+              }}
+              className="btn-primary"
+            >
+              {emailStatus === "sending"
+                ? t("sending")
+                : emailStatus === "sent"
+                  ? t("sent")
+                  : t("sendEmail")}
+            </button>
+          ) : (
+            <p className="text-sm text-neutral-500">{t("noClientEmail")}</p>
+          )}
+          {emailStatus === "error" && <p className="text-sm text-red-600">{emailError}</p>}
+          <a href={done.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
+            {t("viewPdf")}
           </a>
           <Link href="/receptions/new" className="text-sm underline">
-            Nouvelle réception
+            {t("newOne")}
           </Link>
           <Link href="/dashboard" className="text-sm underline">
-            Retour au tableau de bord
+            {tNav("backToDashboard")}
           </Link>
         </div>
       </main>
@@ -241,7 +305,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
-      <p className="mb-1 text-sm text-neutral-500">Étape {step} / 5</p>
+      <p className="mb-1 text-sm text-neutral-500">{t("step", { step })}</p>
       <div className="mb-6 h-1 w-full rounded bg-neutral-200">
         <div
           className="h-1 rounded bg-neutral-900 transition-all"
@@ -251,8 +315,8 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
       {step === 1 && (
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">Client &amp; véhicule</h2>
-          <Field label="Nom du client">
+          <h2 className="text-lg font-semibold">{t("step1Title")}</h2>
+          <Field label={t("clientName")}>
             <input
               className="input"
               value={client.name}
@@ -260,7 +324,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             />
           </Field>
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Téléphone">
+            <Field label={t("phone")}>
               <input
                 className="input"
                 type="tel"
@@ -268,7 +332,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 onChange={(e) => setClient({ ...client, phone: e.target.value })}
               />
             </Field>
-            <Field label="E-mail du client">
+            <Field label={t("clientEmail")}>
               <input
                 className="input"
                 type="email"
@@ -278,14 +342,14 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             </Field>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Plaque d'immatriculation">
+            <Field label={t("plate")}>
               <input
                 className="input"
                 value={client.plate}
                 onChange={(e) => setClient({ ...client, plate: e.target.value })}
               />
             </Field>
-            <Field label="Kilométrage">
+            <Field label={t("mileage")}>
               <input
                 className="input"
                 type="number"
@@ -294,7 +358,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
               />
             </Field>
           </div>
-          <Field label="Marque / modèle">
+          <Field label={t("brandModel")}>
             <input
               className="input"
               value={client.brandModel}
@@ -306,7 +370,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
       {step === 2 && (
         <section className="flex flex-col gap-6">
-          <h2 className="text-lg font-semibold">Photos du véhicule</h2>
+          <h2 className="text-lg font-semibold">{t("step2Title")}</h2>
           <div className="grid grid-cols-2 gap-3">
             {(["front", "back", "left", "right"] as Angle[]).map((angle) => (
               <label
@@ -340,14 +404,18 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
           <label className="flex items-center gap-3 rounded-md border border-neutral-300 p-3">
             {cardGrey ? (
               // eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser
-              <img src={cardGrey.dataUrl} alt="Carte grise" className="h-14 w-14 rounded object-cover" />
+              <img
+                src={cardGrey.dataUrl}
+                alt={t("cardGrey")}
+                className="h-14 w-14 rounded object-cover"
+              />
             ) : (
               <span className="text-2xl">🪪</span>
             )}
             <span className="text-sm">
-              <b>Carte grise</b>
+              <b>{t("cardGrey")}</b>
               <br />
-              Photo du permis de circulation
+              {t("cardGreyHint")}
             </span>
             <input
               type="file"
@@ -363,12 +431,14 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
           <div>
             <p className="mb-2 text-sm font-medium">
-              Dommages constatés à la réception{" "}
-              <span className="font-normal text-neutral-500">(protection du garage)</span>
+              {t("damageTitle")}{" "}
+              <span className="font-normal text-neutral-500">{t("damageSubtitle")}</span>
             </p>
             {Object.entries(DAMAGE_GROUPS).map(([title, tags]) => (
               <div key={title} className="mb-3">
-                <p className="mb-1 text-xs font-semibold uppercase text-neutral-500">{title}</p>
+                <p className="mb-1 text-xs font-semibold uppercase text-neutral-500">
+                  {trCategoryTitle(title, appLocale)}
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {tags.map((tag) => (
                     <Tag
@@ -376,7 +446,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                       active={damageTags.has(tag)}
                       onClick={() => toggle(damageTags, setDamageTags, tag)}
                     >
-                      {trDamageTag(tag, lang)}
+                      {trDamageTag(tag, appLocale)}
                     </Tag>
                   ))}
                 </div>
@@ -388,16 +458,16 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
       {step === 3 && (
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">Travaux demandés</h2>
-          <p className="text-sm font-medium">Interventions courantes</p>
+          <h2 className="text-lg font-semibold">{t("step3Title")}</h2>
+          <p className="text-sm font-medium">{t("commonWork")}</p>
           <div className="flex flex-wrap gap-2">
             {WORK_TAGS.map((tag) => (
               <Tag key={tag} active={workTags.has(tag)} onClick={() => toggle(workTags, setWorkTags, tag)}>
-                {trWorkTag(tag, lang)}
+                {trWorkTag(tag, appLocale)}
               </Tag>
             ))}
           </div>
-          <Field label="Détails / autres demandes du client">
+          <Field label={t("workDetails")}>
             <textarea
               className="input min-h-24"
               value={workText}
@@ -409,20 +479,16 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
       {step === 4 && (
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">Signature du client</h2>
-          <SignaturePad onChange={setSignatureDataUrl} />
-          <p className="text-xs text-neutral-500">
-            En signant, le client certifie l&apos;exactitude des informations ci-dessus et
-            accepte l&apos;état du véhicule tel que constaté et documenté par photos lors de la
-            réception.
-          </p>
+          <h2 className="text-lg font-semibold">{t("step4Title")}</h2>
+          <SignaturePad onChange={setSignatureDataUrl} clearLabel={t("clearSignature")} />
+          <p className="text-xs text-neutral-500">{t("consent")}</p>
         </section>
       )}
 
       {step === 5 && (
         <section className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold">Récapitulatif</h2>
-          <Field label="Langue du document envoyé au client">
+          <h2 className="text-lg font-semibold">{t("step5Title")}</h2>
+          <Field label={t("docLanguage")}>
             <select
               className="input"
               value={lang}
@@ -436,19 +502,19 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             </select>
           </Field>
           <div className="rounded-md border border-neutral-200 p-4 text-sm">
-            <SummaryRow k="Client" v={client.name} />
-            <SummaryRow k="Téléphone" v={client.phone || "—"} />
-            <SummaryRow k="E-mail" v={client.email || "—"} />
-            <SummaryRow k="Véhicule" v={client.brandModel || "—"} />
-            <SummaryRow k="Plaque" v={client.plate} />
-            <SummaryRow k="Kilométrage" v={`${client.mileage || "—"} km`} />
+            <SummaryRow k={t("summary.client")} v={client.name} />
+            <SummaryRow k={t("summary.phone")} v={client.phone || t("summary.none")} />
+            <SummaryRow k={t("summary.email")} v={client.email || t("summary.none")} />
+            <SummaryRow k={t("summary.vehicle")} v={client.brandModel || t("summary.none")} />
+            <SummaryRow k={t("summary.plate")} v={client.plate} />
+            <SummaryRow k={t("summary.mileage")} v={`${client.mileage || t("summary.none")} km`} />
             <SummaryRow
-              k="Travaux"
-              v={[...workTags, ...(workText ? [workText] : [])].join(" · ") || "—"}
+              k={t("summary.work")}
+              v={[...workTags, ...(workText ? [workText] : [])].join(" · ") || t("summary.none")}
             />
             <SummaryRow
-              k="Dommages notés"
-              v={[...damageTags, ...(damageText ? [damageText] : [])].join(" · ") || "—"}
+              k={t("summary.damage")}
+              v={[...damageTags, ...(damageText ? [damageText] : [])].join(" · ") || t("summary.none")}
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
@@ -458,7 +524,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             onClick={handleSubmit}
             className="btn-primary"
           >
-            {saving ? "Génération en cours…" : "Générer la fiche PDF"}
+            {saving ? t("generating") : t("generate")}
           </button>
         </section>
       )}
@@ -468,14 +534,14 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       <div className="mt-8 flex justify-between">
         {step > 1 ? (
           <button type="button" onClick={back} className="text-sm underline">
-            Retour
+            {tCommon("back")}
           </button>
         ) : (
           <span />
         )}
         {step < 5 && (
           <button type="button" onClick={next} className="btn-primary">
-            Continuer
+            {tCommon("continue")}
           </button>
         )}
       </div>

@@ -3,19 +3,33 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
+
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
+}
 
 export default function SignupPage() {
   const router = useRouter();
   const supabase = createClient();
+  const t = useTranslations("signup");
 
   const [garageName, setGarageName] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [language, setLanguage] = useState<Lang>("fr");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingConfirmation, setPendingConfirmation] = useState(false);
+
+  function handleLanguageChange(value: Lang) {
+    setLanguage(value);
+    setLocaleCookie(value);
+    router.refresh();
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -26,7 +40,7 @@ export default function SignupPage() {
       email,
       password,
       options: {
-        data: { garage_name: garageName, full_name: fullName },
+        data: { garage_name: garageName, full_name: fullName, preferred_language: language },
       },
     });
 
@@ -47,6 +61,7 @@ export default function SignupPage() {
     const { error: rpcError } = await supabase.rpc("create_garage_and_owner", {
       garage_name: garageName,
       owner_full_name: fullName,
+      garage_language: language,
     });
 
     if (rpcError) {
@@ -62,14 +77,12 @@ export default function SignupPage() {
   if (pendingConfirmation) {
     return (
       <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 px-4">
-        <h1 className="text-xl font-semibold">Vérifiez votre boîte e-mail</h1>
+        <h1 className="text-xl font-semibold">{t("pendingTitle")}</h1>
         <p className="text-sm text-neutral-600">
-          Un lien de confirmation a été envoyé à <strong>{email}</strong>.
-          Cliquez dessus, puis revenez vous connecter : votre garage «{" "}
-          {garageName} » sera créé automatiquement.
+          {t("pendingBody", { email, garageName })}
         </p>
         <Link href="/login" className="text-sm underline">
-          Aller à la page de connexion
+          {t("goToLogin")}
         </Link>
       </main>
     );
@@ -77,13 +90,26 @@ export default function SignupPage() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
-      <h1 className="mb-1 text-xl font-semibold">Créer votre garage</h1>
-      <p className="mb-6 text-sm text-neutral-600">
-        Ce compte sera le compte propriétaire de votre garage.
-      </p>
+      <h1 className="mb-1 text-xl font-semibold">{t("title")}</h1>
+      <p className="mb-6 text-sm text-neutral-600">{t("subtitle")}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Field label="Nom du garage" htmlFor="garageName">
+        <Field label={t("language")} htmlFor="language">
+          <select
+            id="language"
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value as Lang)}
+            className="input"
+          >
+            {LANGUAGES.map((l) => (
+              <option key={l.value} value={l.value}>
+                {l.label}
+              </option>
+            ))}
+          </select>
+        </Field>
+
+        <Field label={t("garageName")} htmlFor="garageName">
           <input
             id="garageName"
             required
@@ -94,7 +120,7 @@ export default function SignupPage() {
           />
         </Field>
 
-        <Field label="Votre nom complet" htmlFor="fullName">
+        <Field label={t("fullName")} htmlFor="fullName">
           <input
             id="fullName"
             required
@@ -105,7 +131,7 @@ export default function SignupPage() {
           />
         </Field>
 
-        <Field label="E-mail" htmlFor="email">
+        <Field label={t("email")} htmlFor="email">
           <input
             id="email"
             type="email"
@@ -116,7 +142,7 @@ export default function SignupPage() {
           />
         </Field>
 
-        <Field label="Mot de passe" htmlFor="password">
+        <Field label={t("password")} htmlFor="password">
           <input
             id="password"
             type="password"
@@ -131,14 +157,14 @@ export default function SignupPage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" disabled={loading} className="btn-primary">
-          {loading ? "Création en cours..." : "Créer mon garage"}
+          {loading ? t("submitting") : t("submit")}
         </button>
       </form>
 
       <p className="mt-6 text-sm text-neutral-600">
-        Déjà un compte ?{" "}
+        {t("haveAccount")}{" "}
         <Link href="/login" className="underline">
-          Se connecter
+          {t("loginLink")}
         </Link>
       </p>
     </main>

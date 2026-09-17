@@ -309,3 +309,17 @@ DAMAGE_EXTRA.forEach((d) => addDamageTag(d.title, d));
 export function trDamageTag(tag: string, lang: Lang): string {
   return tr(tag, DAMAGE_TAG_TR, lang);
 }
+
+/** Titres des catégories de dommages (utilisés comme intitulés de section dans le formulaire). */
+export const CATEGORY_TITLE_TR: Record<string, Tag> = {
+  Accidenté: { fr: "Accidenté", en: "Collision", es: "Accidentes", pt: "Acidentes", de: "Unfallschäden" },
+  Rayures: { fr: "Rayures", en: "Scratches", es: "Rayones", pt: "Riscos", de: "Kratzer" },
+  Peinture: { fr: "Peinture", en: "Paint", es: "Pintura", pt: "Pintura", de: "Lack" },
+  Jantes: { fr: "Jantes", en: "Rims", es: "Llantas", pt: "Jantes", de: "Felgen" },
+  Autres: { fr: "Autres", en: "Other", es: "Otros", pt: "Outros", de: "Sonstiges" },
+  Intérieur: { fr: "Intérieur", en: "Interior", es: "Interior", pt: "Interior", de: "Innenraum" },
+};
+
+export function trCategoryTitle(title: string, lang: Lang): string {
+  return tr(title, CATEGORY_TITLE_TR, lang);
+}

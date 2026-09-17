@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 export function SignaturePad({
   onChange,
+  clearLabel = "Effacer la signature",
 }: {
   onChange: (dataUrl: string | null) => void;
+  clearLabel?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -89,7 +91,7 @@ export function SignaturePad({
         onPointerCancel={end}
       />
       <button type="button" onClick={clear} className="self-start text-sm underline">
-        Effacer la signature
+        {clearLabel}
       </button>
     </div>
   );

@@ -1,0 +1,120 @@
+{
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "save": "Save",
+    "saving": "Saving…"
+  },
+  "nav": {
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "newReception": "New reception",
+    "history": "Reception history",
+    "backToDashboard": "Back to dashboard"
+  },
+  "login": {
+    "title": "Sign in",
+    "email": "E-mail",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "noAccount": "No garage yet?",
+    "signupLink": "Create an account"
+  },
+  "signup": {
+    "title": "Create your garage",
+    "subtitle": "This account will be the owner account of your garage.",
+    "garageName": "Garage name",
+    "fullName": "Your full name",
+    "email": "E-mail",
+    "password": "Password",
+    "language": "Application language",
+    "submit": "Create my garage",
+    "submitting": "Creating…",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Sign in",
+    "pendingTitle": "Check your inbox",
+    "pendingBody": "A confirmation link was sent to {email}. Click it, then come back and sign in: your garage “{garageName}” will be created automatically.",
+    "goToLogin": "Go to the sign-in page"
+  },
+  "dashboard": {
+    "connectedTo": "Connected to",
+    "account": "Your account",
+    "role": {
+      "owner": "Owner",
+      "mechanic": "Mechanic",
+      "reception": "Reception"
+    },
+    "team": "Garage team ({count})",
+    "isolationNote": "garage_id: {id} — this data is only visible to members of this garage (isolation enforced at the database level)."
+  },
+  "settings": {
+    "title": "Garage settings",
+    "ownerOnly": "Only the owner account can change this information.",
+    "logo": "Logo",
+    "garageName": "Garage name",
+    "address": "Address",
+    "defaultLanguage": "Default language",
+    "defaultLanguageHint": "Used for the application interface and, by default, for documents sent to customers (can be changed for each form).",
+    "saved": "Settings saved."
+  },
+  "receptionsHistory": {
+    "title": "Reception history",
+    "empty": "No forms yet.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Step {step} / 5",
+    "step1Title": "Customer & vehicle",
+    "clientName": "Customer name",
+    "phone": "Phone",
+    "clientEmail": "Customer e-mail",
+    "plate": "License plate",
+    "mileage": "Mileage",
+    "brandModel": "Make / model",
+    "step2Title": "Vehicle photos",
+    "angleFront": "Front",
+    "angleBack": "Back",
+    "angleLeft": "Left side",
+    "angleRight": "Right side",
+    "cardGrey": "Registration document",
+    "cardGreyHint": "Photo of the vehicle registration document",
+    "damageTitle": "Damage noted at reception",
+    "damageSubtitle": "(protects the garage)",
+    "step3Title": "Requested work",
+    "commonWork": "Common services",
+    "workDetails": "Details / other customer requests",
+    "step4Title": "Customer signature",
+    "clearSignature": "Clear signature",
+    "consent": "By signing, the customer certifies the accuracy of the above information and accepts the condition of the vehicle as noted and documented by photos upon reception.",
+    "step5Title": "Summary",
+    "docLanguage": "Language of the document sent to the customer",
+    "summary": {
+      "client": "Customer",
+      "phone": "Phone",
+      "email": "E-mail",
+      "vehicle": "Vehicle",
+      "plate": "Plate",
+      "mileage": "Mileage",
+      "work": "Work",
+      "damage": "Damage noted",
+      "none": "—"
+    },
+    "generate": "Generate the PDF form",
+    "generating": "Generating…",
+    "errors": {
+      "nameAndPlateRequired": "Customer name and plate are required",
+      "missingPhotos": "Some vehicle photos are missing",
+      "workRequired": "Please specify at least one service",
+      "signatureRequired": "Signature required"
+    },
+    "doneTitle": "Form saved",
+    "doneBody": "The reception form has been created and saved for {garageName}.",
+    "sendEmail": "✉️ Send to customer by e-mail",
+    "sending": "Sending…",
+    "sent": "✓ Sent to customer",
+    "noClientEmail": "No customer e-mail on file — use the download below.",
+    "viewPdf": "View / download the PDF",
+    "newOne": "New reception"
+  }
+}

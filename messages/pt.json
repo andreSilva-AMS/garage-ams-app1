@@ -1,0 +1,120 @@
+{
+  "common": {
+    "back": "Voltar",
+    "continue": "Continuar",
+    "save": "Guardar",
+    "saving": "A guardar…"
+  },
+  "nav": {
+    "settings": "Definições",
+    "signOut": "Terminar sessão",
+    "newReception": "Nova receção",
+    "history": "Histórico de receções",
+    "backToDashboard": "Voltar ao painel"
+  },
+  "login": {
+    "title": "Iniciar sessão",
+    "email": "E-mail",
+    "password": "Palavra-passe",
+    "submit": "Iniciar sessão",
+    "submitting": "A entrar…",
+    "noAccount": "Ainda não tem uma garagem?",
+    "signupLink": "Criar uma conta"
+  },
+  "signup": {
+    "title": "Crie a sua garagem",
+    "subtitle": "Esta conta será a conta de proprietário da sua garagem.",
+    "garageName": "Nome da garagem",
+    "fullName": "O seu nome completo",
+    "email": "E-mail",
+    "password": "Palavra-passe",
+    "language": "Idioma da aplicação",
+    "submit": "Criar a minha garagem",
+    "submitting": "A criar…",
+    "haveAccount": "Já tem uma conta?",
+    "loginLink": "Iniciar sessão",
+    "pendingTitle": "Verifique o seu e-mail",
+    "pendingBody": "Foi enviado um link de confirmação para {email}. Clique nele e depois volte para iniciar sessão: a sua garagem «{garageName}» será criada automaticamente.",
+    "goToLogin": "Ir para a página de início de sessão"
+  },
+  "dashboard": {
+    "connectedTo": "Ligado a",
+    "account": "A sua conta",
+    "role": {
+      "owner": "Proprietário",
+      "mechanic": "Mecânico",
+      "reception": "Receção"
+    },
+    "team": "Equipa da garagem ({count})",
+    "isolationNote": "garage_id: {id} — estes dados só são visíveis pelos membros desta garagem (isolamento aplicado ao nível da base de dados)."
+  },
+  "settings": {
+    "title": "Definições da garagem",
+    "ownerOnly": "Só a conta de proprietário pode alterar estas informações.",
+    "logo": "Logótipo",
+    "garageName": "Nome da garagem",
+    "address": "Endereço",
+    "defaultLanguage": "Idioma predefinido",
+    "defaultLanguageHint": "Utilizado na interface da aplicação e, por defeito, nos documentos enviados aos clientes (pode ser alterado em cada ficha).",
+    "saved": "Definições guardadas."
+  },
+  "receptionsHistory": {
+    "title": "Histórico de receções",
+    "empty": "Ainda não há fichas.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Etapa {step} / 5",
+    "step1Title": "Cliente e veículo",
+    "clientName": "Nome do cliente",
+    "phone": "Telefone",
+    "clientEmail": "E-mail do cliente",
+    "plate": "Matrícula",
+    "mileage": "Quilometragem",
+    "brandModel": "Marca / modelo",
+    "step2Title": "Fotos do veículo",
+    "angleFront": "Frente",
+    "angleBack": "Trás",
+    "angleLeft": "Lado esquerdo",
+    "angleRight": "Lado direito",
+    "cardGrey": "Documento único automóvel",
+    "cardGreyHint": "Foto do documento único automóvel",
+    "damageTitle": "Danos constatados na receção",
+    "damageSubtitle": "(proteção da garagem)",
+    "step3Title": "Trabalhos solicitados",
+    "commonWork": "Intervenções habituais",
+    "workDetails": "Detalhes / outros pedidos do cliente",
+    "step4Title": "Assinatura do cliente",
+    "clearSignature": "Limpar assinatura",
+    "consent": "Ao assinar, o cliente certifica a exatidão das informações acima e aceita o estado do veículo tal como constatado e documentado por fotos na receção.",
+    "step5Title": "Resumo",
+    "docLanguage": "Idioma do documento enviado ao cliente",
+    "summary": {
+      "client": "Cliente",
+      "phone": "Telefone",
+      "email": "E-mail",
+      "vehicle": "Veículo",
+      "plate": "Matrícula",
+      "mileage": "Quilometragem",
+      "work": "Trabalhos",
+      "damage": "Danos constatados",
+      "none": "—"
+    },
+    "generate": "Gerar a ficha PDF",
+    "generating": "A gerar…",
+    "errors": {
+      "nameAndPlateRequired": "Nome do cliente e matrícula obrigatórios",
+      "missingPhotos": "Faltam fotos do veículo",
+      "workRequired": "Indique pelo menos uma intervenção",
+      "signatureRequired": "Assinatura obrigatória"
+    },
+    "doneTitle": "Ficha guardada",
+    "doneBody": "A ficha de receção foi criada e guardada para {garageName}.",
+    "sendEmail": "✉️ Enviar ao cliente por e-mail",
+    "sending": "A enviar…",
+    "sent": "✓ Enviado ao cliente",
+    "noClientEmail": "Nenhum e-mail de cliente indicado — utilize o download abaixo.",
+    "viewPdf": "Ver / descarregar o PDF",
+    "newOne": "Nova receção"
+  }
+}

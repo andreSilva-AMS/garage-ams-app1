@@ -1,0 +1,120 @@
+{
+  "common": {
+    "back": "Zurück",
+    "continue": "Weiter",
+    "save": "Speichern",
+    "saving": "Wird gespeichert…"
+  },
+  "nav": {
+    "settings": "Einstellungen",
+    "signOut": "Abmelden",
+    "newReception": "Neue Annahme",
+    "history": "Annahmeverlauf",
+    "backToDashboard": "Zurück zum Dashboard"
+  },
+  "login": {
+    "title": "Anmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Anmelden",
+    "submitting": "Anmeldung läuft…",
+    "noAccount": "Noch keine Werkstatt?",
+    "signupLink": "Konto erstellen"
+  },
+  "signup": {
+    "title": "Erstellen Sie Ihre Werkstatt",
+    "subtitle": "Dieses Konto wird das Inhaberkonto Ihrer Werkstatt.",
+    "garageName": "Name der Werkstatt",
+    "fullName": "Ihr vollständiger Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "language": "Sprache der Anwendung",
+    "submit": "Werkstatt erstellen",
+    "submitting": "Wird erstellt…",
+    "haveAccount": "Bereits ein Konto?",
+    "loginLink": "Anmelden",
+    "pendingTitle": "Prüfen Sie Ihr E-Mail-Postfach",
+    "pendingBody": "Ein Bestätigungslink wurde an {email} gesendet. Klicken Sie darauf und melden Sie sich anschließend an: Ihre Werkstatt „{garageName}“ wird automatisch erstellt.",
+    "goToLogin": "Zur Anmeldeseite"
+  },
+  "dashboard": {
+    "connectedTo": "Verbunden mit",
+    "account": "Ihr Konto",
+    "role": {
+      "owner": "Inhaber",
+      "mechanic": "Mechaniker",
+      "reception": "Annahme"
+    },
+    "team": "Team der Werkstatt ({count})",
+    "isolationNote": "garage_id: {id} — diese Daten sind nur für Mitglieder dieser Werkstatt sichtbar (Isolation auf Datenbankebene durchgesetzt)."
+  },
+  "settings": {
+    "title": "Werkstatt-Einstellungen",
+    "ownerOnly": "Nur das Inhaberkonto kann diese Informationen ändern.",
+    "logo": "Logo",
+    "garageName": "Name der Werkstatt",
+    "address": "Adresse",
+    "defaultLanguage": "Standardsprache",
+    "defaultLanguageHint": "Wird für die Benutzeroberfläche der Anwendung und standardmäßig für an Kunden gesendete Dokumente verwendet (pro Protokoll änderbar).",
+    "saved": "Einstellungen gespeichert."
+  },
+  "receptionsHistory": {
+    "title": "Annahmeverlauf",
+    "empty": "Noch keine Protokolle.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Schritt {step} / 5",
+    "step1Title": "Kunde & Fahrzeug",
+    "clientName": "Name des Kunden",
+    "phone": "Telefon",
+    "clientEmail": "E-Mail des Kunden",
+    "plate": "Kennzeichen",
+    "mileage": "Kilometerstand",
+    "brandModel": "Marke / Modell",
+    "step2Title": "Fahrzeugfotos",
+    "angleFront": "Vorne",
+    "angleBack": "Hinten",
+    "angleLeft": "Linke Seite",
+    "angleRight": "Rechte Seite",
+    "cardGrey": "Fahrzeugausweis",
+    "cardGreyHint": "Foto des Fahrzeugausweises",
+    "damageTitle": "Bei der Annahme festgestellte Schäden",
+    "damageSubtitle": "(Schutz der Werkstatt)",
+    "step3Title": "Gewünschte Arbeiten",
+    "commonWork": "Übliche Arbeiten",
+    "workDetails": "Details / weitere Wünsche des Kunden",
+    "step4Title": "Unterschrift des Kunden",
+    "clearSignature": "Unterschrift löschen",
+    "consent": "Mit der Unterschrift bestätigt der Kunde die Richtigkeit der obigen Angaben und akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs.",
+    "step5Title": "Zusammenfassung",
+    "docLanguage": "Sprache des an den Kunden gesendeten Dokuments",
+    "summary": {
+      "client": "Kunde",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "vehicle": "Fahrzeug",
+      "plate": "Kennzeichen",
+      "mileage": "Kilometerstand",
+      "work": "Arbeiten",
+      "damage": "Festgestellte Schäden",
+      "none": "—"
+    },
+    "generate": "PDF-Protokoll erstellen",
+    "generating": "Wird erstellt…",
+    "errors": {
+      "nameAndPlateRequired": "Name des Kunden und Kennzeichen erforderlich",
+      "missingPhotos": "Es fehlen Fahrzeugfotos",
+      "workRequired": "Bitte mindestens eine Arbeit angeben",
+      "signatureRequired": "Unterschrift erforderlich"
+    },
+    "doneTitle": "Protokoll gespeichert",
+    "doneBody": "Das Annahmeprotokoll wurde für {garageName} erstellt und gespeichert.",
+    "sendEmail": "✉️ An Kunden per E-Mail senden",
+    "sending": "Wird gesendet…",
+    "sent": "✓ An Kunden gesendet",
+    "noClientEmail": "Keine Kunden-E-Mail hinterlegt — nutzen Sie den Download unten.",
+    "viewPdf": "PDF ansehen / herunterladen",
+    "newOne": "Neue Annahme"
+  }
+}

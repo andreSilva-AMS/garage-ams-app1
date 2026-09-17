@@ -4,6 +4,7 @@ import { I18N, Lang, trWorkTag, trDamageTag } from "./i18n";
 export interface ReceptionPdfInput {
   garageName: string;
   garageAddress: string | null;
+  garageLogoDataUrl?: string | null;
   client: {
     name: string;
     phone: string;
@@ -40,6 +41,13 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
   y += 5;
   doc.text(new Date().toLocaleString("fr-CH"), margin, y);
   y += 8;
+  if (input.garageLogoDataUrl) {
+    try {
+      doc.addImage(input.garageLogoDataUrl, 210 - margin - 16, margin - 9, 16, 16);
+    } catch {
+      // logo illisible (format non supporté) : on continue sans bloquer la génération
+    }
+  }
   doc.setDrawColor(210);
   doc.line(margin, y, 210 - margin, y);
   y += 8;

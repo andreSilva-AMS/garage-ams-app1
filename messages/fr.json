@@ -10,7 +10,8 @@
     "signOut": "Se déconnecter",
     "newReception": "Nouvelle réception",
     "history": "Historique des réceptions",
-    "backToDashboard": "Retour au tableau de bord"
+    "backToDashboard": "Retour au tableau de bord",
+    "billing": "Facturation"
   },
   "login": {
     "title": "Connexion",
@@ -46,7 +47,11 @@
       "reception": "Réception"
     },
     "team": "Équipe du garage ({count})",
-    "isolationNote": "garage_id : {id} — ces données ne sont visibles que par les membres de ce garage (isolation appliquée au niveau de la base de données)."
+    "isolationNote": "garage_id : {id} — ces données ne sont visibles que par les membres de ce garage (isolation appliquée au niveau de la base de données).",
+    "trialEndingSoon": "Votre essai gratuit se termine dans {days} jour(s).",
+    "trialExpired": "Votre essai gratuit est terminé.",
+    "paymentIssue": "Un problème est survenu avec votre dernier paiement.",
+    "subscribeCta": "S'abonner"
   },
   "settings": {
     "title": "Réglages du garage",

@@ -10,7 +10,8 @@
     "signOut": "Abmelden",
     "newReception": "Neue Annahme",
     "history": "Annahmeverlauf",
-    "backToDashboard": "Zurück zum Dashboard"
+    "backToDashboard": "Zurück zum Dashboard",
+    "billing": "Abrechnung"
   },
   "login": {
     "title": "Anmelden",
@@ -46,7 +47,11 @@
       "reception": "Annahme"
     },
     "team": "Team der Werkstatt ({count})",
-    "isolationNote": "garage_id: {id} — diese Daten sind nur für Mitglieder dieser Werkstatt sichtbar (Isolation auf Datenbankebene durchgesetzt)."
+    "isolationNote": "garage_id: {id} — diese Daten sind nur für Mitglieder dieser Werkstatt sichtbar (Isolation auf Datenbankebene durchgesetzt).",
+    "trialEndingSoon": "Ihre kostenlose Testphase endet in {days} Tag(en).",
+    "trialExpired": "Ihre kostenlose Testphase ist abgelaufen.",
+    "paymentIssue": "Bei Ihrer letzten Zahlung ist ein Problem aufgetreten.",
+    "subscribeCta": "Abonnieren"
   },
   "settings": {
     "title": "Werkstatt-Einstellungen",

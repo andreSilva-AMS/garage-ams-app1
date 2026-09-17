@@ -7,6 +7,9 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // "/api" est exclu : les routes API (ex. le webhook Stripe, appelé sans
+    // session utilisateur) gèrent leur propre autorisation individuellement,
+    // plutôt que d'être redirigées vers la page de connexion comme une page.
+    "/((?!api|_next/static|_next/image|favicon.ico|sw.js|manifest.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

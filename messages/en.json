@@ -10,7 +10,8 @@
     "signOut": "Sign out",
     "newReception": "New reception",
     "history": "Reception history",
-    "backToDashboard": "Back to dashboard"
+    "backToDashboard": "Back to dashboard",
+    "billing": "Billing"
   },
   "login": {
     "title": "Sign in",
@@ -46,7 +47,11 @@
       "reception": "Reception"
     },
     "team": "Garage team ({count})",
-    "isolationNote": "garage_id: {id} — this data is only visible to members of this garage (isolation enforced at the database level)."
+    "isolationNote": "garage_id: {id} — this data is only visible to members of this garage (isolation enforced at the database level).",
+    "trialEndingSoon": "Your free trial ends in {days} day(s).",
+    "trialExpired": "Your free trial has ended.",
+    "paymentIssue": "There was a problem with your last payment.",
+    "subscribeCta": "Subscribe"
   },
   "settings": {
     "title": "Garage settings",

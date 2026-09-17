@@ -10,7 +10,8 @@
     "signOut": "Terminar sessão",
     "newReception": "Nova receção",
     "history": "Histórico de receções",
-    "backToDashboard": "Voltar ao painel"
+    "backToDashboard": "Voltar ao painel",
+    "billing": "Faturação"
   },
   "login": {
     "title": "Iniciar sessão",
@@ -46,7 +47,11 @@
       "reception": "Receção"
     },
     "team": "Equipa da garagem ({count})",
-    "isolationNote": "garage_id: {id} — estes dados só são visíveis pelos membros desta garagem (isolamento aplicado ao nível da base de dados)."
+    "isolationNote": "garage_id: {id} — estes dados só são visíveis pelos membros desta garagem (isolamento aplicado ao nível da base de dados).",
+    "trialEndingSoon": "O seu período de teste gratuito termina em {days} dia(s).",
+    "trialExpired": "O seu período de teste gratuito terminou.",
+    "paymentIssue": "Ocorreu um problema com o seu último pagamento.",
+    "subscribeCta": "Subscrever"
   },
   "settings": {
     "title": "Definições da garagem",

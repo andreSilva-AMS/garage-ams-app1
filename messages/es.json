@@ -10,7 +10,8 @@
     "signOut": "Cerrar sesión",
     "newReception": "Nueva recepción",
     "history": "Historial de recepciones",
-    "backToDashboard": "Volver al panel"
+    "backToDashboard": "Volver al panel",
+    "billing": "Facturación"
   },
   "login": {
     "title": "Iniciar sesión",
@@ -46,7 +47,11 @@
       "reception": "Recepción"
     },
     "team": "Equipo del taller ({count})",
-    "isolationNote": "garage_id: {id} — estos datos solo son visibles para los miembros de este taller (aislamiento aplicado a nivel de base de datos)."
+    "isolationNote": "garage_id: {id} — estos datos solo son visibles para los miembros de este taller (aislamiento aplicado a nivel de base de datos).",
+    "trialEndingSoon": "Su período de prueba gratuito termina en {days} día(s).",
+    "trialExpired": "Su período de prueba gratuito ha terminado.",
+    "paymentIssue": "Hubo un problema con su último pago.",
+    "subscribeCta": "Suscribirse"
   },
   "settings": {
     "title": "Configuración del taller",

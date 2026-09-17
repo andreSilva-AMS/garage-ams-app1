@@ -5,6 +5,10 @@ import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
 import { signOut } from "./actions";
 
+function daysLeftUntil(date: Date): number {
+  return Math.ceil((date.getTime() - Date.now()) / 86_400_000);
+}
+
 export default async function DashboardPage() {
   const supabase = await createClient();
   const t = await getTranslations("dashboard");
@@ -39,9 +43,21 @@ export default async function DashboardPage() {
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("id, name, address, default_language, subscription_plan")
+    .select("id, name, address, default_language, subscription_plan, payment_status, trial_ends_at")
     .eq("id", profile.garage_id)
     .single();
+
+  const billingBanner = (() => {
+    if (!garage) return null;
+    if (garage.payment_status === "past_due") return t("paymentIssue");
+    if (garage.payment_status === "active" || garage.payment_status === "free") return null;
+    if (garage.trial_ends_at) {
+      const daysLeft = daysLeftUntil(new Date(garage.trial_ends_at));
+      if (daysLeft <= 0) return t("trialExpired");
+      if (daysLeft <= 5) return t("trialEndingSoon", { days: daysLeft });
+    }
+    return null;
+  })();
 
   const { data: teamMembers } = await supabase
     .from("profiles")
@@ -57,6 +73,9 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-semibold">{garage?.name}</h1>
         </div>
         <div className="flex items-center gap-4">
+          <Link href="/billing" className="text-sm underline">
+            {tNav("billing")}
+          </Link>
           <Link href="/settings" className="text-sm underline">
             {tNav("settings")}
           </Link>
@@ -67,6 +86,15 @@ export default async function DashboardPage() {
           </form>
         </div>
       </div>
+
+      {billingBanner && (
+        <Link
+          href="/billing"
+          className="mb-6 block rounded-md bg-amber-50 p-3 text-sm text-amber-800 underline"
+        >
+          {billingBanner} — {t("subscribeCta")}
+        </Link>
+      )}
 
       <section className="mb-8 flex gap-3">
         <Link href="/receptions/new" className="btn-primary">

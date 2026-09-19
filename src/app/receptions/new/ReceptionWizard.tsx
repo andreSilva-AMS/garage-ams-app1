@@ -16,7 +16,7 @@ import {
   trWorkTag,
 } from "@/lib/receptions/i18n";
 import { buildReceptionPdf } from "@/lib/receptions/pdf";
-import { sendReceptionEmail } from "../actions";
+import { sendReceptionEmail, translateTexts } from "../actions";
 
 type Angle = "front" | "back" | "left" | "right";
 interface PhotoData {
@@ -224,19 +224,37 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
       const garageLogoDataUrl = garage.logo_url ? await urlToDataUrl(garage.logo_url) : null;
 
+      // Le texte libre est saisi dans la langue de l'interface (appLocale) ;
+      // s'il doit apparaître dans un document rédigé dans une autre langue
+      // pour le client, on le fait traduire (best-effort — voir translateTexts).
+      let pdfWorkText = workText;
+      let pdfExtraPhotos = extraPhotoUploads.map((p) => ({ dataUrl: p.dataUrl, caption: p.caption }));
+      if (lang !== appLocale) {
+        const [translatedWorkText, ...translatedCaptions] = await translateTexts(
+          [workText, ...extraPhotoUploads.map((p) => p.caption)],
+          appLocale,
+          lang,
+        );
+        pdfWorkText = translatedWorkText;
+        pdfExtraPhotos = extraPhotoUploads.map((p, i) => ({
+          dataUrl: p.dataUrl,
+          caption: translatedCaptions[i],
+        }));
+      }
+
       const doc = buildReceptionPdf({
         garageName: garage.name,
         garageAddress: garage.address,
         garageLogoDataUrl,
         client,
         workTags: [...workTags],
-        workText,
+        workText: pdfWorkText,
         damageTags: [...damageTags],
         damageText,
         photos: photoDataUrls,
         cardGreyDataUrl: cardGrey?.dataUrl ?? null,
         signatureDataUrl: signatureJpeg,
-        extraPhotos: extraPhotoUploads.map((p) => ({ dataUrl: p.dataUrl, caption: p.caption })),
+        extraPhotos: pdfExtraPhotos,
         lang,
       });
       const pdfBlob = doc.output("blob");

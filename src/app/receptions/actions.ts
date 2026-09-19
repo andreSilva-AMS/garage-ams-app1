@@ -143,3 +143,64 @@ export async function deleteReception(
   revalidatePath("/receptions");
   return { ok: true };
 }
+
+const DEEPL_TARGET_LANG: Record<Lang, string> = {
+  fr: "FR",
+  en: "EN-GB",
+  es: "ES",
+  pt: "PT-PT",
+  de: "DE",
+  it: "IT",
+};
+
+/**
+ * Traduit le texte libre saisi par l'employé (langue de l'interface) vers la
+ * langue du document choisie pour ce client, via DeepL. Best-effort : si la
+ * clé n'est pas configurée ou que l'appel échoue, on renvoie le texte
+ * d'origine plutôt que de bloquer la génération de la fiche.
+ */
+export async function translateTexts(
+  texts: string[],
+  sourceLang: Lang,
+  targetLang: Lang,
+): Promise<string[]> {
+  if (sourceLang === targetLang) return texts;
+
+  const apiKey = process.env.DEEPL_API_KEY;
+  if (!apiKey) return texts;
+
+  // DeepL refuse toute la requête si un des textes est vide (ex. une légende
+  // de photo laissée vide) : on ne lui envoie que les textes non vides, et on
+  // replace les traductions à leur position d'origine ensuite.
+  const nonEmptyIndices = texts.map((t, i) => i).filter((i) => texts[i].trim());
+  if (nonEmptyIndices.length === 0) return texts;
+
+  const endpoint = apiKey.endsWith(":fx")
+    ? "https://api-free.deepl.com/v2/translate"
+    : "https://api.deepl.com/v2/translate";
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: `DeepL-Auth-Key ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: nonEmptyIndices.map((i) => texts[i]),
+        source_lang: DEEPL_TARGET_LANG[sourceLang].split("-")[0],
+        target_lang: DEEPL_TARGET_LANG[targetLang],
+      }),
+    });
+    if (!response.ok) return texts;
+
+    const data = (await response.json()) as { translations: { text: string }[] };
+    const result = [...texts];
+    nonEmptyIndices.forEach((originalIndex, i) => {
+      result[originalIndex] = data.translations[i].text;
+    });
+    return result;
+  } catch {
+    return texts;
+  }
+}

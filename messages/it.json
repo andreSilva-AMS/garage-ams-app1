@@ -25,7 +25,6 @@
   "signup": {
     "title": "Crea la tua officina",
     "subtitle": "Questo account sarà l'account proprietario della tua officina.",
-    "garageName": "Nome dell'officina",
     "fullName": "Il tuo nome completo",
     "email": "E-mail",
     "password": "Password",

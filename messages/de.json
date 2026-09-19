@@ -25,7 +25,6 @@
   "signup": {
     "title": "Erstellen Sie Ihre Werkstatt",
     "subtitle": "Dieses Konto wird das Inhaberkonto Ihrer Werkstatt.",
-    "garageName": "Name der Werkstatt",
     "fullName": "Ihr vollständiger Name",
     "email": "E-Mail",
     "password": "Passwort",

@@ -25,7 +25,6 @@
   "signup": {
     "title": "Créer votre garage",
     "subtitle": "Ce compte sera le compte propriétaire de votre garage.",
-    "garageName": "Nom du garage",
     "fullName": "Votre nom complet",
     "email": "E-mail",
     "password": "Mot de passe",

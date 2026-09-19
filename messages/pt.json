@@ -25,7 +25,6 @@
   "signup": {
     "title": "Crie a sua garagem",
     "subtitle": "Esta conta será a conta de proprietário da sua garagem.",
-    "garageName": "Nome da garagem",
     "fullName": "O seu nome completo",
     "email": "E-mail",
     "password": "Palavra-passe",

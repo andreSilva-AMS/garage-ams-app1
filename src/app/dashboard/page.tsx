@@ -112,9 +112,7 @@ export default async function DashboardPage() {
       <section className="mb-8 rounded-2xl border border-neutral-200 p-4">
         <h2 className="mb-2 text-sm font-medium text-neutral-500">{t("account")}</h2>
         <p>{profile.full_name ?? user.email}</p>
-        <p className="text-sm text-neutral-600">
-          {ROLE_LABELS[profile.role] ?? profile.role}
-        </p>
+        <p className="text-sm text-neutral-600">{garage?.name}</p>
       </section>
 
       <section className="rounded-2xl border border-neutral-200 p-4">
@@ -124,7 +122,8 @@ export default async function DashboardPage() {
         <ul className="flex flex-col gap-1">
           {teamMembers?.map((member) => (
             <li key={member.id} className="text-sm">
-              {member.full_name ?? "—"} — {ROLE_LABELS[member.role] ?? member.role}
+              {member.full_name ?? "—"}
+              {member.role !== "owner" && ` — ${ROLE_LABELS[member.role] ?? member.role}`}
             </li>
           ))}
         </ul>

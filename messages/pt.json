@@ -15,7 +15,6 @@
   },
   "login": {
     "title": "Iniciar sessão",
-    "language": "Idioma da aplicação",
     "email": "E-mail",
     "password": "Palavra-passe",
     "submit": "Iniciar sessão",
@@ -32,7 +31,6 @@
     "fullName": "O seu nome completo",
     "email": "E-mail",
     "password": "Palavra-passe",
-    "language": "Idioma da aplicação",
     "submit": "Criar a minha garagem",
     "submitting": "A criar…",
     "haveAccount": "Já tem uma conta?",

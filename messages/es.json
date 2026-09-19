@@ -15,7 +15,6 @@
   },
   "login": {
     "title": "Iniciar sesión",
-    "language": "Idioma de la aplicación",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "submit": "Iniciar sesión",
@@ -32,7 +31,6 @@
     "fullName": "Su nombre completo",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "language": "Idioma de la aplicación",
     "submit": "Crear mi taller",
     "submitting": "Creando…",
     "haveAccount": "¿Ya tiene una cuenta?",

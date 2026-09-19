@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
-import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
+import { Lang } from "@/lib/receptions/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
@@ -60,7 +61,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
+    <main className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
+      <div className="absolute right-4 top-4">
+        <LanguageSwitcher value={language} onChange={handleLanguageChange} />
+      </div>
+
       <div className="mb-8 flex items-center gap-2.5">
         <Image src="/logo.png" alt="ReceptCar" width={36} height={36} className="rounded-xl" />
         <span className="text-lg font-medium" style={{ fontFamily: "var(--font-plex-serif)" }}>
@@ -76,24 +81,6 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="language" className="text-sm font-medium">
-            {t("language")}
-          </label>
-          <select
-            id="language"
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value as Lang)}
-            className="input"
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l.value} value={l.value}>
-                {l.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-sm font-medium">
             {t("email")}

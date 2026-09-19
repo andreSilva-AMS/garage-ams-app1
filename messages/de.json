@@ -15,7 +15,6 @@
   },
   "login": {
     "title": "Anmelden",
-    "language": "Sprache der Anwendung",
     "email": "E-Mail",
     "password": "Passwort",
     "submit": "Anmelden",
@@ -32,7 +31,6 @@
     "fullName": "Ihr vollständiger Name",
     "email": "E-Mail",
     "password": "Passwort",
-    "language": "Sprache der Anwendung",
     "submit": "Werkstatt erstellen",
     "submitting": "Wird erstellt…",
     "haveAccount": "Bereits ein Konto?",

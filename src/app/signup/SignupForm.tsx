@@ -4,9 +4,10 @@ import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
-import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
+import { Lang } from "@/lib/receptions/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
@@ -16,12 +17,13 @@ export function SignupForm() {
   const router = useRouter();
   const supabase = createClient();
   const t = useTranslations("signup");
+  const appLocale = useLocale() as Lang;
 
   const [garageName, setGarageName] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [language, setLanguage] = useState<Lang>("en");
+  const [language, setLanguage] = useState<Lang>(appLocale);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingConfirmation, setPendingConfirmation] = useState(false);
@@ -88,7 +90,11 @@ export function SignupForm() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
+    <main className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
+      <div className="absolute right-4 top-4">
+        <LanguageSwitcher value={language} onChange={handleLanguageChange} />
+      </div>
+
       <div className="mb-8 flex items-center gap-2.5">
         <Image src="/logo.png" alt="ReceptCar" width={36} height={36} className="rounded-xl" />
         <span className="text-lg font-medium" style={{ fontFamily: "var(--font-plex-serif)" }}>
@@ -99,21 +105,6 @@ export function SignupForm() {
       <p className="mb-6 text-sm text-neutral-600">{t("subtitle")}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Field label={t("language")} htmlFor="language">
-          <select
-            id="language"
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value as Lang)}
-            className="input"
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l.value} value={l.value}>
-                {l.label}
-              </option>
-            ))}
-          </select>
-        </Field>
-
         <Field label={t("garageName")} htmlFor="garageName">
           <input
             id="garageName"

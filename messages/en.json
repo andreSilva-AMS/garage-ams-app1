@@ -15,7 +15,6 @@
   },
   "login": {
     "title": "Sign in",
-    "language": "Application language",
     "email": "E-mail",
     "password": "Password",
     "submit": "Sign in",
@@ -32,7 +31,6 @@
     "fullName": "Your full name",
     "email": "E-mail",
     "password": "Password",
-    "language": "Application language",
     "submit": "Create my garage",
     "submitting": "Creating…",
     "haveAccount": "Already have an account?",

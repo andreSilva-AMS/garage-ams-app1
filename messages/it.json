@@ -20,6 +20,7 @@
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
     "rememberMe": "Resta connesso",
+    "sessionTimedOut": "Sei stato disconnesso dopo 24h di inattività.",
     "noAccount": "Non hai ancora un'officina?",
     "signupLink": "Crea un account"
   },
@@ -87,6 +88,7 @@
     "title": "Storico accettazioni",
     "empty": "Nessuna scheda per ora.",
     "pdf": "PDF",
+    "retentionNotice": "Le schede vengono conservate per 30 giorni, poi eliminate automaticamente (incluse foto e PDF).",
     "delete": "Elimina",
     "deleteConfirm": "Eliminare definitivamente questa scheda e le sue foto/PDF? Questa azione non può essere annullata.",
     "deleting": "Eliminazione…"

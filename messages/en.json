@@ -20,6 +20,7 @@
     "submit": "Sign in",
     "submitting": "Signing in…",
     "rememberMe": "Stay signed in",
+    "sessionTimedOut": "You were signed out after 24h of inactivity.",
     "noAccount": "Don't have an account yet?",
     "signupLink": "Create an account"
   },
@@ -87,6 +88,7 @@
     "title": "Reception history",
     "empty": "No forms yet.",
     "pdf": "PDF",
+    "retentionNotice": "Forms are kept for 30 days, then deleted automatically (including photos and PDF).",
     "delete": "Delete",
     "deleteConfirm": "Permanently delete this form and its photos/PDF? This cannot be undone.",
     "deleting": "Deleting…"

@@ -37,6 +37,10 @@ export default async function ReceptionsPage() {
         </Link>
       </div>
 
+      <p className="mb-6 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+        {t("retentionNotice")}
+      </p>
+
       {withUrls.length === 0 && <p className="text-sm text-neutral-500">{t("empty")}</p>}
 
       <ul className="flex flex-col gap-2">

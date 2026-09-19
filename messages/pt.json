@@ -20,6 +20,7 @@
     "submit": "Iniciar sessão",
     "submitting": "A entrar…",
     "rememberMe": "Manter sessão iniciada",
+    "sessionTimedOut": "A sua sessão foi terminada após 24h de inatividade.",
     "noAccount": "Ainda não tem uma garagem?",
     "signupLink": "Criar uma conta"
   },
@@ -87,6 +88,7 @@
     "title": "Histórico de receções",
     "empty": "Ainda não há fichas.",
     "pdf": "PDF",
+    "retentionNotice": "As fichas são conservadas durante 30 dias e depois eliminadas automaticamente (incluindo fotos e PDF).",
     "delete": "Eliminar",
     "deleteConfirm": "Eliminar definitivamente esta ficha e as suas fotos/PDF? Esta ação não pode ser desfeita.",
     "deleting": "A eliminar…"

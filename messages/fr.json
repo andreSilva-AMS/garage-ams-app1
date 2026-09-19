@@ -20,6 +20,7 @@
     "submit": "Se connecter",
     "submitting": "Connexion…",
     "rememberMe": "Rester connecté",
+    "sessionTimedOut": "Vous avez été déconnecté(e) après 24h d'inactivité.",
     "noAccount": "Pas encore de garage ?",
     "signupLink": "Créer un compte"
   },
@@ -87,6 +88,7 @@
     "title": "Historique des réceptions",
     "empty": "Aucune fiche pour l'instant.",
     "pdf": "PDF",
+    "retentionNotice": "Les fiches sont conservées 30 jours, puis supprimées automatiquement (photos et PDF compris).",
     "delete": "Supprimer",
     "deleteConfirm": "Supprimer définitivement cette fiche et ses photos/PDF ? Cette action est irréversible.",
     "deleting": "Suppression…"

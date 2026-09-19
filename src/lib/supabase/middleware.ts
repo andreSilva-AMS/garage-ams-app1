@@ -4,6 +4,11 @@ import { NextResponse, type NextRequest } from "next/server";
 // Routes accessibles sans être connecté.
 const PUBLIC_PATHS = ["/login", "/signup", "/join"];
 
+// Déconnexion automatique après 24h sans aucune requête authentifiée
+// (navigation, actualisation…) — indépendant de la case "Rester connecté",
+// qui ne concerne que la persistance après fermeture du navigateur.
+const INACTIVITY_LIMIT_MS = 24 * 60 * 60 * 1000;
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -39,8 +44,30 @@ export async function updateSession(request: NextRequest) {
   );
 
   const {
-    data: { user },
+    data: { user: authenticatedUser },
   } = await supabase.auth.getUser();
+
+  let user = authenticatedUser;
+  let timedOut = false;
+
+  if (user) {
+    const lastActivity = request.cookies.get("sb_last_activity")?.value;
+    const now = Date.now();
+    if (lastActivity && now - Number(lastActivity) > INACTIVITY_LIMIT_MS) {
+      await supabase.auth.signOut();
+      user = null;
+      timedOut = true;
+    } else {
+      // Marqueur d'activité : maxAge volontairement plus long que la fenêtre
+      // de 24h, pour survivre à une fermeture de navigateur entre-temps et
+      // permettre de mesurer correctement le temps écoulé au retour.
+      supabaseResponse.cookies.set("sb_last_activity", String(now), {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30,
+        sameSite: "lax",
+      });
+    }
+  }
 
   const isPublicPath = PUBLIC_PATHS.some((path) =>
     request.nextUrl.pathname.startsWith(path),
@@ -49,13 +76,18 @@ export async function updateSession(request: NextRequest) {
   if (!user && !isPublicPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    return NextResponse.redirect(url);
+    if (timedOut) url.searchParams.set("timeout", "1");
+    const redirectResponse = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => redirectResponse.cookies.set(cookie));
+    return redirectResponse;
   }
 
   if (user && isPublicPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    const redirectResponse = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => redirectResponse.cookies.set(cookie));
+    return redirectResponse;
   }
 
   return supabaseResponse;

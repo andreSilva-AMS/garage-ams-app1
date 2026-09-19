@@ -20,6 +20,7 @@
     "submit": "Anmelden",
     "submitting": "Anmeldung läuft…",
     "rememberMe": "Angemeldet bleiben",
+    "sessionTimedOut": "Sie wurden nach 24 Stunden Inaktivität abgemeldet.",
     "noAccount": "Noch keine Werkstatt?",
     "signupLink": "Konto erstellen"
   },
@@ -87,6 +88,7 @@
     "title": "Annahmeverlauf",
     "empty": "Noch keine Protokolle.",
     "pdf": "PDF",
+    "retentionNotice": "Protokolle werden 30 Tage lang aufbewahrt und danach automatisch gelöscht (inklusive Fotos und PDF).",
     "delete": "Löschen",
     "deleteConfirm": "Dieses Protokoll samt Fotos/PDF endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "deleting": "Wird gelöscht…"

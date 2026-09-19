@@ -3,13 +3,15 @@
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations("login");
+  const timedOut = searchParams.get("timeout") === "1";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +55,12 @@ export default function LoginPage() {
         </span>
       </div>
       <h1 className="mb-6 text-xl">{t("title")}</h1>
+
+      {timedOut && (
+        <p className="mb-4 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+          {t("sessionTimedOut")}
+        </p>
+      )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">

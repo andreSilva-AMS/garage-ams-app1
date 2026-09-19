@@ -345,6 +345,9 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
+      <Link href="/dashboard" className="mb-4 inline-block text-sm underline text-neutral-500">
+        ← {tNav("backToDashboard")}
+      </Link>
       <p className="mb-1 text-sm text-neutral-500">{t("step", { step })}</p>
       <div className="mb-6 h-1 w-full rounded bg-neutral-200">
         <div

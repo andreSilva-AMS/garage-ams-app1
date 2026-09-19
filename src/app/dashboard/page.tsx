@@ -68,7 +68,7 @@ export default async function DashboardPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="ReceptCar" width={40} height={40} className="rounded-xl" />
           <div>
@@ -76,7 +76,7 @@ export default async function DashboardPage() {
             <h1 className="text-2xl">{garage?.name}</h1>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <Link href="/billing" className="text-sm underline">
             {tNav("billing")}
           </Link>

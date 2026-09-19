@@ -27,6 +27,7 @@ interface Dict {
   consent: string;
   signedOn: string;
   none: string;
+  extraPhotosTitle: string;
   photoLabels: { front: string; back: string; left: string; right: string };
   emailSubject: (plate: string, garageName: string) => string;
   emailBody: (
@@ -58,6 +59,7 @@ export const I18N: Record<Lang, Dict> = {
       "Le client certifie l'exactitude des informations ci-dessus et accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception.",
     signedOn: "Signé le",
     none: "—",
+    extraPhotosTitle: "Photos supplémentaires",
     photoLabels: { front: "Avant", back: "Arrière", left: "Côté gauche", right: "Côté droit" },
     emailSubject: (p, g) => `Fiche de réception — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
@@ -82,6 +84,7 @@ export const I18N: Record<Lang, Dict> = {
       "The client certifies the accuracy of the above information and accepts the condition of the vehicle as noted and documented by photos upon reception.",
     signedOn: "Signed on",
     none: "—",
+    extraPhotosTitle: "Additional photos",
     photoLabels: { front: "Front", back: "Back", left: "Left side", right: "Right side" },
     emailSubject: (p, g) => `Reception form — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
@@ -106,6 +109,7 @@ export const I18N: Record<Lang, Dict> = {
       "El cliente certifica la exactitud de la información anterior y acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción.",
     signedOn: "Firmado el",
     none: "—",
+    extraPhotosTitle: "Fotos adicionales",
     photoLabels: { front: "Delantera", back: "Trasera", left: "Lado izquierdo", right: "Lado derecho" },
     emailSubject: (p, g) => `Ficha de recepción — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
@@ -130,6 +134,7 @@ export const I18N: Record<Lang, Dict> = {
       "O cliente certifica a exatidão das informações acima e aceita o estado do veículo tal como constatado e documentado por fotos na receção.",
     signedOn: "Assinado em",
     none: "—",
+    extraPhotosTitle: "Fotos adicionais",
     photoLabels: { front: "Frente", back: "Trás", left: "Lado esquerdo", right: "Lado direito" },
     emailSubject: (p, g) => `Ficha de receção — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
@@ -154,6 +159,7 @@ export const I18N: Record<Lang, Dict> = {
       "Der Kunde bestätigt die Richtigkeit der obigen Angaben und akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs.",
     signedOn: "Unterschrieben am",
     none: "—",
+    extraPhotosTitle: "Zusätzliche Fotos",
     photoLabels: { front: "Vorne", back: "Hinten", left: "Linke Seite", right: "Rechte Seite" },
     emailSubject: (p, g) => `Annahmeprotokoll — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
@@ -178,6 +184,7 @@ export const I18N: Record<Lang, Dict> = {
       "Il cliente certifica l'esattezza delle informazioni sopra riportate e accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione.",
     signedOn: "Firmato il",
     none: "—",
+    extraPhotosTitle: "Foto aggiuntive",
     photoLabels: { front: "Anteriore", back: "Posteriore", left: "Lato sinistro", right: "Lato destro" },
     emailSubject: (p, g) => `Scheda di accettazione — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>

@@ -20,6 +20,7 @@ export interface ReceptionPdfInput {
   photos: Partial<Record<"front" | "back" | "left" | "right", string>>;
   cardGreyDataUrl: string | null;
   signatureDataUrl: string | null;
+  extraPhotos: { dataUrl: string; caption: string }[];
   lang: Lang;
 }
 
@@ -171,6 +172,40 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
   doc.setFontSize(9);
   doc.setTextColor(20);
   doc.text(`${t.signedOn} ${new Date().toLocaleDateString("fr-CH")}`, margin, y);
+
+  if (input.extraPhotos.length > 0) {
+    const cols = 2;
+    const perPage = 6;
+    const gap = 6;
+    const cellW = (210 - 2 * margin - gap) / cols;
+    const cellH = cellW * 0.75;
+    const rowH = cellH + 14;
+
+    input.extraPhotos.forEach((photo, i) => {
+      const posInPage = i % perPage;
+      if (posInPage === 0) {
+        doc.addPage();
+        y = margin;
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(13);
+        doc.setTextColor(20);
+        doc.text(t.extraPhotosTitle, margin, y);
+        y += 8;
+      }
+      const col = posInPage % cols;
+      const row = Math.floor(posInPage / cols);
+      const x = margin + col * (cellW + gap);
+      const cellY = y + row * rowH;
+      doc.addImage(photo.dataUrl, "JPEG", x, cellY, cellW, cellH);
+      if (photo.caption) {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(90);
+        const captionLines = doc.splitTextToSize(photo.caption, cellW);
+        doc.text(captionLines.slice(0, 2), x, cellY + cellH + 4);
+      }
+    });
+  }
 
   return doc;
 }

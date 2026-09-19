@@ -236,6 +236,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         photos: photoDataUrls,
         cardGreyDataUrl: cardGrey?.dataUrl ?? null,
         signatureDataUrl: signatureJpeg,
+        extraPhotos: extraPhotoUploads.map((p) => ({ dataUrl: p.dataUrl, caption: p.caption })),
         lang,
       });
       const pdfBlob = doc.output("blob");

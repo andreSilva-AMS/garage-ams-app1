@@ -25,6 +25,7 @@
   "signup": {
     "title": "Cree su taller",
     "subtitle": "Esta cuenta será la cuenta propietaria de su taller.",
+    "garageName": "Nombre del taller",
     "fullName": "Su nombre completo",
     "email": "Correo electrónico",
     "password": "Contraseña",

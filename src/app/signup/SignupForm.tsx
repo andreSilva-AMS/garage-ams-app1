@@ -17,6 +17,7 @@ export function SignupForm() {
   const supabase = createClient();
   const t = useTranslations("signup");
 
+  const [garageName, setGarageName] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +41,7 @@ export function SignupForm() {
       email,
       password,
       options: {
-        data: { garage_name: fullName, full_name: fullName, preferred_language: language },
+        data: { garage_name: garageName, full_name: fullName, preferred_language: language },
       },
     });
 
@@ -59,7 +60,7 @@ export function SignupForm() {
     }
 
     const { error: rpcError } = await supabase.rpc("create_garage_and_owner", {
-      garage_name: fullName,
+      garage_name: garageName,
       owner_full_name: fullName,
       garage_language: language,
     });
@@ -78,7 +79,7 @@ export function SignupForm() {
     return (
       <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 px-4">
         <h1 className="text-xl">{t("pendingTitle")}</h1>
-        <p className="text-sm text-neutral-600">{t("pendingBody", { email, garageName: fullName })}</p>
+        <p className="text-sm text-neutral-600">{t("pendingBody", { email, garageName })}</p>
         <Link href="/login" className="text-sm underline">
           {t("goToLogin")}
         </Link>
@@ -111,6 +112,17 @@ export function SignupForm() {
               </option>
             ))}
           </select>
+        </Field>
+
+        <Field label={t("garageName")} htmlFor="garageName">
+          <input
+            id="garageName"
+            required
+            value={garageName}
+            onChange={(e) => setGarageName(e.target.value)}
+            className="input"
+            placeholder="Garage AMS Automobiles Sàrl"
+          />
         </Field>
 
         <Field label={t("fullName")} htmlFor="fullName">

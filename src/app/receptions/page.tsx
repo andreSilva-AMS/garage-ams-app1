@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { DeleteReceptionButton } from "./DeleteReceptionButton";
 
 export default async function ReceptionsPage() {
   const supabase = await createClient();
@@ -42,7 +43,7 @@ export default async function ReceptionsPage() {
         {withUrls.map((r) => (
           <li
             key={r.id}
-            className="flex items-center justify-between rounded-2xl border border-neutral-200 p-3"
+            className="flex flex-col gap-3 rounded-2xl border border-neutral-200 p-3 sm:flex-row sm:items-center sm:justify-between"
           >
             <div>
               <p className="font-medium">
@@ -53,11 +54,14 @@ export default async function ReceptionsPage() {
                 {new Date(r.created_at).toLocaleString()}
               </p>
             </div>
-            {r.pdfUrl && (
-              <a href={r.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
-                {t("pdf")}
-              </a>
-            )}
+            <div className="flex items-center gap-4">
+              {r.pdfUrl && (
+                <a href={r.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
+                  {t("pdf")}
+                </a>
+              )}
+              <DeleteReceptionButton receptionId={r.id} />
+            </div>
           </li>
         ))}
       </ul>

@@ -67,7 +67,10 @@
   "receptionsHistory": {
     "title": "Storico accettazioni",
     "empty": "Nessuna scheda per ora.",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "delete": "Elimina",
+    "deleteConfirm": "Eliminare definitivamente questa scheda e le sue foto/PDF? Questa azione non può essere annullata.",
+    "deleting": "Eliminazione…"
   },
   "receptionWizard": {
     "step": "Passo {step} / 5",

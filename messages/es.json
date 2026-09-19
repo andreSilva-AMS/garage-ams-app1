@@ -67,7 +67,10 @@
   "receptionsHistory": {
     "title": "Historial de recepciones",
     "empty": "Todavía no hay fichas.",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Eliminar definitivamente esta ficha y sus fotos/PDF? Esta acción no se puede deshacer.",
+    "deleting": "Eliminando…"
   },
   "receptionWizard": {
     "step": "Paso {step} / 5",

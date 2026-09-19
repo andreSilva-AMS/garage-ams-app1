@@ -67,7 +67,10 @@
   "receptionsHistory": {
     "title": "Reception history",
     "empty": "No forms yet.",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "delete": "Delete",
+    "deleteConfirm": "Permanently delete this form and its photos/PDF? This cannot be undone.",
+    "deleting": "Deleting…"
   },
   "receptionWizard": {
     "step": "Step {step} / 5",

@@ -67,7 +67,10 @@
   "receptionsHistory": {
     "title": "Annahmeverlauf",
     "empty": "Noch keine Protokolle.",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "delete": "Löschen",
+    "deleteConfirm": "Dieses Protokoll samt Fotos/PDF endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleting": "Wird gelöscht…"
   },
   "receptionWizard": {
     "step": "Schritt {step} / 5",

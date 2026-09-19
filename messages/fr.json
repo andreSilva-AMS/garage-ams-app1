@@ -67,7 +67,10 @@
   "receptionsHistory": {
     "title": "Historique des réceptions",
     "empty": "Aucune fiche pour l'instant.",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer définitivement cette fiche et ses photos/PDF ? Cette action est irréversible.",
+    "deleting": "Suppression…"
   },
   "receptionWizard": {
     "step": "Étape {step} / 5",

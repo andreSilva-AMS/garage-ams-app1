@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { I18N, Lang } from "@/lib/receptions/i18n";
 
@@ -84,5 +85,61 @@ export async function sendReceptionEmail(
     .update({ email_sent_at: new Date().toISOString() })
     .eq("id", receptionId);
 
+  return { ok: true };
+}
+
+export async function deleteReception(
+  receptionId: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Vous devez être connecté." };
+
+  const { data: reception, error: receptionError } = await supabase
+    .from("receptions")
+    .select(
+      "photo_front_path, photo_back_path, photo_left_path, photo_right_path, photo_card_grey_path, signature_path, pdf_path",
+    )
+    .eq("id", receptionId)
+    .single();
+  if (receptionError || !reception) {
+    return { ok: false, error: "Fiche introuvable." };
+  }
+
+  const { data: extraPhotos } = await supabase
+    .from("reception_extra_photos")
+    .select("storage_path")
+    .eq("reception_id", receptionId);
+
+  const paths = [
+    reception.photo_front_path,
+    reception.photo_back_path,
+    reception.photo_left_path,
+    reception.photo_right_path,
+    reception.photo_card_grey_path,
+    reception.signature_path,
+    reception.pdf_path,
+    ...(extraPhotos ?? []).map((p) => p.storage_path),
+  ].filter((p): p is string => Boolean(p));
+
+  if (paths.length > 0) {
+    // On continue même si le nettoyage des fichiers échoue partiellement :
+    // mieux vaut une fiche supprimée avec quelques fichiers orphelins
+    // qu'une fiche bloquée dans l'historique.
+    await supabase.storage.from("receptions").remove(paths);
+  }
+
+  const { error: deleteError } = await supabase
+    .from("receptions")
+    .delete()
+    .eq("id", receptionId);
+  if (deleteError) {
+    return { ok: false, error: deleteError.message };
+  }
+
+  revalidatePath("/receptions");
   return { ok: true };
 }

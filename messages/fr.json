@@ -64,6 +64,7 @@
     "title": "Réglages du garage",
     "ownerOnly": "Seul le compte propriétaire peut modifier ces informations.",
     "logo": "Logo",
+    "chooseFile": "Choisir un fichier",
     "garageName": "Nom du garage",
     "address": "Adresse",
     "defaultLanguage": "Langue par défaut",

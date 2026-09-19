@@ -64,6 +64,7 @@
     "title": "Garage settings",
     "ownerOnly": "Only the owner account can change this information.",
     "logo": "Logo",
+    "chooseFile": "Choose a file",
     "garageName": "Garage name",
     "address": "Address",
     "defaultLanguage": "Default language",

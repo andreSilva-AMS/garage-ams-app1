@@ -64,6 +64,7 @@
     "title": "Werkstatt-Einstellungen",
     "ownerOnly": "Nur das Inhaberkonto kann diese Informationen ändern.",
     "logo": "Logo",
+    "chooseFile": "Datei auswählen",
     "garageName": "Name der Werkstatt",
     "address": "Adresse",
     "defaultLanguage": "Standardsprache",

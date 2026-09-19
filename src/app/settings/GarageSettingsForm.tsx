@@ -109,15 +109,21 @@ export function GarageSettingsForm({
                 🏢
               </div>
             )}
-            <input
-              type="file"
-              accept="image/*"
-              disabled={!isOwner}
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) onLogoChange(file);
-              }}
-            />
+            <label
+              className={`btn-secondary cursor-pointer ${!isOwner ? "pointer-events-none opacity-60" : ""}`}
+            >
+              {t("chooseFile")}
+              <input
+                type="file"
+                accept="image/*"
+                disabled={!isOwner}
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) onLogoChange(file);
+                }}
+              />
+            </label>
           </div>
         </div>
 

@@ -64,6 +64,7 @@
     "title": "Configuración del taller",
     "ownerOnly": "Solo la cuenta propietaria puede modificar esta información.",
     "logo": "Logotipo",
+    "chooseFile": "Elegir un archivo",
     "garageName": "Nombre del taller",
     "address": "Dirección",
     "defaultLanguage": "Idioma predeterminado",

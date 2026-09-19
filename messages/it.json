@@ -1,0 +1,132 @@
+{
+  "common": {
+    "back": "Indietro",
+    "continue": "Continua",
+    "save": "Salva",
+    "saving": "Salvataggio…"
+  },
+  "nav": {
+    "settings": "Impostazioni",
+    "signOut": "Disconnetti",
+    "newReception": "Nuova accettazione",
+    "history": "Storico accettazioni",
+    "backToDashboard": "Torna alla dashboard",
+    "billing": "Fatturazione"
+  },
+  "login": {
+    "title": "Accedi",
+    "email": "E-mail",
+    "password": "Password",
+    "submit": "Accedi",
+    "submitting": "Accesso in corso…",
+    "noAccount": "Non hai ancora un'officina?",
+    "signupLink": "Crea un account"
+  },
+  "signup": {
+    "title": "Crea la tua officina",
+    "subtitle": "Questo account sarà l'account proprietario della tua officina.",
+    "garageName": "Nome dell'officina",
+    "fullName": "Il tuo nome completo",
+    "email": "E-mail",
+    "password": "Password",
+    "language": "Lingua dell'applicazione",
+    "billingCountry": "Paese di fatturazione",
+    "otherCountry": "Il mio paese non è in elenco",
+    "waitlistCountryLabel": "Il tuo paese",
+    "waitlistSubmit": "Iscriviti alla lista d'attesa",
+    "waitlistSubmitting": "Invio…",
+    "waitlistDoneTitle": "Grazie!",
+    "waitlistDoneBody": "Ti avviseremo non appena ReceptCar sarà disponibile nel tuo paese.",
+    "submit": "Crea la mia officina",
+    "submitting": "Creazione in corso…",
+    "haveAccount": "Hai già un account?",
+    "loginLink": "Accedi",
+    "pendingTitle": "Controlla la tua casella e-mail",
+    "pendingBody": "Un link di conferma è stato inviato a {email}. Cliccalo, poi torna ad accedere: la tua officina «{garageName}» sarà creata automaticamente.",
+    "goToLogin": "Vai alla pagina di accesso"
+  },
+  "dashboard": {
+    "connectedTo": "Connesso a",
+    "account": "Il tuo account",
+    "role": {
+      "owner": "Proprietario",
+      "mechanic": "Meccanico",
+      "reception": "Accettazione"
+    },
+    "team": "Team dell'officina ({count})",
+    "isolationNote": "garage_id: {id} — questi dati sono visibili solo ai membri di questa officina (isolamento applicato a livello di database).",
+    "trialEndingSoon": "La tua prova gratuita termina tra {days} giorno/i.",
+    "trialExpired": "La tua prova gratuita è terminata.",
+    "paymentIssue": "Si è verificato un problema con il tuo ultimo pagamento.",
+    "subscribeCta": "Abbonati"
+  },
+  "settings": {
+    "title": "Impostazioni dell'officina",
+    "ownerOnly": "Solo l'account proprietario può modificare queste informazioni.",
+    "logo": "Logo",
+    "garageName": "Nome dell'officina",
+    "address": "Indirizzo",
+    "defaultLanguage": "Lingua predefinita",
+    "defaultLanguageHint": "Usata per l'interfaccia dell'applicazione e, per impostazione predefinita, per i documenti inviati ai clienti (modificabile per ogni scheda).",
+    "saved": "Impostazioni salvate."
+  },
+  "receptionsHistory": {
+    "title": "Storico accettazioni",
+    "empty": "Nessuna scheda per ora.",
+    "pdf": "PDF"
+  },
+  "receptionWizard": {
+    "step": "Passo {step} / 5",
+    "step1Title": "Cliente e veicolo",
+    "clientName": "Nome del cliente",
+    "phone": "Telefono",
+    "clientEmail": "E-mail del cliente",
+    "plate": "Targa",
+    "mileage": "Chilometraggio",
+    "brandModel": "Marca / modello",
+    "step2Title": "Foto del veicolo",
+    "angleFront": "Anteriore",
+    "angleBack": "Posteriore",
+    "angleLeft": "Lato sinistro",
+    "angleRight": "Lato destro",
+    "cardGrey": "Libretto di circolazione",
+    "cardGreyHint": "Foto del libretto di circolazione",
+    "damageTitle": "Danni riscontrati all'accettazione",
+    "damageSubtitle": "(tutela dell'officina)",
+    "step3Title": "Interventi richiesti",
+    "commonWork": "Interventi comuni",
+    "workDetails": "Dettagli / altre richieste del cliente",
+    "step4Title": "Firma del cliente",
+    "clearSignature": "Cancella la firma",
+    "consent": "Firmando, il cliente certifica l'esattezza delle informazioni sopra riportate e accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione.",
+    "step5Title": "Riepilogo",
+    "docLanguage": "Lingua del documento inviato al cliente",
+    "summary": {
+      "client": "Cliente",
+      "phone": "Telefono",
+      "email": "E-mail",
+      "vehicle": "Veicolo",
+      "plate": "Targa",
+      "mileage": "Chilometraggio",
+      "work": "Interventi",
+      "damage": "Danni riscontrati",
+      "none": "—"
+    },
+    "generate": "Genera la scheda PDF",
+    "generating": "Generazione in corso…",
+    "errors": {
+      "nameAndPlateRequired": "Nome del cliente e targa obbligatori",
+      "missingPhotos": "Mancano alcune foto del veicolo",
+      "workRequired": "Indica almeno un intervento",
+      "signatureRequired": "Firma obbligatoria"
+    },
+    "doneTitle": "Scheda salvata",
+    "doneBody": "La scheda di accettazione è stata creata e salvata per {garageName}.",
+    "sendEmail": "✉️ Invia al cliente via e-mail",
+    "sending": "Invio in corso…",
+    "sent": "✓ Inviato al cliente",
+    "noClientEmail": "Nessuna e-mail del cliente indicata — usa il download qui sotto.",
+    "viewPdf": "Visualizza / scarica il PDF",
+    "newOne": "Nuova accettazione"
+  }
+}

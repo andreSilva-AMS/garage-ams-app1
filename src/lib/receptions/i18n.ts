@@ -1,4 +1,4 @@
-export type Lang = "fr" | "en" | "es" | "pt" | "de";
+export type Lang = "fr" | "en" | "es" | "pt" | "de" | "it";
 
 export const LANGUAGES: { value: Lang; label: string }[] = [
   { value: "fr", label: "🇫🇷 Français" },
@@ -6,6 +6,7 @@ export const LANGUAGES: { value: Lang; label: string }[] = [
   { value: "es", label: "🇪🇸 Español" },
   { value: "pt", label: "🇵🇹 Português" },
   { value: "de", label: "🇩🇪 Deutsch" },
+  { value: "it", label: "🇮🇹 Italiano" },
 ];
 
 interface Dict {
@@ -158,6 +159,30 @@ export const I18N: Record<Lang, Dict> = {
     emailBody: (name, bm, p, g, addr) =>
       `Guten Tag ${name},\n\nAnbei erhalten Sie das Annahmeprotokoll für Ihr Fahrzeug (${bm || ""} — ${p}) mit den bei der Ankunft aufgenommenen Fotos und den vereinbarten Arbeiten.\n\n${g}\n${addr}`,
   },
+  it: {
+    docTitle: "Scheda di accettazione veicolo",
+    clientVehicle: "Cliente e veicolo",
+    name: "Nome del cliente",
+    phone: "Telefono",
+    email: "E-mail",
+    vehicle: "Veicolo",
+    plate: "Targa",
+    mileage: "Chilometraggio",
+    km: "km",
+    workRequested: "Interventi richiesti",
+    vehicleState: "Stato del veicolo all'arrivo",
+    damageNoted: "Danni riscontrati all'accettazione",
+    cardGrey: "Libretto di circolazione",
+    signature: "Firma del cliente",
+    consent:
+      "Il cliente certifica l'esattezza delle informazioni sopra riportate e accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione.",
+    signedOn: "Firmato il",
+    none: "—",
+    photoLabels: { front: "Anteriore", back: "Posteriore", left: "Lato sinistro", right: "Lato destro" },
+    emailSubject: (p, g) => `Scheda di accettazione — ${p} — ${g}`,
+    emailBody: (name, bm, p, g, addr) =>
+      `Gentile ${name},\n\nIn allegato trova la scheda di accettazione del suo veicolo (${bm || ""} — ${p}), con le foto scattate all'arrivo e gli interventi concordati.\n\n${g}\n${addr}`,
+  },
 };
 
 interface Tag {
@@ -166,6 +191,7 @@ interface Tag {
   es: string;
   pt: string;
   de: string;
+  it: string;
 }
 
 function tr(tag: string, map: Record<string, Tag>, lang: Lang): string {
@@ -173,41 +199,45 @@ function tr(tag: string, map: Record<string, Tag>, lang: Lang): string {
 }
 
 export const WORK_TAG_TR: Record<string, Tag> = {
-  Vidange: { fr: "Vidange", en: "Oil change", es: "Cambio de aceite", pt: "Mudança de óleo", de: "Ölwechsel" },
-  Freins: { fr: "Freins", en: "Brakes", es: "Frenos", pt: "Travões", de: "Bremsen" },
-  Pneus: { fr: "Pneus", en: "Tires", es: "Neumáticos", pt: "Pneus", de: "Reifen" },
+  Vidange: { fr: "Vidange", en: "Oil change", es: "Cambio de aceite", pt: "Mudança de óleo", de: "Ölwechsel", it: "Cambio olio" },
+  Freins: { fr: "Freins", en: "Brakes", es: "Frenos", pt: "Travões", de: "Bremsen", it: "Freni" },
+  Pneus: { fr: "Pneus", en: "Tires", es: "Neumáticos", pt: "Pneus", de: "Reifen", it: "Pneumatici" },
   "Contrôle technique": {
     fr: "Contrôle technique",
     en: "Technical inspection",
     es: "Inspección técnica",
     pt: "Inspeção técnica",
     de: "Fahrzeugprüfung",
+    it: "Revisione tecnica",
   },
-  Climatisation: { fr: "Climatisation", en: "Air conditioning", es: "Aire acondicionado", pt: "Ar condicionado", de: "Klimaanlage" },
+  Climatisation: { fr: "Climatisation", en: "Air conditioning", es: "Aire acondicionado", pt: "Ar condicionado", de: "Klimaanlage", it: "Climatizzazione" },
   "Diagnostic panne": {
     fr: "Diagnostic panne",
     en: "Fault diagnosis",
     es: "Diagnóstico de avería",
     pt: "Diagnóstico de avaria",
     de: "Fehlerdiagnose",
+    it: "Diagnosi guasto",
   },
-  Révision: { fr: "Révision", en: "Service", es: "Revisión", pt: "Revisão", de: "Wartung" },
+  Révision: { fr: "Révision", en: "Service", es: "Revisión", pt: "Revisão", de: "Wartung", it: "Tagliando" },
   "Courroie de distribution": {
     fr: "Courroie de distribution",
     en: "Timing belt",
     es: "Correa de distribución",
     pt: "Correia de distribuição",
     de: "Zahnriemen",
+    it: "Cinghia di distribuzione",
   },
-  Embrayage: { fr: "Embrayage", en: "Clutch", es: "Embrague", pt: "Embraiagem", de: "Kupplung" },
-  Alternateur: { fr: "Alternateur", en: "Alternator", es: "Alternador", pt: "Alternador", de: "Lichtmaschine" },
-  Démarreur: { fr: "Démarreur", en: "Starter motor", es: "Motor de arranque", pt: "Motor de arranque", de: "Anlasser" },
+  Embrayage: { fr: "Embrayage", en: "Clutch", es: "Embrague", pt: "Embraiagem", de: "Kupplung", it: "Frizione" },
+  Alternateur: { fr: "Alternateur", en: "Alternator", es: "Alternador", pt: "Alternador", de: "Lichtmaschine", it: "Alternatore" },
+  Démarreur: { fr: "Démarreur", en: "Starter motor", es: "Motor de arranque", pt: "Motor de arranque", de: "Anlasser", it: "Motorino d'avviamento" },
   "Balai d'essuie-glace": {
     fr: "Balai d'essuie-glace",
     en: "Wiper blade",
     es: "Escobilla limpiaparabrisas",
     pt: "Palheta do limpa-vidros",
     de: "Scheibenwischer",
+    it: "Spazzola tergicristallo",
   },
   "Pare-brise à remplacer": {
     fr: "Pare-brise à remplacer",
@@ -215,6 +245,7 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     es: "Sustitución de parabrisas",
     pt: "Substituição do para-brisas",
     de: "Windschutzscheibe ersetzen",
+    it: "Sostituzione parabrezza",
   },
 };
 
@@ -225,12 +256,12 @@ export function trWorkTag(tag: string, lang: Lang): string {
 }
 
 const POSITIONS: Tag[] = [
-  { fr: "avant droite", en: "front right", es: "delantera derecha", pt: "dianteira direita", de: "vorne rechts" },
-  { fr: "avant gauche", en: "front left", es: "delantera izquierda", pt: "dianteira esquerda", de: "vorne links" },
-  { fr: "arrière droite", en: "rear right", es: "trasera derecha", pt: "traseira direita", de: "hinten rechts" },
-  { fr: "arrière gauche", en: "rear left", es: "trasera izquierda", pt: "traseira esquerda", de: "hinten links" },
-  { fr: "latéral droite", en: "right side", es: "lateral derecho", pt: "lateral direito", de: "rechte Seite" },
-  { fr: "latéral gauche", en: "left side", es: "lateral izquierdo", pt: "lateral esquerdo", de: "linke Seite" },
+  { fr: "avant droite", en: "front right", es: "delantera derecha", pt: "dianteira direita", de: "vorne rechts", it: "anteriore destra" },
+  { fr: "avant gauche", en: "front left", es: "delantera izquierda", pt: "dianteira esquerda", de: "vorne links", it: "anteriore sinistra" },
+  { fr: "arrière droite", en: "rear right", es: "trasera derecha", pt: "traseira direita", de: "hinten rechts", it: "posteriore destra" },
+  { fr: "arrière gauche", en: "rear left", es: "trasera izquierda", pt: "traseira esquerda", de: "hinten links", it: "posteriore sinistra" },
+  { fr: "latéral droite", en: "right side", es: "lateral derecho", pt: "lateral direito", de: "rechte Seite", it: "lato destro" },
+  { fr: "latéral gauche", en: "left side", es: "lateral izquierdo", pt: "lateral esquerdo", de: "linke Seite", it: "lato sinistro" },
 ];
 
 const RIM_POSITIONS = POSITIONS.slice(0, 4);
@@ -242,12 +273,13 @@ interface DamageCategory {
   es: string;
   pt: string;
   de: string;
+  it: string;
   positions: Tag[];
 }
 
 const DAMAGE_CATEGORIES: DamageCategory[] = [
-  { title: "Accidenté", fr: "Accidenté", en: "Collision damage", es: "Accidentado", pt: "Acidentado", de: "Unfallschaden", positions: POSITIONS },
-  { title: "Rayures", fr: "Rayé", en: "Scratched", es: "Rayado", pt: "Riscado", de: "Verkratzt", positions: POSITIONS },
+  { title: "Accidenté", fr: "Accidenté", en: "Collision damage", es: "Accidentado", pt: "Acidentado", de: "Unfallschaden", it: "Incidentato", positions: POSITIONS },
+  { title: "Rayures", fr: "Rayé", en: "Scratched", es: "Rayado", pt: "Riscado", de: "Verkratzt", it: "Graffiato", positions: POSITIONS },
   {
     title: "Peinture",
     fr: "Peinture défectueuse",
@@ -255,13 +287,14 @@ const DAMAGE_CATEGORIES: DamageCategory[] = [
     es: "Pintura defectuosa",
     pt: "Pintura defeituosa",
     de: "Lackschaden",
+    it: "Vernice danneggiata",
     positions: POSITIONS,
   },
-  { title: "Jantes", fr: "Jante rayée", en: "Scratched rim", es: "Llanta rayada", pt: "Jante riscada", de: "Verkratzte Felge", positions: RIM_POSITIONS },
+  { title: "Jantes", fr: "Jante rayée", en: "Scratched rim", es: "Llanta rayada", pt: "Jante riscada", de: "Verkratzte Felge", it: "Cerchio graffiato", positions: RIM_POSITIONS },
 ];
 
 const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
-  { title: "Autres", fr: "Rétroviseur cassé", en: "Broken mirror", es: "Retrovisor roto", pt: "Espelho retrovisor partido", de: "Spiegel gebrochen" },
+  { title: "Autres", fr: "Rétroviseur cassé", en: "Broken mirror", es: "Retrovisor roto", pt: "Espelho retrovisor partido", de: "Spiegel gebrochen", it: "Specchietto rotto" },
   {
     title: "Autres",
     fr: "Pare-choc(s) abîmé(s)",
@@ -269,8 +302,9 @@ const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
     es: "Parachoques dañado(s)",
     pt: "Para-choques danificado(s)",
     de: "Stoßstange(n) beschädigt",
+    it: "Paraurti danneggiato/i",
   },
-  { title: "Autres", fr: "Pneus défectueux", en: "Defective tires", es: "Neumáticos defectuosos", pt: "Pneus com defeito", de: "Reifen defekt" },
+  { title: "Autres", fr: "Pneus défectueux", en: "Defective tires", es: "Neumáticos defectuosos", pt: "Pneus com defeito", de: "Reifen defekt", it: "Pneumatici difettosi" },
   {
     title: "Autres",
     fr: "Ampoule(s) défectueuse(s)",
@@ -278,10 +312,11 @@ const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
     es: "Bombilla(s) defectuosa(s)",
     pt: "Lâmpada(s) com defeito",
     de: "Lampe(n) defekt",
+    it: "Lampadina/e difettosa/e",
   },
-  { title: "Autres", fr: "Pare-brise cassé", en: "Cracked windshield", es: "Parabrisas roto", pt: "Para-brisas rachado", de: "Windschutzscheibe gesprungen" },
-  { title: "Intérieur", fr: "Intérieur propre", en: "Interior clean", es: "Interior limpio", pt: "Interior limpo", de: "Innenraum sauber" },
-  { title: "Intérieur", fr: "Intérieur sale", en: "Interior dirty", es: "Interior sucio", pt: "Interior sujo", de: "Innenraum schmutzig" },
+  { title: "Autres", fr: "Pare-brise cassé", en: "Cracked windshield", es: "Parabrisas roto", pt: "Para-brisas rachado", de: "Windschutzscheibe gesprungen", it: "Parabrezza incrinato" },
+  { title: "Intérieur", fr: "Intérieur propre", en: "Interior clean", es: "Interior limpio", pt: "Interior limpo", de: "Innenraum sauber", it: "Interni puliti" },
+  { title: "Intérieur", fr: "Intérieur sale", en: "Interior dirty", es: "Interior sucio", pt: "Interior sujo", de: "Innenraum schmutzig", it: "Interni sporchi" },
 ];
 
 export const DAMAGE_TAG_TR: Record<string, Tag> = {};
@@ -300,6 +335,7 @@ DAMAGE_CATEGORIES.forEach((cat) => {
       es: `${cat.es} (${p.es})`,
       pt: `${cat.pt} (${p.pt})`,
       de: `${cat.de} (${p.de})`,
+      it: `${cat.it} (${p.it})`,
     });
   });
 });
@@ -312,12 +348,12 @@ export function trDamageTag(tag: string, lang: Lang): string {
 
 /** Titres des catégories de dommages (utilisés comme intitulés de section dans le formulaire). */
 export const CATEGORY_TITLE_TR: Record<string, Tag> = {
-  Accidenté: { fr: "Accidenté", en: "Collision", es: "Accidentes", pt: "Acidentes", de: "Unfallschäden" },
-  Rayures: { fr: "Rayures", en: "Scratches", es: "Rayones", pt: "Riscos", de: "Kratzer" },
-  Peinture: { fr: "Peinture", en: "Paint", es: "Pintura", pt: "Pintura", de: "Lack" },
-  Jantes: { fr: "Jantes", en: "Rims", es: "Llantas", pt: "Jantes", de: "Felgen" },
-  Autres: { fr: "Autres", en: "Other", es: "Otros", pt: "Outros", de: "Sonstiges" },
-  Intérieur: { fr: "Intérieur", en: "Interior", es: "Interior", pt: "Interior", de: "Innenraum" },
+  Accidenté: { fr: "Accidenté", en: "Collision", es: "Accidentes", pt: "Acidentes", de: "Unfallschäden", it: "Incidenti" },
+  Rayures: { fr: "Rayures", en: "Scratches", es: "Rayones", pt: "Riscos", de: "Kratzer", it: "Graffi" },
+  Peinture: { fr: "Peinture", en: "Paint", es: "Pintura", pt: "Pintura", de: "Lack", it: "Vernice" },
+  Jantes: { fr: "Jantes", en: "Rims", es: "Llantas", pt: "Jantes", de: "Felgen", it: "Cerchi" },
+  Autres: { fr: "Autres", en: "Other", es: "Otros", pt: "Outros", de: "Sonstiges", it: "Altro" },
+  Intérieur: { fr: "Intérieur", en: "Interior", es: "Interior", pt: "Interior", de: "Innenraum", it: "Interni" },
 };
 
 export function trCategoryTitle(title: string, lang: Lang): string {

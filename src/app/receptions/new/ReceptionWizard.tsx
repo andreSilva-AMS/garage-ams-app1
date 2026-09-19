@@ -23,6 +23,10 @@ interface PhotoData {
   blob: Blob;
   dataUrl: string;
 }
+interface ExtraPhoto extends PhotoData {
+  caption: string;
+}
+const MAX_EXTRA_PHOTOS = 10;
 interface Garage {
   id: string;
   name: string;
@@ -96,6 +100,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   });
   const [photos, setPhotos] = useState<Partial<Record<Angle, PhotoData>>>({});
   const [cardGrey, setCardGrey] = useState<PhotoData | null>(null);
+  const [extraPhotos, setExtraPhotos] = useState<ExtraPhoto[]>([]);
   const [damageTags, setDamageTags] = useState<Set<string>>(new Set());
   const [damageText] = useState("");
   const [workTags, setWorkTags] = useState<Set<string>>(new Set());
@@ -162,6 +167,20 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
     setCardGrey(resized);
   }
 
+  async function handleAddExtraPhoto(file: File) {
+    if (extraPhotos.length >= MAX_EXTRA_PHOTOS) return;
+    const resized = await fileToResizedImage(file, 1600, 0.8);
+    setExtraPhotos((p) => [...p, { ...resized, caption: "" }]);
+  }
+
+  function updateExtraPhotoCaption(index: number, caption: string) {
+    setExtraPhotos((p) => p.map((photo, i) => (i === index ? { ...photo, caption } : photo)));
+  }
+
+  function removeExtraPhoto(index: number) {
+    setExtraPhotos((p) => p.filter((_, i) => i !== index));
+  }
+
   async function handleSubmit() {
     setSaving(true);
     setError(null);
@@ -188,6 +207,13 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         }
       }
       const cardGreyPath = cardGrey ? await upload("carte-grise.jpg", cardGrey.blob) : null;
+
+      const extraPhotoUploads: { path: string; caption: string; dataUrl: string }[] = [];
+      for (let i = 0; i < extraPhotos.length; i++) {
+        const photo = extraPhotos[i];
+        const path = await upload(`extra-${i + 1}.jpg`, photo.blob);
+        extraPhotoUploads.push({ path, caption: photo.caption, dataUrl: photo.dataUrl });
+      }
 
       const signatureJpeg = signatureDataUrl
         ? await shrinkDataUrl(signatureDataUrl, 900, 0.82)
@@ -238,6 +264,19 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         pdf_path: pdfPath,
       });
       if (insertError) throw insertError;
+
+      if (extraPhotoUploads.length > 0) {
+        const { error: extraError } = await supabase.from("reception_extra_photos").insert(
+          extraPhotoUploads.map((p, i) => ({
+            reception_id: receptionId,
+            garage_id: garage.id,
+            storage_path: p.path,
+            caption: p.caption || null,
+            position: i,
+          })),
+        );
+        if (extraError) throw extraError;
+      }
 
       const { data: signed } = await supabase.storage
         .from("receptions")
@@ -452,6 +491,60 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div>
+            <p className="mb-2 text-sm font-medium">
+              {t("extraPhotosTitle")}{" "}
+              <span className="font-normal text-neutral-500">
+                {t("extraPhotosCount", { count: extraPhotos.length, max: MAX_EXTRA_PHOTOS })}
+              </span>
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              {extraPhotos.map((photo, i) => (
+                <div key={i} className="flex flex-col gap-1">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-neutral-300">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser */}
+                    <img
+                      src={photo.dataUrl}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeExtraPhoto(i)}
+                      aria-label={t("removePhoto")}
+                      className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <input
+                    className="input text-xs"
+                    placeholder={t("extraPhotoCaptionPlaceholder")}
+                    value={photo.caption}
+                    onChange={(e) => updateExtraPhotoCaption(i, e.target.value)}
+                  />
+                </div>
+              ))}
+              {extraPhotos.length < MAX_EXTRA_PHOTOS && (
+                <label className="flex aspect-square flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-neutral-300 text-sm text-neutral-500">
+                  <span className="text-2xl">+</span>
+                  <span>{t("addPhoto")}</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleAddExtraPhoto(file);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+              )}
+            </div>
           </div>
         </section>
       )}

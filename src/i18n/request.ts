@@ -4,7 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 
 export const SUPPORTED_LOCALES = ["fr", "en", "es", "pt", "de", "it"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-export const DEFAULT_LOCALE: SupportedLocale = "fr";
+// Anglais par défaut : avant inscription/connexion, on ne sait pas encore
+// d'où vient la personne (produit vendu dans plusieurs pays) — l'anglais
+// est compris plus largement que le français par un premier visiteur.
+export const DEFAULT_LOCALE: SupportedLocale = "en";
 
 /**
  * La langue de l'interface suit la langue par défaut du garage (partagée par

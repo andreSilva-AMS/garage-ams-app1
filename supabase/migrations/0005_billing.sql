@@ -88,8 +88,9 @@ $$;
 grant execute on function public.create_garage_and_owner(text, text, text) to authenticated;
 
 -- Garage AMS Automobiles : plan gratuit permanent, aucun passage par Stripe.
+-- trim() car le nom a été saisi avec un espace final lors de l'inscription.
 update public.garages
 set subscription_plan = 'free', payment_status = 'free', trial_ends_at = null
-where name = 'Garage AMS Automobiles';
+where trim(name) = 'Garage AMS Automobiles';
 
 NOTIFY pgrst, 'reload schema';

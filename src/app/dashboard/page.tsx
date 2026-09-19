@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -68,9 +69,12 @@ export default async function DashboardPage() {
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
       <div className="mb-8 flex items-start justify-between">
-        <div>
-          <p className="text-sm text-neutral-500">{t("connectedTo")}</p>
-          <h1 className="text-2xl font-semibold">{garage?.name}</h1>
+        <div className="flex items-center gap-3">
+          <Image src="/logo.png" alt="ReceptCar" width={40} height={40} className="rounded-xl" />
+          <div>
+            <p className="text-sm text-neutral-500">{t("connectedTo")}</p>
+            <h1 className="text-2xl">{garage?.name}</h1>
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/billing" className="text-sm underline">
@@ -90,7 +94,7 @@ export default async function DashboardPage() {
       {billingBanner && (
         <Link
           href="/billing"
-          className="mb-6 block rounded-md bg-amber-50 p-3 text-sm text-amber-800 underline"
+          className="mb-6 block rounded-2xl bg-amber-50 p-3 text-sm text-amber-800 underline"
         >
           {billingBanner} — {t("subscribeCta")}
         </Link>
@@ -100,15 +104,12 @@ export default async function DashboardPage() {
         <Link href="/receptions/new" className="btn-primary">
           {tNav("newReception")}
         </Link>
-        <Link
-          href="/receptions"
-          className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium"
-        >
+        <Link href="/receptions" className="btn-secondary">
           {tNav("history")}
         </Link>
       </section>
 
-      <section className="mb-8 rounded-lg border border-neutral-200 p-4">
+      <section className="mb-8 rounded-2xl border border-neutral-200 p-4">
         <h2 className="mb-2 text-sm font-medium text-neutral-500">{t("account")}</h2>
         <p>{profile.full_name ?? user.email}</p>
         <p className="text-sm text-neutral-600">
@@ -116,7 +117,7 @@ export default async function DashboardPage() {
         </p>
       </section>
 
-      <section className="rounded-lg border border-neutral-200 p-4">
+      <section className="rounded-2xl border border-neutral-200 p-4">
         <h2 className="mb-2 text-sm font-medium text-neutral-500">
           {t("team", { count: teamMembers?.length ?? 0 })}
         </h2>

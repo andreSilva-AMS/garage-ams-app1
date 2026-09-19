@@ -42,7 +42,7 @@ export default async function ReceptionsPage() {
         {withUrls.map((r) => (
           <li
             key={r.id}
-            className="flex items-center justify-between rounded-md border border-neutral-200 p-3"
+            className="flex items-center justify-between rounded-2xl border border-neutral-200 p-3"
           >
             <div>
               <p className="font-medium">

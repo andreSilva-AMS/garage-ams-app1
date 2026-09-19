@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -38,7 +39,13 @@ export default function LoginPage() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4">
-      <h1 className="mb-6 text-xl font-semibold">{t("title")}</h1>
+      <div className="mb-8 flex items-center gap-2.5">
+        <Image src="/logo.png" alt="ReceptCar" width={36} height={36} className="rounded-xl" />
+        <span className="text-lg font-medium" style={{ fontFamily: "var(--font-plex-serif)" }}>
+          ReceptCar
+        </span>
+      </div>
+      <h1 className="mb-6 text-xl">{t("title")}</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">

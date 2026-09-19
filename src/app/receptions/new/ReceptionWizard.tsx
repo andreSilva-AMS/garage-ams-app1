@@ -59,7 +59,7 @@ function Tag({
       type="button"
       onClick={onClick}
       className={`rounded-full border px-3 py-1.5 text-sm ${
-        active ? "border-neutral-900 bg-neutral-900 text-white" : "border-neutral-300"
+        active ? "border-accent bg-accent text-accent-foreground" : "border-neutral-300"
       }`}
     >
       {children}
@@ -308,7 +308,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       <p className="mb-1 text-sm text-neutral-500">{t("step", { step })}</p>
       <div className="mb-6 h-1 w-full rounded bg-neutral-200">
         <div
-          className="h-1 rounded bg-neutral-900 transition-all"
+          className="h-1 rounded bg-accent transition-all"
           style={{ width: `${(step / 5) * 100}%` }}
         />
       </div>
@@ -375,7 +375,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             {(["front", "back", "left", "right"] as Angle[]).map((angle) => (
               <label
                 key={angle}
-                className="flex aspect-square flex-col items-center justify-center overflow-hidden rounded-md border border-neutral-300 bg-neutral-50 text-sm"
+                className="flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border border-neutral-300 bg-neutral-50 text-sm"
               >
                 {photos[angle] ? (
                   // eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser
@@ -401,7 +401,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             ))}
           </div>
 
-          <label className="flex items-center gap-3 rounded-md border border-neutral-300 p-3">
+          <label className="flex items-center gap-3 rounded-2xl border border-neutral-300 p-3">
             {cardGrey ? (
               // eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser
               <img
@@ -501,7 +501,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
               ))}
             </select>
           </Field>
-          <div className="rounded-md border border-neutral-200 p-4 text-sm">
+          <div className="rounded-2xl border border-neutral-200 p-4 text-sm">
             <SummaryRow k={t("summary.client")} v={client.name} />
             <SummaryRow k={t("summary.phone")} v={client.phone || t("summary.none")} />
             <SummaryRow k={t("summary.email")} v={client.email || t("summary.none")} />

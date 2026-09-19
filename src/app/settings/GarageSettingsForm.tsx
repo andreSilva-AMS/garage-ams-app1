@@ -88,7 +88,7 @@ export function GarageSettingsForm({
       <h1 className="mb-6 text-xl font-semibold">{t("title")}</h1>
 
       {!isOwner && (
-        <p className="mb-4 rounded-md bg-amber-50 p-3 text-sm text-amber-800">
+        <p className="mb-4 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
           {t("ownerOnly")}
         </p>
       )}

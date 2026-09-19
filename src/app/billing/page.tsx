@@ -60,14 +60,14 @@ export default async function BillingPage() {
     <main className="mx-auto max-w-xl px-4 py-8">
       <h1 className="mb-6 text-xl font-semibold">Facturation</h1>
 
-      <div className="mb-6 rounded-lg border border-neutral-200 p-4">
+      <div className="mb-6 rounded-2xl border border-neutral-200 p-4">
         <p className="text-sm text-neutral-500">Statut de {garage.name}</p>
         <p className="text-lg font-medium">{statusLabel}</p>
         {statusDetail && <p className="mt-1 text-sm text-neutral-600">{statusDetail}</p>}
       </div>
 
       {!active && !isOwner && (
-        <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-800">
+        <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
           L&apos;essai gratuit est terminé. Demandez au propriétaire du garage de s&apos;abonner
           pour continuer à utiliser l&apos;application.
         </p>

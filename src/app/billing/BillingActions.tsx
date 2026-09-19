@@ -51,7 +51,7 @@ export function ManageSubscriptionButton() {
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium"
+        className="btn-secondary"
       >
         {loading ? "Redirection…" : "Gérer mon abonnement"}
       </button>

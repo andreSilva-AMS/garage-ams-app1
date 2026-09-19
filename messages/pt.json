@@ -38,6 +38,17 @@
     "pendingBody": "Foi enviado um link de confirmação para {email}. Clique nele e depois volte para iniciar sessão: a sua garagem «{garageName}» será criada automaticamente.",
     "goToLogin": "Ir para a página de início de sessão"
   },
+  "join": {
+    "title": "Juntar-se a {garageName}",
+    "subtitle": "Convidado(a) como {role}, para {email}.",
+    "fullName": "O seu nome completo",
+    "password": "Escolha uma palavra-passe",
+    "submit": "Juntar-me à equipa",
+    "submitting": "A registar…",
+    "pendingTitle": "Verifique o seu e-mail",
+    "pendingBody": "Foi enviado um link de confirmação para {email}. Clique nele e depois volte para iniciar sessão: juntar-se-á à equipa automaticamente.",
+    "goToLogin": "Ir para a página de início de sessão"
+  },
   "dashboard": {
     "connectedTo": "Ligado a",
     "account": "A sua conta",
@@ -62,7 +73,14 @@
     "address": "Endereço",
     "defaultLanguage": "Idioma predefinido",
     "defaultLanguageHint": "Utilizado na interface da aplicação e, por defeito, nos documentos enviados aos clientes (pode ser alterado em cada ficha).",
-    "saved": "Definições guardadas."
+    "saved": "Definições guardadas.",
+    "inviteTitle": "Convidar um empregado",
+    "inviteEmail": "E-mail do empregado",
+    "inviteRole": "Função",
+    "inviteSend": "Enviar convite",
+    "inviteSending": "A enviar…",
+    "inviteSent": "Convite enviado.",
+    "invitePending": "pendente"
   },
   "receptionsHistory": {
     "title": "Histórico de receções",

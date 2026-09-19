@@ -38,6 +38,17 @@
     "pendingBody": "Ein Bestätigungslink wurde an {email} gesendet. Klicken Sie darauf und melden Sie sich anschließend an: Ihre Werkstatt „{garageName}“ wird automatisch erstellt.",
     "goToLogin": "Zur Anmeldeseite"
   },
+  "join": {
+    "title": "{garageName} beitreten",
+    "subtitle": "Eingeladen als {role}, für {email}.",
+    "fullName": "Ihr vollständiger Name",
+    "password": "Passwort wählen",
+    "submit": "Team beitreten",
+    "submitting": "Wird registriert…",
+    "pendingTitle": "Prüfen Sie Ihr E-Mail-Postfach",
+    "pendingBody": "Ein Bestätigungslink wurde an {email} gesendet. Klicken Sie darauf und melden Sie sich anschließend an: Sie treten dem Team automatisch bei.",
+    "goToLogin": "Zur Anmeldeseite"
+  },
   "dashboard": {
     "connectedTo": "Verbunden mit",
     "account": "Ihr Konto",
@@ -62,7 +73,14 @@
     "address": "Adresse",
     "defaultLanguage": "Standardsprache",
     "defaultLanguageHint": "Wird für die Benutzeroberfläche der Anwendung und standardmäßig für an Kunden gesendete Dokumente verwendet (pro Protokoll änderbar).",
-    "saved": "Einstellungen gespeichert."
+    "saved": "Einstellungen gespeichert.",
+    "inviteTitle": "Mitarbeiter einladen",
+    "inviteEmail": "E-Mail des Mitarbeiters",
+    "inviteRole": "Rolle",
+    "inviteSend": "Einladung senden",
+    "inviteSending": "Wird gesendet…",
+    "inviteSent": "Einladung gesendet.",
+    "invitePending": "ausstehend"
   },
   "receptionsHistory": {
     "title": "Annahmeverlauf",

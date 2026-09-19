@@ -38,6 +38,17 @@
     "pendingBody": "Un link di conferma è stato inviato a {email}. Cliccalo, poi torna ad accedere: la tua officina «{garageName}» sarà creata automaticamente.",
     "goToLogin": "Vai alla pagina di accesso"
   },
+  "join": {
+    "title": "Unisciti a {garageName}",
+    "subtitle": "Invitato/a come {role}, per {email}.",
+    "fullName": "Il tuo nome completo",
+    "password": "Scegli una password",
+    "submit": "Unisciti al team",
+    "submitting": "Registrazione in corso…",
+    "pendingTitle": "Controlla la tua casella e-mail",
+    "pendingBody": "Un link di conferma è stato inviato a {email}. Cliccalo, poi torna ad accedere: ti unirai automaticamente al team.",
+    "goToLogin": "Vai alla pagina di accesso"
+  },
   "dashboard": {
     "connectedTo": "Connesso a",
     "account": "Il tuo account",
@@ -62,7 +73,14 @@
     "address": "Indirizzo",
     "defaultLanguage": "Lingua predefinita",
     "defaultLanguageHint": "Usata per l'interfaccia dell'applicazione e, per impostazione predefinita, per i documenti inviati ai clienti (modificabile per ogni scheda).",
-    "saved": "Impostazioni salvate."
+    "saved": "Impostazioni salvate.",
+    "inviteTitle": "Invita un dipendente",
+    "inviteEmail": "E-mail del dipendente",
+    "inviteRole": "Ruolo",
+    "inviteSend": "Invia invito",
+    "inviteSending": "Invio…",
+    "inviteSent": "Invito inviato.",
+    "invitePending": "in attesa"
   },
   "receptionsHistory": {
     "title": "Storico accettazioni",

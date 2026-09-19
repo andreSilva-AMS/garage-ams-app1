@@ -15,8 +15,18 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
 
   if (existing) return;
 
-  const garageName = user.user_metadata?.garage_name as string | undefined;
   const fullName = user.user_metadata?.full_name as string | undefined;
+  const inviteToken = user.user_metadata?.invite_token as string | undefined;
+
+  if (inviteToken) {
+    await supabase.rpc("accept_garage_invite", {
+      p_token: inviteToken,
+      p_full_name: fullName ?? null,
+    });
+    return;
+  }
+
+  const garageName = user.user_metadata?.garage_name as string | undefined;
   const preferredLanguage = user.user_metadata?.preferred_language as string | undefined;
 
   if (!garageName) return;

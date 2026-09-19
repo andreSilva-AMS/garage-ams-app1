@@ -24,5 +24,17 @@ export default async function SettingsPage() {
     .single();
   if (!garage) redirect("/dashboard");
 
-  return <GarageSettingsForm garage={garage} isOwner={profile.role === "owner"} />;
+  const isOwner = profile.role === "owner";
+
+  const { data: pendingInvites } = isOwner
+    ? await supabase
+        .from("garage_invites")
+        .select("id, email, role, created_at")
+        .is("accepted_at", null)
+        .order("created_at", { ascending: false })
+    : { data: null };
+
+  return (
+    <GarageSettingsForm garage={garage} isOwner={isOwner} pendingInvites={pendingInvites ?? []} />
+  );
 }

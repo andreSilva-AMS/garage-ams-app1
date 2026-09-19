@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
+import { InviteEmployeeSection } from "./InviteEmployeeSection";
 
 interface Garage {
   id: string;
@@ -15,12 +16,21 @@ interface Garage {
   default_language: string;
 }
 
+interface PendingInvite {
+  id: string;
+  email: string;
+  role: string;
+  created_at: string;
+}
+
 export function GarageSettingsForm({
   garage,
   isOwner,
+  pendingInvites,
 }: {
   garage: Garage;
   isOwner: boolean;
+  pendingInvites: PendingInvite[];
 }) {
   const router = useRouter();
   const supabase = createClient();
@@ -173,6 +183,8 @@ export function GarageSettingsForm({
           </button>
         )}
       </form>
+
+      {isOwner && <InviteEmployeeSection pendingInvites={pendingInvites} />}
 
       <Link href="/dashboard" className="mt-8 inline-block text-sm underline">
         {tNav("backToDashboard")}

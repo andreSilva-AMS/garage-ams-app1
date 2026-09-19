@@ -38,6 +38,17 @@
     "pendingBody": "A confirmation link was sent to {email}. Click it, then come back and sign in: your garage “{garageName}” will be created automatically.",
     "goToLogin": "Go to the sign-in page"
   },
+  "join": {
+    "title": "Join {garageName}",
+    "subtitle": "Invited as {role}, for {email}.",
+    "fullName": "Your full name",
+    "password": "Choose a password",
+    "submit": "Join the team",
+    "submitting": "Signing up…",
+    "pendingTitle": "Check your inbox",
+    "pendingBody": "A confirmation link was sent to {email}. Click it, then come back and sign in: you'll join the team automatically.",
+    "goToLogin": "Go to the sign-in page"
+  },
   "dashboard": {
     "connectedTo": "Connected to",
     "account": "Your account",
@@ -62,7 +73,14 @@
     "address": "Address",
     "defaultLanguage": "Default language",
     "defaultLanguageHint": "Used for the application interface and, by default, for documents sent to customers (can be changed for each form).",
-    "saved": "Settings saved."
+    "saved": "Settings saved.",
+    "inviteTitle": "Invite an employee",
+    "inviteEmail": "Employee's e-mail",
+    "inviteRole": "Role",
+    "inviteSend": "Send invitation",
+    "inviteSending": "Sending…",
+    "inviteSent": "Invitation sent.",
+    "invitePending": "pending"
   },
   "receptionsHistory": {
     "title": "Reception history",

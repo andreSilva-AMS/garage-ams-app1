@@ -38,6 +38,17 @@
     "pendingBody": "Se ha enviado un enlace de confirmación a {email}. Haga clic en él y luego vuelva a iniciar sesión: su taller «{garageName}» se creará automáticamente.",
     "goToLogin": "Ir a la página de inicio de sesión"
   },
+  "join": {
+    "title": "Unirse a {garageName}",
+    "subtitle": "Invitado/a como {role}, para {email}.",
+    "fullName": "Su nombre completo",
+    "password": "Elija una contraseña",
+    "submit": "Unirse al equipo",
+    "submitting": "Registrando…",
+    "pendingTitle": "Revise su correo",
+    "pendingBody": "Se ha enviado un enlace de confirmación a {email}. Haga clic en él y luego vuelva a iniciar sesión: se unirá al equipo automáticamente.",
+    "goToLogin": "Ir a la página de inicio de sesión"
+  },
   "dashboard": {
     "connectedTo": "Conectado a",
     "account": "Su cuenta",
@@ -62,7 +73,14 @@
     "address": "Dirección",
     "defaultLanguage": "Idioma predeterminado",
     "defaultLanguageHint": "Se usa para la interfaz de la aplicación y, por defecto, para los documentos enviados a los clientes (modificable en cada ficha).",
-    "saved": "Configuración guardada."
+    "saved": "Configuración guardada.",
+    "inviteTitle": "Invitar a un empleado",
+    "inviteEmail": "Correo del empleado",
+    "inviteRole": "Rol",
+    "inviteSend": "Enviar invitación",
+    "inviteSending": "Enviando…",
+    "inviteSent": "Invitación enviada.",
+    "invitePending": "pendiente"
   },
   "receptionsHistory": {
     "title": "Historial de recepciones",

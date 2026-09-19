@@ -7,15 +7,12 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
-import { PricingPlan, formatPriceHt } from "@/lib/pricing";
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
 }
 
-const OTHER_COUNTRY = "OTHER";
-
-export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
+export function SignupForm() {
   const router = useRouter();
   const supabase = createClient();
   const t = useTranslations("signup");
@@ -25,43 +22,14 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [language, setLanguage] = useState<Lang>("fr");
-  const [billingCountry, setBillingCountry] = useState<string>(
-    pricingPlans[0]?.country_code ?? OTHER_COUNTRY,
-  );
-  const [otherCountryLabel, setOtherCountryLabel] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingConfirmation, setPendingConfirmation] = useState(false);
-  const [waitlisted, setWaitlisted] = useState(false);
-
-  const isOtherCountry = billingCountry === OTHER_COUNTRY;
-  const selectedPlan = pricingPlans.find((p) => p.country_code === billingCountry);
 
   function handleLanguageChange(value: Lang) {
     setLanguage(value);
     setLocaleCookie(value);
     router.refresh();
-  }
-
-  async function handleWaitlistSubmit(e: FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    const { error: waitlistError } = await supabase.from("waitlist").insert({
-      email,
-      country_code: otherCountryLabel || null,
-      garage_name: garageName || null,
-    });
-
-    if (waitlistError) {
-      setError(waitlistError.message);
-      setLoading(false);
-      return;
-    }
-
-    setWaitlisted(true);
-    setLoading(false);
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -73,12 +41,7 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
       email,
       password,
       options: {
-        data: {
-          garage_name: garageName,
-          full_name: fullName,
-          preferred_language: language,
-          billing_country: billingCountry,
-        },
+        data: { garage_name: garageName, full_name: fullName, preferred_language: language },
       },
     });
 
@@ -100,7 +63,6 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
       garage_name: garageName,
       owner_full_name: fullName,
       garage_language: language,
-      garage_billing_country: billingCountry,
     });
 
     if (rpcError) {
@@ -111,18 +73,6 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
 
     router.push("/dashboard");
     router.refresh();
-  }
-
-  if (waitlisted) {
-    return (
-      <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 px-4">
-        <h1 className="text-xl">{t("waitlistDoneTitle")}</h1>
-        <p className="text-sm text-neutral-600">{t("waitlistDoneBody")}</p>
-        <Link href="/login" className="text-sm underline">
-          {t("goToLogin")}
-        </Link>
-      </main>
-    );
   }
 
   if (pendingConfirmation) {
@@ -148,7 +98,7 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
       <h1 className="mb-1 text-xl">{t("title")}</h1>
       <p className="mb-6 text-sm text-neutral-600">{t("subtitle")}</p>
 
-      <form onSubmit={isOtherCountry ? handleWaitlistSubmit : handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Field label={t("language")} htmlFor="language">
           <select
             id="language"
@@ -164,36 +114,6 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
           </select>
         </Field>
 
-        <Field label={t("billingCountry")} htmlFor="billingCountry">
-          <select
-            id="billingCountry"
-            value={billingCountry}
-            onChange={(e) => setBillingCountry(e.target.value)}
-            className="input"
-          >
-            {pricingPlans.map((plan) => (
-              <option key={plan.country_code} value={plan.country_code}>
-                {plan.country_label} — {formatPriceHt(plan)}
-              </option>
-            ))}
-            <option value={OTHER_COUNTRY}>{t("otherCountry")}</option>
-          </select>
-          {selectedPlan && (
-            <p className="text-xs text-neutral-500">{formatPriceHt(selectedPlan)}</p>
-          )}
-        </Field>
-
-        {isOtherCountry && (
-          <Field label={t("waitlistCountryLabel")} htmlFor="otherCountryLabel">
-            <input
-              id="otherCountryLabel"
-              value={otherCountryLabel}
-              onChange={(e) => setOtherCountryLabel(e.target.value)}
-              className="input"
-            />
-          </Field>
-        )}
-
         <Field label={t("garageName")} htmlFor="garageName">
           <input
             id="garageName"
@@ -208,7 +128,7 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
         <Field label={t("fullName")} htmlFor="fullName">
           <input
             id="fullName"
-            required={!isOtherCountry}
+            required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             className="input"
@@ -227,30 +147,22 @@ export function SignupForm({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
           />
         </Field>
 
-        {!isOtherCountry && (
-          <Field label={t("password")} htmlFor="password">
-            <input
-              id="password"
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input"
-            />
-          </Field>
-        )}
+        <Field label={t("password")} htmlFor="password">
+          <input
+            id="password"
+            type="password"
+            required
+            minLength={6}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+          />
+        </Field>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" disabled={loading} className="btn-primary">
-          {isOtherCountry
-            ? loading
-              ? t("waitlistSubmitting")
-              : t("waitlistSubmit")
-            : loading
-              ? t("submitting")
-              : t("submit")}
+          {loading ? t("submitting") : t("submit")}
         </button>
       </form>
 

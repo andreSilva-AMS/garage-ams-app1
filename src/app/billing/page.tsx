@@ -2,8 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
-import { formatPriceHt } from "@/lib/pricing";
-import { SubscribeButton, ManageSubscriptionButton } from "./BillingActions";
+import { formatPriceHt, type PricingPlan } from "@/lib/pricing";
+import { SubscribeFlow, ManageSubscriptionButton } from "./BillingActions";
 
 function daysLeftUntil(date: Date): number {
   return Math.max(0, Math.ceil((date.getTime() - Date.now()) / 86_400_000));
@@ -40,6 +40,12 @@ export default async function BillingPage() {
         .eq("country_code", garage.billing_country)
         .single()
     : { data: null };
+
+  const { data: pricingPlans } = await supabase
+    .from("pricing_plans")
+    .select("country_code, country_label, currency, amount_ht, stripe_price_id")
+    .eq("active", true)
+    .order("country_code");
 
   const isOwner = profile.role === "owner";
   const active = hasActiveAccess(garage);
@@ -98,7 +104,7 @@ export default async function BillingPage() {
           ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
             <ManageSubscriptionButton />
           ) : (
-            <SubscribeButton />
+            <SubscribeFlow pricingPlans={(pricingPlans ?? []) as PricingPlan[]} />
           )}
         </>
       )}

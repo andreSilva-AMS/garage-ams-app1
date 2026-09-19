@@ -43,26 +43,22 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
   return { supabase, garage };
 }
 
-export async function createCheckoutSession(): Promise<ActionResult> {
+export async function createCheckoutSession(countryCode: string): Promise<ActionResult> {
   const result = await getOwnerGarage();
   if ("error" in result) return { ok: false, error: result.error };
   const { supabase, garage } = result;
 
-  if (!garage.billing_country) {
-    return {
-      ok: false,
-      error: "Aucun pays de facturation renseigné pour ce garage. Contactez le support.",
-    };
-  }
-
   const { data: plan } = await supabase
     .from("pricing_plans")
-    .select("stripe_price_id")
-    .eq("country_code", garage.billing_country)
+    .select("country_code, stripe_price_id")
+    .eq("country_code", countryCode)
     .eq("active", true)
     .single();
 
-  if (!plan?.stripe_price_id) {
+  if (!plan) {
+    return { ok: false, error: "Pays de facturation non pris en charge." };
+  }
+  if (!plan.stripe_price_id) {
     return {
       ok: false,
       error: "Le tarif pour ce pays n'est pas encore configuré. Contactez le support.",
@@ -71,6 +67,10 @@ export async function createCheckoutSession(): Promise<ActionResult> {
 
   const stripe = getStripeClient();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
+
+  if (garage.billing_country !== plan.country_code) {
+    await supabase.from("garages").update({ billing_country: plan.country_code }).eq("id", garage.id);
+  }
 
   let customerId = garage.stripe_customer_id;
   if (!customerId) {

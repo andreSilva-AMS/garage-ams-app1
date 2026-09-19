@@ -15,6 +15,7 @@
   },
   "login": {
     "title": "Accedi",
+    "language": "Lingua dell'applicazione",
     "email": "E-mail",
     "password": "Password",
     "submit": "Accedi",

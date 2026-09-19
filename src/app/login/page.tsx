@@ -4,20 +4,33 @@ import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
+
+function setLocaleCookie(locale: string) {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
+}
 
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations("login");
+  const appLocale = useLocale() as Lang;
   const timedOut = searchParams.get("timeout") === "1";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
+  const [language, setLanguage] = useState<Lang>(appLocale);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function handleLanguageChange(value: Lang) {
+    setLanguage(value);
+    setLocaleCookie(value);
+    router.refresh();
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -63,6 +76,24 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="language" className="text-sm font-medium">
+            {t("language")}
+          </label>
+          <select
+            id="language"
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value as Lang)}
+            className="input"
+          >
+            {LANGUAGES.map((l) => (
+              <option key={l.value} value={l.value}>
+                {l.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-sm font-medium">
             {t("email")}

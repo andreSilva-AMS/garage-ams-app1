@@ -15,6 +15,7 @@
   },
   "login": {
     "title": "Sign in",
+    "language": "Application language",
     "email": "E-mail",
     "password": "Password",
     "submit": "Sign in",

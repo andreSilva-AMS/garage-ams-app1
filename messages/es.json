@@ -15,6 +15,7 @@
   },
   "login": {
     "title": "Iniciar sesión",
+    "language": "Idioma de la aplicación",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "submit": "Iniciar sesión",

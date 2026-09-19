@@ -15,6 +15,7 @@
   },
   "login": {
     "title": "Connexion",
+    "language": "Langue de l'application",
     "email": "E-mail",
     "password": "Mot de passe",
     "submit": "Se connecter",

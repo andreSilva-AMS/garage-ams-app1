@@ -4,10 +4,13 @@ import { NextResponse, type NextRequest } from "next/server";
 // Routes accessibles sans être connecté.
 const PUBLIC_PATHS = ["/login", "/signup", "/join"];
 
-// Déconnexion automatique après 24h sans aucune requête authentifiée
-// (navigation, actualisation…) — indépendant de la case "Rester connecté",
-// qui ne concerne que la persistance après fermeture du navigateur.
-const INACTIVITY_LIMIT_MS = 24 * 60 * 60 * 1000;
+// Déconnexion automatique après une période d'inactivité (aucune requête
+// authentifiée). Fenêtre plus courte, avec message explicatif, quand
+// "Rester connecté" est décochée (cas d'un appareil partagé) ; fenêtre plus
+// longue et silencieuse (pas de message alarmant) quand elle est cochée,
+// puisque l'utilisateur s'attend à rester connecté "en permanence".
+const INACTIVITY_LIMIT_SESSION_ONLY_MS = 24 * 60 * 60 * 1000;
+const INACTIVITY_LIMIT_REMEMBERED_MS = 7 * 24 * 60 * 60 * 1000;
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -51,16 +54,22 @@ export async function updateSession(request: NextRequest) {
   let timedOut = false;
 
   if (user) {
+    const inactivityLimit = sessionOnly
+      ? INACTIVITY_LIMIT_SESSION_ONLY_MS
+      : INACTIVITY_LIMIT_REMEMBERED_MS;
     const lastActivity = request.cookies.get("sb_last_activity")?.value;
     const now = Date.now();
-    if (lastActivity && now - Number(lastActivity) > INACTIVITY_LIMIT_MS) {
+    if (lastActivity && now - Number(lastActivity) > inactivityLimit) {
       await supabase.auth.signOut();
       user = null;
-      timedOut = true;
+      // Pas de message quand "Rester connecté" était cochée : l'utilisateur
+      // s'attend à rester connecté "en permanence", une bannière de sécurité
+      // après une longue absence serait plus alarmante qu'utile.
+      timedOut = sessionOnly;
     } else {
-      // Marqueur d'activité : maxAge volontairement plus long que la fenêtre
-      // de 24h, pour survivre à une fermeture de navigateur entre-temps et
-      // permettre de mesurer correctement le temps écoulé au retour.
+      // Marqueur d'activité : maxAge volontairement plus long que la plus
+      // grande fenêtre (7 jours), pour survivre à une fermeture de
+      // navigateur entre-temps et mesurer correctement le temps écoulé.
       supabaseResponse.cookies.set("sb_last_activity", String(now), {
         path: "/",
         maxAge: 60 * 60 * 24 * 30,

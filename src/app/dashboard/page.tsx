@@ -33,7 +33,7 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, role, full_name")
+    .select("garage_id")
     .eq("id", user.id)
     .single();
 
@@ -44,7 +44,9 @@ export default async function DashboardPage() {
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("id, name, address, default_language, subscription_plan, payment_status, trial_ends_at")
+    .select(
+      "id, name, address, logo_url, default_language, subscription_plan, payment_status, trial_ends_at",
+    )
     .eq("id", profile.garage_id)
     .single();
 
@@ -109,10 +111,19 @@ export default async function DashboardPage() {
         </Link>
       </section>
 
-      <section className="mb-8 rounded-2xl border border-neutral-200 p-4">
-        <h2 className="mb-2 text-sm font-medium text-neutral-500">{t("account")}</h2>
-        <p>{profile.full_name ?? user.email}</p>
-        <p className="text-sm text-neutral-600">{garage?.name}</p>
+      <section className="mb-8 flex items-center justify-center rounded-2xl border border-neutral-200 p-4">
+        {garage?.logo_url ? (
+          // eslint-disable-next-line @next/next/no-img-element -- logo du garage (Supabase Storage), taille variable
+          <img
+            src={garage.logo_url}
+            alt={garage.name}
+            className="h-20 w-20 rounded-xl object-contain"
+          />
+        ) : (
+          <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-neutral-100 text-3xl">
+            🏢
+          </div>
+        )}
       </section>
 
       <section className="rounded-2xl border border-neutral-200 p-4">

@@ -52,7 +52,6 @@
   },
   "dashboard": {
     "connectedTo": "Ligado a",
-    "account": "A sua conta",
     "role": {
       "owner": "Proprietário",
       "mechanic": "Mecânico",

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
+import { formatPriceHt } from "@/lib/pricing";
 import { SubscribeButton, ManageSubscriptionButton } from "./BillingActions";
 
 function daysLeftUntil(date: Date): number {
@@ -25,10 +26,20 @@ export default async function BillingPage() {
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("id, name, subscription_plan, payment_status, trial_ends_at, stripe_customer_id")
+    .select(
+      "id, name, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country",
+    )
     .eq("id", profile.garage_id)
     .single();
   if (!garage) redirect("/dashboard");
+
+  const { data: plan } = garage.billing_country
+    ? await supabase
+        .from("pricing_plans")
+        .select("country_label, currency, amount_ht")
+        .eq("country_code", garage.billing_country)
+        .single()
+    : { data: null };
 
   const isOwner = profile.role === "owner";
   const active = hasActiveAccess(garage);
@@ -64,6 +75,11 @@ export default async function BillingPage() {
         <p className="text-sm text-neutral-500">Statut de {garage.name}</p>
         <p className="text-lg font-medium">{statusLabel}</p>
         {statusDetail && <p className="mt-1 text-sm text-neutral-600">{statusDetail}</p>}
+        {plan && garage.payment_status !== "free" && (
+          <p className="mt-1 text-sm text-neutral-600">
+            {plan.country_label} — {formatPriceHt(plan)}
+          </p>
+        )}
       </div>
 
       {!active && !isOwner && (

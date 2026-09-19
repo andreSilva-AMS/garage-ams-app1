@@ -9,6 +9,7 @@ type OwnerGarage = {
   id: string;
   name: string;
   stripe_customer_id: string | null;
+  billing_country: string | null;
 };
 
 type OwnerGarageResult =
@@ -34,7 +35,7 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("id, name, stripe_customer_id")
+    .select("id, name, stripe_customer_id, billing_country")
     .eq("id", profile.garage_id)
     .single();
   if (!garage) return { error: "Garage introuvable." as const };
@@ -46,6 +47,27 @@ export async function createCheckoutSession(): Promise<ActionResult> {
   const result = await getOwnerGarage();
   if ("error" in result) return { ok: false, error: result.error };
   const { supabase, garage } = result;
+
+  if (!garage.billing_country) {
+    return {
+      ok: false,
+      error: "Aucun pays de facturation renseigné pour ce garage. Contactez le support.",
+    };
+  }
+
+  const { data: plan } = await supabase
+    .from("pricing_plans")
+    .select("stripe_price_id")
+    .eq("country_code", garage.billing_country)
+    .eq("active", true)
+    .single();
+
+  if (!plan?.stripe_price_id) {
+    return {
+      ok: false,
+      error: "Le tarif pour ce pays n'est pas encore configuré. Contactez le support.",
+    };
+  }
 
   const stripe = getStripeClient();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
@@ -63,7 +85,7 @@ export async function createCheckoutSession(): Promise<ActionResult> {
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     customer: customerId,
-    line_items: [{ price: process.env.STRIPE_PRICE_ID!, quantity: 1 }],
+    line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
     success_url: `${baseUrl}/billing?success=true`,
     cancel_url: `${baseUrl}/billing?canceled=true`,
   });

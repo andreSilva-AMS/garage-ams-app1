@@ -197,32 +197,45 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         return path;
       }
 
+      // Tout ce qui suit est indépendant (photos, signature, logo du garage,
+      // traduction) : lancé en parallèle plutôt qu'en série pour ne pas
+      // attendre chaque envoi l'un après l'autre (jusqu'à une quinzaine
+      // d'envois pour une fiche avec beaucoup de photos supplémentaires).
+      const angles = (["front", "back", "left", "right"] as Angle[]).filter((a) => photos[a]);
+
+      const [angleResults, cardGreyPath, extraPhotoUploads, signatureResult, garageLogoDataUrl] =
+        await Promise.all([
+          Promise.all(
+            angles.map(async (angle) => {
+              const p = photos[angle]!;
+              const path = await upload(`${angle}.jpg`, p.blob);
+              return { angle, path, dataUrl: p.dataUrl };
+            }),
+          ),
+          cardGrey ? upload("carte-grise.jpg", cardGrey.blob) : Promise.resolve(null),
+          Promise.all(
+            extraPhotos.map(async (photo, i) => {
+              const path = await upload(`extra-${i + 1}.jpg`, photo.blob);
+              return { path, caption: photo.caption, dataUrl: photo.dataUrl };
+            }),
+          ),
+          (async () => {
+            if (!signatureDataUrl) return null;
+            const signatureJpeg = await shrinkDataUrl(signatureDataUrl, 900, 0.82);
+            const path = await upload("signature.jpg", await (await fetch(signatureJpeg)).blob());
+            return { path, signatureJpeg };
+          })(),
+          garage.logo_url ? urlToDataUrl(garage.logo_url) : Promise.resolve(null),
+        ]);
+
       const photoPaths: Partial<Record<Angle, string>> = {};
       const photoDataUrls: Partial<Record<Angle, string>> = {};
-      for (const angle of ["front", "back", "left", "right"] as Angle[]) {
-        const p = photos[angle];
-        if (p) {
-          photoPaths[angle] = await upload(`${angle}.jpg`, p.blob);
-          photoDataUrls[angle] = p.dataUrl;
-        }
+      for (const { angle, path, dataUrl } of angleResults) {
+        photoPaths[angle] = path;
+        photoDataUrls[angle] = dataUrl;
       }
-      const cardGreyPath = cardGrey ? await upload("carte-grise.jpg", cardGrey.blob) : null;
-
-      const extraPhotoUploads: { path: string; caption: string; dataUrl: string }[] = [];
-      for (let i = 0; i < extraPhotos.length; i++) {
-        const photo = extraPhotos[i];
-        const path = await upload(`extra-${i + 1}.jpg`, photo.blob);
-        extraPhotoUploads.push({ path, caption: photo.caption, dataUrl: photo.dataUrl });
-      }
-
-      const signatureJpeg = signatureDataUrl
-        ? await shrinkDataUrl(signatureDataUrl, 900, 0.82)
-        : null;
-      const signaturePath = signatureJpeg
-        ? await upload("signature.jpg", await (await fetch(signatureJpeg)).blob())
-        : null;
-
-      const garageLogoDataUrl = garage.logo_url ? await urlToDataUrl(garage.logo_url) : null;
+      const signaturePath = signatureResult?.path ?? null;
+      const signatureJpeg = signatureResult?.signatureJpeg ?? null;
 
       // Le texte libre est saisi dans la langue de l'interface (appLocale) ;
       // s'il doit apparaître dans un document rédigé dans une autre langue

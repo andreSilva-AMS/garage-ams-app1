@@ -17,22 +17,25 @@ export default async function SettingsPage() {
     .single();
   if (!profile) redirect("/dashboard");
 
-  const { data: garage } = await supabase
-    .from("garages")
-    .select("id, name, address, logo_url, default_language")
-    .eq("id", profile.garage_id)
-    .single();
-  if (!garage) redirect("/dashboard");
-
   const isOwner = profile.role === "owner";
 
-  const { data: pendingInvites } = isOwner
-    ? await supabase
-        .from("garage_invites")
-        .select("id, email, role, created_at")
-        .is("accepted_at", null)
-        .order("created_at", { ascending: false })
-    : { data: null };
+  // Les deux requêtes ne dépendent que du profil déjà chargé, pas l'une de
+  // l'autre : lancées en parallèle plutôt qu'en série.
+  const [{ data: garage }, { data: pendingInvites }] = await Promise.all([
+    supabase
+      .from("garages")
+      .select("id, name, address, logo_url, default_language")
+      .eq("id", profile.garage_id)
+      .single(),
+    isOwner
+      ? supabase
+          .from("garage_invites")
+          .select("id, email, role, created_at")
+          .is("accepted_at", null)
+          .order("created_at", { ascending: false })
+      : Promise.resolve({ data: null }),
+  ]);
+  if (!garage) redirect("/dashboard");
 
   return (
     <GarageSettingsForm garage={garage} isOwner={isOwner} pendingInvites={pendingInvites ?? []} />

@@ -42,13 +42,23 @@ export default async function DashboardPage() {
     redirect("/signup");
   }
 
-  const { data: garage } = await supabase
-    .from("garages")
-    .select(
-      "id, name, address, logo_url, default_language, subscription_plan, payment_status, trial_ends_at",
-    )
-    .eq("id", profile.garage_id)
-    .single();
+  // Les deux requêtes ne dépendent que de profile.garage_id, pas l'une de
+  // l'autre : lancées en parallèle plutôt qu'en série pour économiser un
+  // aller-retour réseau vers la base de données.
+  const [{ data: garage }, { data: teamMembers }] = await Promise.all([
+    supabase
+      .from("garages")
+      .select(
+        "id, name, address, logo_url, default_language, subscription_plan, payment_status, trial_ends_at",
+      )
+      .eq("id", profile.garage_id)
+      .single(),
+    supabase
+      .from("profiles")
+      .select("id, full_name, role")
+      .eq("garage_id", profile.garage_id)
+      .order("created_at", { ascending: true }),
+  ]);
 
   const billingBanner = (() => {
     if (!garage) return null;
@@ -61,12 +71,6 @@ export default async function DashboardPage() {
     }
     return null;
   })();
-
-  const { data: teamMembers } = await supabase
-    .from("profiles")
-    .select("id, full_name, role")
-    .eq("garage_id", profile.garage_id)
-    .order("created_at", { ascending: true });
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">

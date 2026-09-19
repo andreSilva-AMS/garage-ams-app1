@@ -19,6 +19,7 @@
     "password": "Password",
     "submit": "Sign in",
     "submitting": "Signing in…",
+    "rememberMe": "Stay signed in",
     "noAccount": "Don't have an account yet?",
     "signupLink": "Create an account"
   },

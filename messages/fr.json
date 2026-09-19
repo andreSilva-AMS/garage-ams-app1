@@ -19,6 +19,7 @@
     "password": "Mot de passe",
     "submit": "Se connecter",
     "submitting": "Connexion…",
+    "rememberMe": "Rester connecté",
     "noAccount": "Pas encore de garage ?",
     "signupLink": "Créer un compte"
   },

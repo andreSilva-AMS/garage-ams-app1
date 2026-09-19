@@ -19,6 +19,7 @@
     "password": "Contraseña",
     "submit": "Iniciar sesión",
     "submitting": "Conectando…",
+    "rememberMe": "Mantener la sesión iniciada",
     "noAccount": "¿Aún no tiene un taller?",
     "signupLink": "Crear una cuenta"
   },

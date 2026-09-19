@@ -9,11 +9,11 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = createClient();
   const t = useTranslations("login");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,6 +22,13 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
+    // Marqueur lu par le middleware pour appliquer le même choix lors du
+    // rafraîchissement automatique du jeton (voir middleware.ts).
+    document.cookie = remember
+      ? "sb_remember=; path=/; max-age=0"
+      : "sb_remember=0; path=/; SameSite=Lax";
+
+    const supabase = createClient({ remember });
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -75,6 +82,15 @@ export default function LoginPage() {
             className="input"
           />
         </div>
+
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+          />
+          {t("rememberMe")}
+        </label>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 

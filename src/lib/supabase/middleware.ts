@@ -7,10 +7,20 @@ const PUBLIC_PATHS = ["/login", "/signup", "/join"];
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
+  // Reflète le choix fait à la connexion ("Rester connecté" décochée) : sans
+  // ce cookie marqueur (comportement par défaut, y compris pour toute session
+  // déjà ouverte avant ce changement), la session reste persistante comme
+  // avant. Seule une valeur explicite "0" bascule sur des cookies de session
+  // (effacés à la fermeture du navigateur) — y compris lors du rafraîchissement
+  // automatique du jeton ici, sinon il écraserait ce choix avec la valeur par
+  // défaut de @supabase/ssr (~400 jours).
+  const sessionOnly = request.cookies.get("sb_remember")?.value === "0";
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: sessionOnly ? { maxAge: undefined } : undefined,
       cookies: {
         getAll() {
           return request.cookies.getAll();

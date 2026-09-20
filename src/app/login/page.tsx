@@ -19,6 +19,7 @@ export default function LoginPage() {
   const t = useTranslations("login");
   const appLocale = useLocale() as Lang;
   const timedOut = searchParams.get("timeout") === "1";
+  const confirmError = searchParams.get("confirmError") === "1";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,6 +78,12 @@ export default function LoginPage() {
       {timedOut && (
         <p className="mb-4 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
           {t("sessionTimedOut")}
+        </p>
+      )}
+
+      {confirmError && (
+        <p className="mb-4 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+          {t("confirmError")}
         </p>
       )}
 

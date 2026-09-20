@@ -21,6 +21,7 @@
     "submitting": "Connexion…",
     "rememberMe": "Rester connecté",
     "sessionTimedOut": "Vous avez été déconnecté(e) après 24h d'inactivité.",
+    "confirmError": "Ce lien de confirmation n'est plus valable (déjà utilisé ou expiré). Réessayez de vous inscrire, ou connectez-vous si votre compte est déjà confirmé.",
     "noAccount": "Pas encore de garage ?",
     "signupLink": "Créer un compte"
   },

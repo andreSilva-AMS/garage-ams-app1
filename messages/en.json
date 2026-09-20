@@ -21,6 +21,7 @@
     "submitting": "Signing in…",
     "rememberMe": "Stay signed in",
     "sessionTimedOut": "You were signed out after 24h of inactivity.",
+    "confirmError": "This confirmation link is no longer valid (already used or expired). Try signing up again, or sign in if your account is already confirmed.",
     "noAccount": "Don't have an account yet?",
     "signupLink": "Create an account"
   },

@@ -21,6 +21,7 @@
     "submitting": "Conectando…",
     "rememberMe": "Mantener la sesión iniciada",
     "sessionTimedOut": "Se ha cerrado su sesión tras 24h de inactividad.",
+    "confirmError": "Este enlace de confirmación ya no es válido (ya usado o caducado). Vuelva a registrarse, o inicie sesión si su cuenta ya está confirmada.",
     "noAccount": "¿Aún no tiene un taller?",
     "signupLink": "Crear una cuenta"
   },

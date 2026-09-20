@@ -21,6 +21,7 @@
     "submitting": "A entrar…",
     "rememberMe": "Manter sessão iniciada",
     "sessionTimedOut": "A sua sessão foi terminada após 24h de inatividade.",
+    "confirmError": "Este link de confirmação já não é válido (já utilizado ou expirado). Tente inscrever-se novamente, ou inicie sessão se a sua conta já estiver confirmada.",
     "noAccount": "Ainda não tem uma garagem?",
     "signupLink": "Criar uma conta"
   },

@@ -21,6 +21,7 @@
     "submitting": "Accesso in corso…",
     "rememberMe": "Resta connesso",
     "sessionTimedOut": "Sei stato disconnesso dopo 24h di inattività.",
+    "confirmError": "Questo link di conferma non è più valido (già usato o scaduto). Riprova a registrarti, oppure accedi se il tuo account è già confermato.",
     "noAccount": "Non hai ancora un'officina?",
     "signupLink": "Crea un account"
   },

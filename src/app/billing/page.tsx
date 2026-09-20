@@ -47,6 +47,14 @@ export default async function BillingPage() {
     .eq("active", true)
     .order("country_code");
 
+  const { data: subscription } = await supabase
+    .from("subscriptions")
+    .select("cancel_at_period_end, current_period_end")
+    .eq("garage_id", garage.id)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   const isOwner = profile.role === "owner";
   const active = hasActiveAccess(garage);
 
@@ -57,6 +65,10 @@ export default async function BillingPage() {
     statusLabel = "Plan gratuit";
   } else if (garage.payment_status === "active") {
     statusLabel = "Abonnement actif";
+    if (subscription?.cancel_at_period_end && subscription.current_period_end) {
+      const endDate = new Date(subscription.current_period_end);
+      statusDetail = `Résiliation programmée : votre abonnement restera actif jusqu'au ${endDate.toLocaleDateString("fr-CH")}, puis ne sera pas renouvelé.`;
+    }
   } else if (garage.payment_status === "past_due") {
     statusLabel = "Paiement échoué";
     statusDetail = "Merci de mettre à jour votre moyen de paiement pour continuer.";

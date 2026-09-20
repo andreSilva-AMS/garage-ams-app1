@@ -21,6 +21,7 @@
     "submitting": "Anmeldung läuft…",
     "rememberMe": "Angemeldet bleiben",
     "sessionTimedOut": "Sie wurden nach 24 Stunden Inaktivität abgemeldet.",
+    "confirmError": "Dieser Bestätigungslink ist nicht mehr gültig (bereits verwendet oder abgelaufen). Registrieren Sie sich erneut, oder melden Sie sich an, falls Ihr Konto bereits bestätigt ist.",
     "noAccount": "Noch keine Werkstatt?",
     "signupLink": "Konto erstellen"
   },

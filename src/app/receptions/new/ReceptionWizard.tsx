@@ -360,6 +360,11 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             <p className="text-sm text-neutral-500">{t("noClientEmail")}</p>
           )}
           {emailStatus === "error" && <p className="text-sm text-red-600">{emailError}</p>}
+          {emailStatus === "sent" && (
+            <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+              {t("sentSpamNotice")}
+            </p>
+          )}
           <a href={done.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
             {t("viewPdf")}
           </a>

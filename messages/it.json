@@ -147,6 +147,7 @@
     "sendEmail": "✉️ Invia al cliente via e-mail",
     "sending": "Invio in corso…",
     "sent": "✓ Inviato al cliente",
+    "sentSpamNotice": "Avviso: se il cliente non trova l'e-mail nella posta in arrivo, chiedigli di controllare la cartella spam / posta indesiderata.",
     "noClientEmail": "Nessuna e-mail del cliente indicata — usa il download qui sotto.",
     "viewPdf": "Visualizza / scarica il PDF",
     "newOne": "Nuova accettazione"

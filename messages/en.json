@@ -147,6 +147,7 @@
     "sendEmail": "✉️ Send to customer by e-mail",
     "sending": "Sending…",
     "sent": "✓ Sent to customer",
+    "sentSpamNotice": "Heads up: if the customer can't find the e-mail in their inbox, ask them to check their spam / junk folder.",
     "noClientEmail": "No customer e-mail on file — use the download below.",
     "viewPdf": "View / download the PDF",
     "newOne": "New reception"

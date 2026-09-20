@@ -147,6 +147,7 @@
     "sendEmail": "✉️ Enviar ao cliente por e-mail",
     "sending": "A enviar…",
     "sent": "✓ Enviado ao cliente",
+    "sentSpamNotice": "Aviso: se o cliente não encontrar o e-mail na caixa de entrada, peça-lhe para verificar a pasta de spam / correio indesejado.",
     "noClientEmail": "Nenhum e-mail de cliente indicado — utilize o download abaixo.",
     "viewPdf": "Ver / descarregar o PDF",
     "newOne": "Nova receção"

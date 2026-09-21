@@ -1,9 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useLocale } from "next-intl";
+import { useState } from "react";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { Lang } from "@/lib/receptions/i18n";
 
-const CONTENT = {
+const CONTENT: Record<
+  Lang,
+  { title: string; updated: string; draftNotice: string; sections: { h: string; p: string }[] }
+> = {
   fr: {
     title: "Politique de confidentialité",
     updated: "Dernière mise à jour : à compléter lors de la mise en ligne",
@@ -92,10 +98,187 @@ const CONTENT = {
       },
     ],
   },
+  es: {
+    title: "Política de privacidad",
+    updated: "Última actualización: a completar antes de la puesta en línea",
+    draftNotice:
+      "Borrador genérico pendiente de revisión jurídica antes de su uso real. El texto entre corchetes [ ] debe completarse con los datos exactos de la sociedad que explota ReceptCar.",
+    sections: [
+      {
+        h: "1. Quién trata sus datos",
+        p: "ReceptCar está editado por [razón social completa, dirección, contacto]. Para los datos introducidos por los talleres clientes (información de sus propios clientes), el Editor actúa como encargado del tratamiento en el sentido del RGPD (Reglamento UE 2016/679); el taller sigue siendo responsable del tratamiento frente a sus propios clientes.",
+      },
+      {
+        h: "2. Datos recopilados",
+        p: "Cuenta del taller: nombre, dirección, teléfono, correo electrónico, idioma, logotipo. Cuentas de usuario: nombre, correo electrónico, rol. Fichas de recepción: nombre, teléfono, correo electrónico del cliente final, matrícula, kilometraje, fotos del vehículo, foto del documento de matriculación (permiso de circulación), firma manuscrita, daños y trabajos constatados — esta información, en particular la foto del documento de matriculación, constituye datos personales en el sentido del RGPD.",
+      },
+      {
+        h: "3. Finalidades",
+        p: "Estos datos se tratan para: prestar el servicio de recepción de vehículos (constatación contradictoria del estado del vehículo), generar y transmitir el documento PDF al cliente final, gestionar las cuentas y suscripciones, y garantizar la seguridad del servicio.",
+      },
+      {
+        h: "4. Base jurídica",
+        p: "Ejecución del contrato celebrado entre el taller y su cliente final (constatación de recepción), interés legítimo del taller (protección en caso de litigio), y para el Editor, ejecución del contrato celebrado con el taller.",
+      },
+      {
+        h: "5. Conservación",
+        p: "Las fichas de recepción (y los archivos asociados, incluidas fotos y PDF) se conservan durante el período elegido por cada taller (30 días por defecto, 12 meses opcional), y después se eliminan automática y definitivamente. Los datos de la cuenta se conservan mientras la cuenta esté activa.",
+      },
+      {
+        h: "6. Alojamiento y subencargados",
+        p: "Los datos se alojan y tratan mediante Supabase (base de datos y almacenamiento de archivos) y Vercel (alojamiento de la aplicación), así como los proveedores de envío de correo electrónico y de pago utilizados por el Servicio (Resend, Stripe). [Completar con la lista exacta y la ubicación de los servidores en su caso.]",
+      },
+      {
+        h: "7. Derechos de las personas",
+        p: "Toda persona interesada (cliente final de un taller o usuario del Servicio) puede ejercer sus derechos de acceso, rectificación, supresión y oposición ante el taller correspondiente (responsable del tratamiento para sus propios clientes) o ante el Editor para los datos de la cuenta, en [dirección de correo electrónico de contacto].",
+      },
+      {
+        h: "8. Seguridad",
+        p: "El Servicio aplica medidas técnicas de seguridad: aislamiento estricto de los datos entre talleres (control de acceso aplicado a nivel de la base de datos), almacenamiento de archivos en un espacio privado con acceso temporal limitado en el tiempo, cifrado de las comunicaciones (HTTPS).",
+      },
+      {
+        h: "9. Contacto",
+        p: "Para cualquier pregunta relativa a esta política o para ejercer sus derechos: [dirección de correo electrónico de contacto].",
+      },
+    ],
+  },
+  pt: {
+    title: "Política de privacidade",
+    updated: "Última atualização: a completar antes da entrada em produção",
+    draftNotice:
+      "Rascunho genérico pendente de revisão jurídica antes de uma utilização real. O texto entre parênteses retos [ ] deve ser completado com os dados exatos da sociedade que explora o ReceptCar.",
+    sections: [
+      {
+        h: "1. Quem trata os seus dados",
+        p: "O ReceptCar é publicado por [razão social completa, endereço, contacto]. Para os dados introduzidos pelas oficinas clientes (informações dos seus próprios clientes), o Editor atua como subcontratante na aceção do RGPD; a oficina continua a ser responsável pelo tratamento perante os seus próprios clientes.",
+      },
+      {
+        h: "2. Dados recolhidos",
+        p: "Conta da oficina: nome, morada, telefone, e-mail, idioma, logótipo. Contas de utilizador: nome, e-mail, função. Fichas de receção: nome, telefone, e-mail do cliente final, matrícula, quilometragem, fotos do veículo, foto do documento do veículo, assinatura manuscrita, danos e trabalhos constatados — estas informações, nomeadamente a foto do documento do veículo, constituem dados pessoais na aceção do RGPD.",
+      },
+      {
+        h: "3. Finalidades",
+        p: "Estes dados são tratados para: prestar o serviço de receção de veículos (constatação contraditória do estado do veículo), gerar e transmitir o documento PDF ao cliente final, gerir as contas e subscrições, e garantir a segurança do serviço.",
+      },
+      {
+        h: "4. Base jurídica",
+        p: "Execução do contrato celebrado entre a oficina e o seu cliente final (constatação de receção), interesse legítimo da oficina (proteção em caso de litígio), e para o Editor, execução do contrato celebrado com a oficina.",
+      },
+      {
+        h: "5. Conservação",
+        p: "As fichas de receção (e os ficheiros associados, incluindo fotos e PDF) são conservadas durante o período escolhido por cada oficina (30 dias por defeito, 12 meses opcional), sendo depois eliminadas automática e definitivamente. Os dados da conta são conservados enquanto a conta estiver ativa.",
+      },
+      {
+        h: "6. Alojamento e subcontratantes",
+        p: "Os dados são alojados e tratados pela Supabase (base de dados e armazenamento de ficheiros) e pela Vercel (alojamento da aplicação), bem como pelos prestadores de envio de e-mail e de pagamento utilizados pelo Serviço (Resend, Stripe). [Completar com a lista exata e a localização dos servidores, se aplicável.]",
+      },
+      {
+        h: "7. Direitos dos titulares",
+        p: "Qualquer titular dos dados (cliente final de uma oficina ou utilizador do Serviço) pode exercer os seus direitos de acesso, retificação, apagamento e oposição junto da oficina em causa (responsável pelo tratamento para os seus próprios clientes) ou junto do Editor para os dados da conta, em [endereço de e-mail de contacto].",
+      },
+      {
+        h: "8. Segurança",
+        p: "O Serviço aplica medidas técnicas de segurança: isolamento estrito dos dados entre oficinas (controlo de acesso aplicado ao nível da base de dados), armazenamento de ficheiros num espaço privado com acesso temporário limitado no tempo, encriptação das comunicações (HTTPS).",
+      },
+      {
+        h: "9. Contacto",
+        p: "Para qualquer questão relativa a esta política ou para exercer os seus direitos: [endereço de e-mail de contacto].",
+      },
+    ],
+  },
+  de: {
+    title: "Datenschutzrichtlinie",
+    updated: "Letzte Aktualisierung: vor der Veröffentlichung zu ergänzen",
+    draftNotice:
+      "Generischer Entwurf, der vor der tatsächlichen Nutzung rechtlich geprüft werden muss. Die Angaben in eckigen Klammern [ ] müssen mit den genauen Angaben der Gesellschaft, die ReceptCar betreibt, ergänzt werden.",
+    sections: [
+      {
+        h: "1. Wer Ihre Daten verarbeitet",
+        p: "ReceptCar wird herausgegeben von [vollständiger Firmenname, Adresse, Kontakt]. Für Daten, die von den Kunden-Werkstätten eingegeben werden (Informationen über deren eigene Kunden), handelt der Anbieter als Auftragsverarbeiter im Sinne der DSGVO (EU-Verordnung 2016/679) und des revDSG; die Werkstatt bleibt gegenüber ihren eigenen Kunden für die Verarbeitung verantwortlich.",
+      },
+      {
+        h: "2. Erhobene Daten",
+        p: "Werkstattkonto: Name, Adresse, Telefon, E-Mail, Sprache, Logo. Benutzerkonten: Name, E-Mail, Rolle. Annahmeprotokolle: Name, Telefon, E-Mail des Endkunden, Kennzeichen, Kilometerstand, Fahrzeugfotos, Foto des Fahrzeugausweises, handschriftliche Unterschrift, festgestellte Schäden und Arbeiten — diese Informationen, insbesondere das Foto des Fahrzeugausweises, stellen personenbezogene Daten im Sinne der DSGVO dar.",
+      },
+      {
+        h: "3. Zwecke",
+        p: "Diese Daten werden verarbeitet, um: den Fahrzeug-Annahmedienst zu erbringen (gemeinsame Feststellung des Fahrzeugzustands), das PDF-Dokument zu erstellen und an den Endkunden zu übermitteln, Konten und Abonnements zu verwalten und die Sicherheit des Dienstes zu gewährleisten.",
+      },
+      {
+        h: "4. Rechtsgrundlage",
+        p: "Erfüllung des zwischen der Werkstatt und ihrem Endkunden geschlossenen Vertrags (Annahmeprotokoll), berechtigtes Interesse der Werkstatt (Schutz im Streitfall) und für den Anbieter die Erfüllung des mit der Werkstatt geschlossenen Vertrags.",
+      },
+      {
+        h: "5. Aufbewahrung",
+        p: "Annahmeprotokolle (und zugehörige Dateien, einschließlich Fotos und PDF) werden für die von jeder Werkstatt gewählte Dauer aufbewahrt (standardmäßig 30 Tage, optional 12 Monate) und anschließend automatisch und endgültig gelöscht. Kontodaten werden aufbewahrt, solange das Konto aktiv ist.",
+      },
+      {
+        h: "6. Hosting und Auftragsverarbeiter",
+        p: "Die Daten werden von Supabase (Datenbank und Dateispeicherung) und Vercel (Hosting der Anwendung) sowie von den vom Dienst genutzten E-Mail- und Zahlungsanbietern (Resend, Stripe) gehostet und verarbeitet. [Bei Bedarf mit der genauen Liste und den Serverstandorten ergänzen.]",
+      },
+      {
+        h: "7. Rechte der betroffenen Personen",
+        p: "Jede betroffene Person (Endkunde einer Werkstatt oder Nutzer des Dienstes) kann ihre Rechte auf Auskunft, Berichtigung, Löschung und Widerspruch bei der betreffenden Werkstatt (Verantwortliche für ihre eigenen Kunden) oder für Kontodaten beim Anbieter unter [Kontakt-E-Mail-Adresse] geltend machen.",
+      },
+      {
+        h: "8. Sicherheit",
+        p: "Der Dienst wendet technische Sicherheitsmaßnahmen an: strikte Datentrennung zwischen Werkstätten (Zugriffskontrolle auf Datenbankebene), Speicherung von Dateien in einem privaten Bereich mit zeitlich begrenztem Zugriff, verschlüsselte Kommunikation (HTTPS).",
+      },
+      {
+        h: "9. Kontakt",
+        p: "Für Fragen zu dieser Richtlinie oder zur Ausübung Ihrer Rechte: [Kontakt-E-Mail-Adresse].",
+      },
+    ],
+  },
+  it: {
+    title: "Informativa sulla privacy",
+    updated: "Ultimo aggiornamento: da completare prima della messa online",
+    draftNotice:
+      "Bozza generica in attesa di revisione legale prima dell'uso reale. Le indicazioni tra parentesi quadre [ ] devono essere completate con i dati esatti della società che gestisce ReceptCar.",
+    sections: [
+      {
+        h: "1. Chi tratta i vostri dati",
+        p: "ReceptCar è pubblicato da [ragione sociale completa, indirizzo, contatto]. Per i dati inseriti dalle officine clienti (informazioni dei loro propri clienti), l'Editore agisce come responsabile del trattamento ai sensi del GDPR (Regolamento UE 2016/679); l'officina rimane titolare del trattamento nei confronti dei propri clienti.",
+      },
+      {
+        h: "2. Dati raccolti",
+        p: "Account officina: nome, indirizzo, telefono, e-mail, lingua, logo. Account utente: nome, e-mail, ruolo. Schede di accettazione: nome, telefono, e-mail del cliente finale, targa, chilometraggio, foto del veicolo, foto del documento di circolazione, firma autografa, danni e lavori constatati — queste informazioni, in particolare la foto del documento di circolazione, costituiscono dati personali ai sensi del GDPR.",
+      },
+      {
+        h: "3. Finalità",
+        p: "Questi dati sono trattati per: fornire il servizio di accettazione veicolo (constatazione condivisa dello stato del veicolo), generare e trasmettere il documento PDF al cliente finale, gestire gli account e gli abbonamenti, garantire la sicurezza del servizio.",
+      },
+      {
+        h: "4. Base giuridica",
+        p: "Esecuzione del contratto concluso tra l'officina e il suo cliente finale (verbale di accettazione), legittimo interesse dell'officina (tutela in caso di controversia), e per l'Editore, esecuzione del contratto concluso con l'officina.",
+      },
+      {
+        h: "5. Conservazione",
+        p: "Le schede di accettazione (e i file associati, incluse foto e PDF) sono conservate per il periodo scelto da ciascuna officina (30 giorni per impostazione predefinita, 12 mesi opzionali), quindi eliminate automaticamente e definitivamente. I dati dell'account sono conservati finché l'account resta attivo.",
+      },
+      {
+        h: "6. Hosting e subresponsabili",
+        p: "I dati sono ospitati e trattati da Supabase (database e archiviazione file) e Vercel (hosting dell'applicazione), nonché dai fornitori di invio e-mail e di pagamento utilizzati dal Servizio (Resend, Stripe). [Completare con l'elenco esatto e le sedi dei server, se applicabile.]",
+      },
+      {
+        h: "7. Diritti degli interessati",
+        p: "Ogni interessato (cliente finale di un'officina o utente del Servizio) può esercitare i propri diritti di accesso, rettifica, cancellazione e opposizione presso l'officina interessata (titolare del trattamento per i propri clienti) o presso l'Editore per i dati dell'account, all'indirizzo [indirizzo e-mail di contatto].",
+      },
+      {
+        h: "8. Sicurezza",
+        p: "Il Servizio applica misure tecniche di sicurezza: rigoroso isolamento dei dati tra officine (controllo degli accessi applicato a livello di database), archiviazione dei file in uno spazio privato con accesso temporaneo limitato nel tempo, comunicazioni cifrate (HTTPS).",
+      },
+      {
+        h: "9. Contatto",
+        p: "Per qualsiasi domanda relativa alla presente informativa o per esercitare i propri diritti: [indirizzo e-mail di contatto].",
+      },
+    ],
+  },
 };
 
 export default function PrivacyPage() {
-  const [lang, setLang] = useState<"fr" | "en">("fr");
+  const appLocale = useLocale() as Lang;
+  const [lang, setLang] = useState<Lang>(appLocale);
   const c = CONTENT[lang];
 
   return (
@@ -104,22 +287,7 @@ export default function PrivacyPage() {
         <Link href="/" className="text-sm underline">
           ReceptCar
         </Link>
-        <div className="flex gap-2 text-sm">
-          <button
-            type="button"
-            onClick={() => setLang("fr")}
-            className={lang === "fr" ? "font-semibold underline" : "text-neutral-500"}
-          >
-            FR
-          </button>
-          <button
-            type="button"
-            onClick={() => setLang("en")}
-            className={lang === "en" ? "font-semibold underline" : "text-neutral-500"}
-          >
-            EN
-          </button>
-        </div>
+        <LanguageSwitcher value={lang} onChange={setLang} />
       </div>
 
       <h1 className="mb-1 text-2xl font-semibold">{c.title}</h1>

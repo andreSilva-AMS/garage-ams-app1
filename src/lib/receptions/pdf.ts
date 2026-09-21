@@ -62,18 +62,24 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
   }
 
   // ---------------------------------------------------------------------
-  // En-tête : garage, coordonnées, numéro de fiche, date/heure.
+  // En-tête : logo, garage, coordonnées, date/heure. Le titre du document
+  // et le numéro de fiche sont reportés en pied de page (voir plus bas).
   // ---------------------------------------------------------------------
+  const numberLabel = `${t.receptionNumberLabel} ${String(input.receptionNumber).padStart(6, "0")}`;
+
+  if (input.garageLogoDataUrl) {
+    try {
+      doc.addImage(input.garageLogoDataUrl, PAGE_WIDTH - margin - 20, y, 20, 20);
+    } catch {
+      // logo illisible (format non supporté) : on continue sans bloquer la génération
+    }
+  }
+
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
-  doc.text(input.garageName, margin, y);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
   doc.setTextColor(20);
-  const numberLabel = `${t.receptionNumberLabel} ${String(input.receptionNumber).padStart(6, "0")}`;
-  doc.text(numberLabel, PAGE_WIDTH - margin, y, { align: "right" });
-  y += 6;
+  doc.text(input.garageName, margin, y + 5);
+  y += 11;
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
@@ -87,17 +93,8 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
     doc.text(contactBits.join("  ·  "), margin, y);
     y += 5;
   }
-  doc.text(t.docTitle, margin, y);
-  y += 5;
   doc.text(formatGarageDateTime(new Date(), input.timezone), margin, y);
-  y += 6;
-  if (input.garageLogoDataUrl) {
-    try {
-      doc.addImage(input.garageLogoDataUrl, PAGE_WIDTH - margin - 16, margin - 9, 16, 16);
-    } catch {
-      // logo illisible (format non supporté) : on continue sans bloquer la génération
-    }
-  }
+  y += 8;
   doc.setDrawColor(210);
   doc.line(margin, y, PAGE_WIDTH - margin, y);
   y += 8;
@@ -272,6 +269,22 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
         doc.text(captionLines.slice(0, 2), x, cellY + cellH2 + 4);
       }
     });
+  }
+
+  // ---------------------------------------------------------------------
+  // Pied de page : titre du document + numéro de fiche, sur chaque page.
+  // ---------------------------------------------------------------------
+  const footerLabel = `${t.docTitle}  ·  ${numberLabel}`;
+  const footerY = PAGE_HEIGHT - 10;
+  const pageCount = doc.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setDrawColor(220);
+    doc.line(margin, footerY - 4, PAGE_WIDTH - margin, footerY - 4);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8.5);
+    doc.setTextColor(140);
+    doc.text(footerLabel, PAGE_WIDTH / 2, footerY, { align: "center" });
   }
 
   return doc;

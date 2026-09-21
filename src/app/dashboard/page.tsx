@@ -44,7 +44,7 @@ export default async function DashboardPage() {
     supabase
       .from("garages")
       .select(
-        "id, name, address, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at",
+        "id, name, address, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at, onboarding_completed",
       )
       .eq("id", profile.garage_id)
       .single(),
@@ -54,6 +54,10 @@ export default async function DashboardPage() {
       .order("created_at", { ascending: false })
       .limit(LATEST_RECEPTIONS_LIMIT),
   ]);
+
+  if (garage && !garage.onboarding_completed && profile.role === "owner") {
+    redirect("/onboarding");
+  }
 
   const timezone = getGarageTimezone(garage ?? {});
   const startOfToday = startOfTodayInTimezone(timezone);

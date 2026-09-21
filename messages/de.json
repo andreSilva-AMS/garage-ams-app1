@@ -19,7 +19,8 @@
     "billing": "Abrechnung",
     "menu": "Hauptmenü",
     "openMenu": "Menü öffnen",
-    "closeMenu": "Menü schließen"
+    "closeMenu": "Menü schließen",
+    "help": "Hilfe"
   },
   "login": {
     "title": "Anmelden",
@@ -120,6 +121,36 @@
     "inviteSending": "Wird gesendet…",
     "inviteSent": "Einladung gesendet.",
     "invitePending": "ausstehend"
+  },
+  "onboarding": {
+    "step": "Schritt {step} / 3",
+    "stepNames": {
+      "logo": "Logo",
+      "contact": "Kontaktdaten",
+      "language": "Sprache"
+    },
+    "logoStepTitle": "Fügen Sie Ihr Logo hinzu",
+    "logoStepBody": "Es erscheint im Banner der Anwendung und auf den an Ihre Kunden gesendeten PDF-Protokollen.",
+    "contactStepTitle": "Ihre Kontaktdaten",
+    "contactStepBody": "Sie werden im Kopfbereich der an Ihre Kunden gesendeten PDF-Protokolle angezeigt.",
+    "languageStepTitle": "Standardsprache",
+    "languageStepBody": "Wird für die Benutzeroberfläche der Anwendung und standardmäßig für an Kunden gesendete Dokumente verwendet (pro Protokoll änderbar).",
+    "skip": "Assistent überspringen",
+    "finish": "Fertigstellen",
+    "finishing": "Wird gespeichert…"
+  },
+  "help": {
+    "title": "So funktioniert's",
+    "intro": "ReceptCar hilft Ihnen, jede Fahrzeugannahme in wenigen Minuten zu dokumentieren.",
+    "step1Title": "1. Neue Annahme",
+    "step1Body": "Tippen Sie im Dashboard auf „Neue Annahme“.",
+    "step2Title": "2. Folgen Sie den 5 Schritten",
+    "step2Body": "Kunde, Fahrzeugfotos, gewünschte Arbeiten, Unterschrift und dann Zusammenfassung.",
+    "step3Title": "3. Automatischer Versand",
+    "step3Body": "Sobald das Protokoll erstellt ist, wird es dem Kunden per E-Mail mit dem PDF im Anhang gesendet.",
+    "step4Title": "4. Verlauf",
+    "step4Body": "Finden Sie alle Ihre Protokolle, deren Versandstatus und PDF unter „Verlauf“.",
+    "settingsNote": "Passen Sie Logo, Kontaktdaten und Sprache Ihrer Werkstatt unter „Einstellungen“ an."
   },
   "receptionsHistory": {
     "title": "Annahmeverlauf",

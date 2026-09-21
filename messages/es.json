@@ -19,7 +19,8 @@
     "billing": "Facturación",
     "menu": "Menú principal",
     "openMenu": "Abrir el menú",
-    "closeMenu": "Cerrar el menú"
+    "closeMenu": "Cerrar el menú",
+    "help": "Ayuda"
   },
   "login": {
     "title": "Iniciar sesión",
@@ -120,6 +121,36 @@
     "inviteSending": "Enviando…",
     "inviteSent": "Invitación enviada.",
     "invitePending": "pendiente"
+  },
+  "onboarding": {
+    "step": "Paso {step} / 3",
+    "stepNames": {
+      "logo": "Logotipo",
+      "contact": "Datos de contacto",
+      "language": "Idioma"
+    },
+    "logoStepTitle": "Añada su logotipo",
+    "logoStepBody": "Aparecerá en la barra de la aplicación y en las fichas PDF enviadas a sus clientes.",
+    "contactStepTitle": "Sus datos de contacto",
+    "contactStepBody": "Se mostrarán en el encabezado de las fichas PDF enviadas a sus clientes.",
+    "languageStepTitle": "Idioma predeterminado",
+    "languageStepBody": "Se usa para la interfaz de la aplicación y, por defecto, para los documentos enviados a los clientes (modificable en cada ficha).",
+    "skip": "Omitir el asistente",
+    "finish": "Finalizar",
+    "finishing": "Guardando…"
+  },
+  "help": {
+    "title": "Cómo funciona",
+    "intro": "ReceptCar le ayuda a documentar cada recepción de vehículo en unos minutos.",
+    "step1Title": "1. Nueva recepción",
+    "step1Body": "Desde el panel, pulse «Nueva recepción».",
+    "step2Title": "2. Siga los 5 pasos",
+    "step2Body": "Cliente, fotos del vehículo, trabajos solicitados, firma y luego resumen.",
+    "step3Title": "3. Envío automático",
+    "step3Body": "Una vez generada la ficha, se envía por correo al cliente con el PDF adjunto.",
+    "step4Title": "4. Historial",
+    "step4Body": "Encuentre todas sus fichas, su estado de envío y su PDF en «Historial».",
+    "settingsNote": "Personalice el logotipo, los datos de contacto y el idioma de su taller en «Configuración»."
   },
   "receptionsHistory": {
     "title": "Historial de recepciones",

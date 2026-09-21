@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import {
   Building2,
   CreditCard,
+  HelpCircle,
   History,
   LayoutDashboard,
   LogOut,
@@ -21,7 +22,7 @@ import { signOut } from "@/lib/supabase/actions";
 interface NavItem {
   href: string;
   icon: LucideIcon;
-  labelKey: "dashboard" | "newReception" | "history" | "billing" | "settings";
+  labelKey: "dashboard" | "newReception" | "history" | "billing" | "settings" | "help";
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -30,6 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/receptions", icon: History, labelKey: "history" },
   { href: "/billing", icon: CreditCard, labelKey: "billing" },
   { href: "/settings", icon: Settings, labelKey: "settings" },
+  { href: "/help", icon: HelpCircle, labelKey: "help" },
 ];
 
 function GarageBadge({ garageName, logoUrl }: { garageName: string; logoUrl: string | null }) {

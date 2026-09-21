@@ -19,7 +19,8 @@
     "billing": "Facturation",
     "menu": "Menu principal",
     "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu"
+    "closeMenu": "Fermer le menu",
+    "help": "Aide"
   },
   "login": {
     "title": "Connexion",
@@ -120,6 +121,36 @@
     "inviteSending": "Envoi…",
     "inviteSent": "Invitation envoyée.",
     "invitePending": "en attente"
+  },
+  "onboarding": {
+    "step": "Étape {step} / 3",
+    "stepNames": {
+      "logo": "Logo",
+      "contact": "Coordonnées",
+      "language": "Langue"
+    },
+    "logoStepTitle": "Ajoutez votre logo",
+    "logoStepBody": "Il apparaîtra dans le bandeau de l'application et sur les fiches PDF envoyées à vos clients.",
+    "contactStepTitle": "Vos coordonnées",
+    "contactStepBody": "Elles seront affichées dans l'en-tête des fiches PDF envoyées à vos clients.",
+    "languageStepTitle": "Langue par défaut",
+    "languageStepBody": "Utilisée pour l'interface de l'application et, par défaut, pour les documents envoyés aux clients (modifiable pour chaque fiche).",
+    "skip": "Passer l'assistant",
+    "finish": "Terminer",
+    "finishing": "Enregistrement…"
+  },
+  "help": {
+    "title": "Comment ça marche",
+    "intro": "ReceptCar vous aide à documenter chaque réception de véhicule en quelques minutes.",
+    "step1Title": "1. Nouvelle réception",
+    "step1Body": "Depuis le tableau de bord, appuyez sur « Nouvelle réception ».",
+    "step2Title": "2. Suivez les 5 étapes",
+    "step2Body": "Client, photos du véhicule, interventions demandées, signature, puis récapitulatif.",
+    "step3Title": "3. Envoi automatique",
+    "step3Body": "Une fois la fiche générée, elle est envoyée par e-mail au client avec le PDF en pièce jointe.",
+    "step4Title": "4. Historique",
+    "step4Body": "Retrouvez toutes vos fiches, leur statut d'envoi et leur PDF dans « Historique ».",
+    "settingsNote": "Personnalisez le logo, les coordonnées et la langue de votre garage dans « Réglages »."
   },
   "receptionsHistory": {
     "title": "Historique des réceptions",

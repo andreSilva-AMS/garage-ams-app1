@@ -19,7 +19,8 @@
     "billing": "Fatturazione",
     "menu": "Menu principale",
     "openMenu": "Apri il menu",
-    "closeMenu": "Chiudi il menu"
+    "closeMenu": "Chiudi il menu",
+    "help": "Guida"
   },
   "login": {
     "title": "Accedi",
@@ -120,6 +121,36 @@
     "inviteSending": "Invio…",
     "inviteSent": "Invito inviato.",
     "invitePending": "in attesa"
+  },
+  "onboarding": {
+    "step": "Passo {step} / 3",
+    "stepNames": {
+      "logo": "Logo",
+      "contact": "Dati di contatto",
+      "language": "Lingua"
+    },
+    "logoStepTitle": "Aggiungi il tuo logo",
+    "logoStepBody": "Apparirà nel banner dell'applicazione e sulle schede PDF inviate ai tuoi clienti.",
+    "contactStepTitle": "I tuoi dati di contatto",
+    "contactStepBody": "Saranno mostrati nell'intestazione delle schede PDF inviate ai tuoi clienti.",
+    "languageStepTitle": "Lingua predefinita",
+    "languageStepBody": "Usata per l'interfaccia dell'applicazione e, per impostazione predefinita, per i documenti inviati ai clienti (modificabile per ogni scheda).",
+    "skip": "Salta la configurazione",
+    "finish": "Termina",
+    "finishing": "Salvataggio…"
+  },
+  "help": {
+    "title": "Come funziona",
+    "intro": "ReceptCar ti aiuta a documentare ogni accettazione di veicolo in pochi minuti.",
+    "step1Title": "1. Nuova accettazione",
+    "step1Body": "Dal pannello, tocca «Nuova accettazione».",
+    "step2Title": "2. Segui i 5 passi",
+    "step2Body": "Cliente, foto del veicolo, interventi richiesti, firma, poi riepilogo.",
+    "step3Title": "3. Invio automatico",
+    "step3Body": "Una volta generata la scheda, viene inviata via e-mail al cliente con il PDF allegato.",
+    "step4Title": "4. Storico",
+    "step4Body": "Trova tutte le tue schede, il loro stato di invio e il PDF in «Storico».",
+    "settingsNote": "Personalizza il logo, i dati di contatto e la lingua della tua officina in «Impostazioni»."
   },
   "receptionsHistory": {
     "title": "Storico accettazioni",

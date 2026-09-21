@@ -19,7 +19,8 @@
     "billing": "Billing",
     "menu": "Main menu",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "help": "Help"
   },
   "login": {
     "title": "Sign in",
@@ -120,6 +121,36 @@
     "inviteSending": "Sending…",
     "inviteSent": "Invitation sent.",
     "invitePending": "pending"
+  },
+  "onboarding": {
+    "step": "Step {step} / 3",
+    "stepNames": {
+      "logo": "Logo",
+      "contact": "Contact details",
+      "language": "Language"
+    },
+    "logoStepTitle": "Add your logo",
+    "logoStepBody": "It will appear in the app banner and on the PDF forms sent to your customers.",
+    "contactStepTitle": "Your contact details",
+    "contactStepBody": "They will be shown in the header of the PDF forms sent to your customers.",
+    "languageStepTitle": "Default language",
+    "languageStepBody": "Used for the app interface and, by default, for documents sent to customers (can be changed for each form).",
+    "skip": "Skip setup",
+    "finish": "Finish",
+    "finishing": "Saving…"
+  },
+  "help": {
+    "title": "How it works",
+    "intro": "ReceptCar helps you document every vehicle reception in a few minutes.",
+    "step1Title": "1. New reception",
+    "step1Body": "From the dashboard, tap “New reception”.",
+    "step2Title": "2. Follow the 5 steps",
+    "step2Body": "Customer, vehicle photos, requested work, signature, then summary.",
+    "step3Title": "3. Automatic sending",
+    "step3Body": "Once the form is generated, it is emailed to the customer with the PDF attached.",
+    "step4Title": "4. History",
+    "step4Body": "Find all your forms, their sending status and PDF under “History”.",
+    "settingsNote": "Customize your garage's logo, contact details and language in “Settings”."
   },
   "receptionsHistory": {
     "title": "Reception history",

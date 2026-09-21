@@ -19,7 +19,8 @@
     "billing": "Faturação",
     "menu": "Menu principal",
     "openMenu": "Abrir o menu",
-    "closeMenu": "Fechar o menu"
+    "closeMenu": "Fechar o menu",
+    "help": "Ajuda"
   },
   "login": {
     "title": "Iniciar sessão",
@@ -120,6 +121,36 @@
     "inviteSending": "A enviar…",
     "inviteSent": "Convite enviado.",
     "invitePending": "pendente"
+  },
+  "onboarding": {
+    "step": "Etapa {step} / 3",
+    "stepNames": {
+      "logo": "Logótipo",
+      "contact": "Dados de contacto",
+      "language": "Idioma"
+    },
+    "logoStepTitle": "Adicione o seu logótipo",
+    "logoStepBody": "Vai aparecer na barra da aplicação e nas fichas PDF enviadas aos seus clientes.",
+    "contactStepTitle": "Os seus dados de contacto",
+    "contactStepBody": "Serão apresentados no cabeçalho das fichas PDF enviadas aos seus clientes.",
+    "languageStepTitle": "Idioma predefinido",
+    "languageStepBody": "Utilizado na interface da aplicação e, por defeito, nos documentos enviados aos clientes (pode ser alterado em cada ficha).",
+    "skip": "Ignorar o assistente",
+    "finish": "Concluir",
+    "finishing": "A guardar…"
+  },
+  "help": {
+    "title": "Como funciona",
+    "intro": "O ReceptCar ajuda-o a documentar cada receção de veículo em poucos minutos.",
+    "step1Title": "1. Nova receção",
+    "step1Body": "No painel, toque em «Nova receção».",
+    "step2Title": "2. Siga as 5 etapas",
+    "step2Body": "Cliente, fotos do veículo, trabalhos solicitados, assinatura e depois resumo.",
+    "step3Title": "3. Envio automático",
+    "step3Body": "Assim que a ficha é gerada, é enviada por e-mail ao cliente com o PDF em anexo.",
+    "step4Title": "4. Histórico",
+    "step4Body": "Encontre todas as suas fichas, o estado de envio e o PDF em «Histórico».",
+    "settingsNote": "Personalize o logótipo, os dados de contacto e o idioma da sua garagem em «Definições»."
   },
   "receptionsHistory": {
     "title": "Histórico de receções",

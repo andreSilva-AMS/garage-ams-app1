@@ -24,6 +24,7 @@ export function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [language, setLanguage] = useState<Lang>(appLocale);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pendingConfirmation, setPendingConfirmation] = useState(false);
@@ -150,9 +151,33 @@ export function SignupForm() {
           />
         </Field>
 
+        <label className="flex items-start gap-2 text-sm text-neutral-600">
+          <input
+            type="checkbox"
+            required
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span>
+            {t.rich("acceptTerms", {
+              terms: (chunks) => (
+                <Link href="/terms" target="_blank" className="underline">
+                  {chunks}
+                </Link>
+              ),
+              privacy: (chunks) => (
+                <Link href="/privacy" target="_blank" className="underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </span>
+        </label>
+
         {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button type="submit" disabled={loading} className="btn-primary">
+        <button type="submit" disabled={loading || !acceptedTerms} className="btn-primary">
           {loading ? t("submitting") : t("submit")}
         </button>
       </form>

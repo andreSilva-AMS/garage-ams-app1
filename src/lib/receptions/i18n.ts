@@ -61,7 +61,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Carte grise",
     signature: "Signature du client",
     consent:
-      "Le client certifie l'exactitude des informations ci-dessus et accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception.",
+      "Le client certifie l'exactitude des informations ci-dessus, accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception, et consent au traitement de ses données personnelles (dont la photo du document d'immatriculation) pour les besoins de cette prestation.",
     signedOn: "Signé le",
     none: "—",
     extraPhotosTitle: "Photos supplémentaires",
@@ -91,7 +91,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Registration document",
     signature: "Client signature",
     consent:
-      "The client certifies the accuracy of the above information and accepts the condition of the vehicle as noted and documented by photos upon reception.",
+      "The client certifies the accuracy of the above information, accepts the condition of the vehicle as noted and documented by photos upon reception, and consents to the processing of their personal data (including the photo of the registration document) for the purposes of this service.",
     signedOn: "Signed on",
     none: "—",
     extraPhotosTitle: "Additional photos",
@@ -121,7 +121,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Permiso de circulación",
     signature: "Firma del cliente",
     consent:
-      "El cliente certifica la exactitud de la información anterior y acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción.",
+      "El cliente certifica la exactitud de la información anterior, acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción, y consiente el tratamiento de sus datos personales (incluida la foto del permiso de circulación) para los fines de esta prestación.",
     signedOn: "Firmado el",
     none: "—",
     extraPhotosTitle: "Fotos adicionales",
@@ -151,7 +151,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Documento do veículo",
     signature: "Assinatura do cliente",
     consent:
-      "O cliente certifica a exatidão das informações acima e aceita o estado do veículo tal como constatado e documentado por fotos na receção.",
+      "O cliente certifica a exatidão das informações acima, aceita o estado do veículo tal como constatado e documentado por fotos na receção, e consente o tratamento dos seus dados pessoais (incluindo a foto do documento do veículo) para os fins desta prestação.",
     signedOn: "Assinado em",
     none: "—",
     extraPhotosTitle: "Fotos adicionais",
@@ -181,7 +181,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Fahrzeugausweis",
     signature: "Unterschrift des Kunden",
     consent:
-      "Der Kunde bestätigt die Richtigkeit der obigen Angaben und akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs.",
+      "Der Kunde bestätigt die Richtigkeit der obigen Angaben, akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs und willigt in die Verarbeitung seiner personenbezogenen Daten (einschließlich des Fotos des Fahrzeugausweises) für die Zwecke dieser Dienstleistung ein.",
     signedOn: "Unterschrieben am",
     none: "—",
     extraPhotosTitle: "Zusätzliche Fotos",
@@ -211,7 +211,7 @@ export const I18N: Record<Lang, Dict> = {
     cardGrey: "Libretto di circolazione",
     signature: "Firma del cliente",
     consent:
-      "Il cliente certifica l'esattezza delle informazioni sopra riportate e accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione.",
+      "Il cliente certifica l'esattezza delle informazioni sopra riportate, accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione, e acconsente al trattamento dei propri dati personali (compresa la foto del documento del veicolo) per le finalità di questa prestazione.",
     signedOn: "Firmato il",
     none: "—",
     extraPhotosTitle: "Foto aggiuntive",

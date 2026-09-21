@@ -46,6 +46,7 @@
     "fullName": "Votre nom complet",
     "email": "E-mail",
     "password": "Mot de passe",
+    "acceptTerms": "J'accepte les <terms>conditions d'utilisation</terms> et la <privacy>politique de confidentialité</privacy>.",
     "submit": "Créer mon garage",
     "submitting": "Création en cours…",
     "haveAccount": "Déjà un compte ?",
@@ -156,7 +157,7 @@
     "workDetails": "Détails / autres demandes du client",
     "step4Title": "Signature du client",
     "clearSignature": "Effacer la signature",
-    "consent": "En signant, le client certifie l'exactitude des informations ci-dessus et accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception.",
+    "consent": "En signant, le client certifie l'exactitude des informations ci-dessus, accepte l'état du véhicule tel que constaté et documenté par photos lors de la réception, et consent au traitement de ses données personnelles (dont la photo du document d'immatriculation) pour les besoins de cette prestation.",
     "step5Title": "Récapitulatif",
     "docLanguage": "Langue du document envoyé au client",
     "summary": {

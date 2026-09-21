@@ -46,6 +46,7 @@
     "fullName": "Il tuo nome completo",
     "email": "E-mail",
     "password": "Password",
+    "acceptTerms": "Accetto i <terms>termini di utilizzo</terms> e l'<privacy>informativa sulla privacy</privacy>.",
     "submit": "Crea la mia officina",
     "submitting": "Creazione in corso…",
     "haveAccount": "Hai già un account?",
@@ -156,7 +157,7 @@
     "workDetails": "Dettagli / altre richieste del cliente",
     "step4Title": "Firma del cliente",
     "clearSignature": "Cancella la firma",
-    "consent": "Firmando, il cliente certifica l'esattezza delle informazioni sopra riportate e accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione.",
+    "consent": "Firmando, il cliente certifica l'esattezza delle informazioni sopra riportate, accetta lo stato del veicolo così come constatato e documentato con foto al momento dell'accettazione, e acconsente al trattamento dei propri dati personali (compresa la foto del documento del veicolo) per le finalità di questa prestazione.",
     "step5Title": "Riepilogo",
     "docLanguage": "Lingua del documento inviato al cliente",
     "summary": {

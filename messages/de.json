@@ -46,6 +46,7 @@
     "fullName": "Ihr vollständiger Name",
     "email": "E-Mail",
     "password": "Passwort",
+    "acceptTerms": "Ich akzeptiere die <terms>Nutzungsbedingungen</terms> und die <privacy>Datenschutzrichtlinie</privacy>.",
     "submit": "Werkstatt erstellen",
     "submitting": "Wird erstellt…",
     "haveAccount": "Bereits ein Konto?",
@@ -156,7 +157,7 @@
     "workDetails": "Details / weitere Wünsche des Kunden",
     "step4Title": "Unterschrift des Kunden",
     "clearSignature": "Unterschrift löschen",
-    "consent": "Mit der Unterschrift bestätigt der Kunde die Richtigkeit der obigen Angaben und akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs.",
+    "consent": "Mit der Unterschrift bestätigt der Kunde die Richtigkeit der obigen Angaben, akzeptiert den bei der Annahme festgestellten und mittels Fotos dokumentierten Zustand des Fahrzeugs und willigt in die Verarbeitung seiner personenbezogenen Daten (einschließlich des Fotos des Fahrzeugausweises) für die Zwecke dieser Dienstleistung ein.",
     "step5Title": "Zusammenfassung",
     "docLanguage": "Sprache des an den Kunden gesendeten Dokuments",
     "summary": {

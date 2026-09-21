@@ -46,6 +46,7 @@
     "fullName": "O seu nome completo",
     "email": "E-mail",
     "password": "Palavra-passe",
+    "acceptTerms": "Aceito os <terms>termos de utilização</terms> e a <privacy>política de privacidade</privacy>.",
     "submit": "Criar a minha garagem",
     "submitting": "A criar…",
     "haveAccount": "Já tem uma conta?",
@@ -156,7 +157,7 @@
     "workDetails": "Detalhes / outros pedidos do cliente",
     "step4Title": "Assinatura do cliente",
     "clearSignature": "Limpar assinatura",
-    "consent": "Ao assinar, o cliente certifica a exatidão das informações acima e aceita o estado do veículo tal como constatado e documentado por fotos na receção.",
+    "consent": "Ao assinar, o cliente certifica a exatidão das informações acima, aceita o estado do veículo tal como constatado e documentado por fotos na receção, e consente o tratamento dos seus dados pessoais (incluindo a foto do documento do veículo) para os fins desta prestação.",
     "step5Title": "Resumo",
     "docLanguage": "Idioma do documento enviado ao cliente",
     "summary": {

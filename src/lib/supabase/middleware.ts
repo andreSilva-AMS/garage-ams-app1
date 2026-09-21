@@ -2,7 +2,13 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Routes accessibles sans être connecté.
-const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth", "/forgot-password"];
+const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth", "/forgot-password", "/terms", "/privacy"];
+
+// Parmi les routes publiques, celles qu'un utilisateur déjà connecté doit
+// aussi pouvoir consulter (pas de redirection vers /dashboard) : les CGU et
+// la politique de confidentialité concernent tout le monde, pas seulement
+// les visiteurs non connectés.
+const ALWAYS_ACCESSIBLE_PATHS = ["/terms", "/privacy"];
 
 // Déconnexion automatique après une période d'inactivité (aucune requête
 // authentifiée). Fenêtre plus courte, avec message explicatif, quand
@@ -91,7 +97,11 @@ export async function updateSession(request: NextRequest) {
     return redirectResponse;
   }
 
-  if (user && isPublicPath) {
+  const isAlwaysAccessible = ALWAYS_ACCESSIBLE_PATHS.some((path) =>
+    request.nextUrl.pathname.startsWith(path),
+  );
+
+  if (user && isPublicPath && !isAlwaysAccessible) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     const redirectResponse = NextResponse.redirect(url);

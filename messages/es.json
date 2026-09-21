@@ -46,6 +46,7 @@
     "fullName": "Su nombre completo",
     "email": "Correo electrónico",
     "password": "Contraseña",
+    "acceptTerms": "Acepto las <terms>condiciones de uso</terms> y la <privacy>política de privacidad</privacy>.",
     "submit": "Crear mi taller",
     "submitting": "Creando…",
     "haveAccount": "¿Ya tiene una cuenta?",
@@ -156,7 +157,7 @@
     "workDetails": "Detalles / otras solicitudes del cliente",
     "step4Title": "Firma del cliente",
     "clearSignature": "Borrar firma",
-    "consent": "Al firmar, el cliente certifica la exactitud de la información anterior y acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción.",
+    "consent": "Al firmar, el cliente certifica la exactitud de la información anterior, acepta el estado del vehículo tal como se constató y documentó mediante fotos en la recepción, y consiente el tratamiento de sus datos personales (incluida la foto del permiso de circulación) para los fines de esta prestación.",
     "step5Title": "Resumen",
     "docLanguage": "Idioma del documento enviado al cliente",
     "summary": {

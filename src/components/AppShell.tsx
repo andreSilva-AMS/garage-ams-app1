@@ -164,12 +164,14 @@ export function AppShell({
             open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
-          <nav aria-label={t("menu")} className="min-h-0 overflow-hidden border-t border-border-color px-3 py-3">
-            <div className="flex flex-col gap-1">
-              <NavLinks onNavigate={() => setOpen(false)} />
-              <SignOutButton onNavigate={() => setOpen(false)} />
-            </div>
-          </nav>
+          <div className="min-h-0 overflow-hidden">
+            <nav aria-label={t("menu")} className="border-t border-border-color px-3 py-3">
+              <div className="flex flex-col gap-1">
+                <NavLinks onNavigate={() => setOpen(false)} />
+                <SignOutButton onNavigate={() => setOpen(false)} />
+              </div>
+            </nav>
+          </div>
         </div>
       </header>
 

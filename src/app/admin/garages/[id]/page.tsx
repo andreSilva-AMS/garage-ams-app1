@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, FileText } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { BillingCountryForm } from "./BillingCountryForm";
 
 export const metadata: Metadata = { title: "Détail garage — Admin" };
 
@@ -60,7 +61,10 @@ export default async function AdminGarageDetailPage({
       </div>
 
       <div className="grid grid-cols-1 gap-3 rounded-2xl border border-border-color bg-white p-4 sm:grid-cols-2">
-        <Field label="Pays de facturation" value={garage.billing_country ?? "—"} />
+        <div>
+          <Field label="Pays de facturation" value={garage.billing_country ?? "—"} />
+          <BillingCountryForm garageId={garage.id} currentCountry={garage.billing_country} />
+        </div>
         <Field label="Abonnement" value={`${garage.subscription_plan} · ${garage.payment_status}`} />
         <Field label="Adresse" value={garage.address ?? "—"} />
         <Field label="Téléphone" value={garage.phone ?? "—"} />

@@ -28,6 +28,7 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
 
   const garageName = user.user_metadata?.garage_name as string | undefined;
   const preferredLanguage = user.user_metadata?.preferred_language as string | undefined;
+  const billingCountry = user.user_metadata?.billing_country as string | undefined;
 
   if (!garageName) return;
 
@@ -35,5 +36,6 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
     garage_name: garageName,
     owner_full_name: fullName ?? null,
     garage_language: preferredLanguage ?? "fr",
+    garage_billing_country: billingCountry ?? null,
   });
 }

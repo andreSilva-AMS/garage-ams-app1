@@ -212,15 +212,25 @@ export function GarageSettingsForm({
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium">{t("retentionDays")}</label>
           {canChooseLongRetention ? (
-            <select
-              className="input"
-              value={retentionDays}
-              disabled={!isOwner}
-              onChange={(e) => setRetentionDays(Number(e.target.value))}
-            >
-              <option value={30}>{t("retention30")}</option>
-              <option value={365}>{t("retention365")}</option>
-            </select>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                disabled={!isOwner}
+                onClick={() => setRetentionDays(30)}
+                className={retentionDays === 30 ? "btn-primary" : "btn-secondary"}
+              >
+                {t("retention30")}
+              </button>
+              <button
+                type="button"
+                disabled={!isOwner}
+                onClick={() => setRetentionDays(365)}
+                className={retentionDays === 365 ? "btn-primary" : "btn-secondary"}
+              >
+                {t("retention365")}
+                <span className="ml-1.5 text-xs opacity-75">({t("retention365Supplement")})</span>
+              </button>
+            </div>
           ) : (
             <p className="text-sm text-neutral-600">{t("retention30")}</p>
           )}

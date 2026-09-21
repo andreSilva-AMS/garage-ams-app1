@@ -16,6 +16,40 @@ function mapStatus(stripeStatus: Stripe.Subscription.Status): string {
   }
 }
 
+/**
+ * Compare le pays saisi dans l'adresse de facturation Stripe Checkout au
+ * pays de facturation enregistré pour le garage. Signale un écart sans
+ * jamais bloquer le paiement (demande explicite : "sans bloquer").
+ */
+async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+  const supabase = createServiceClient();
+  const customerId =
+    typeof session.customer === "string" ? session.customer : session.customer?.id;
+  if (!customerId) return;
+
+  const { data: garage } = await supabase
+    .from("garages")
+    .select("id, billing_country")
+    .eq("stripe_customer_id", customerId)
+    .maybeSingle();
+  if (!garage) return;
+
+  const billingAddressCountry = session.customer_details?.address?.country ?? null;
+  const vatNumber = session.customer_details?.tax_ids?.[0]?.value ?? null;
+  const mismatch = Boolean(
+    garage.billing_country && billingAddressCountry && billingAddressCountry !== garage.billing_country,
+  );
+
+  await supabase
+    .from("garages")
+    .update({
+      checkout_billing_address_country: billingAddressCountry,
+      checkout_country_mismatch: mismatch,
+      ...(vatNumber ? { vat_number: vatNumber } : {}),
+    })
+    .eq("id", garage.id);
+}
+
 async function syncSubscription(subscription: Stripe.Subscription) {
   const supabase = createServiceClient();
   const customerId =
@@ -72,6 +106,9 @@ export async function POST(request: Request) {
     case "customer.subscription.updated":
     case "customer.subscription.deleted":
       await syncSubscription(event.data.object);
+      break;
+    case "checkout.session.completed":
+      await handleCheckoutCompleted(event.data.object);
       break;
     default:
       break;

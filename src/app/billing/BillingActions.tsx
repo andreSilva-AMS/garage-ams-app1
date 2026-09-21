@@ -5,12 +5,22 @@ import { createClient } from "@/lib/supabase/client";
 import { formatPriceHt, guessCountryFromLocale, type PricingPlan } from "@/lib/pricing";
 import { createCheckoutSession, createPortalSession } from "./actions";
 
-export function SubscribeFlow({ pricingPlans }: { pricingPlans: PricingPlan[] }) {
+type FixedPlan = { country_label: string; currency: string; amount_ht: number } | null;
+
+export function SubscribeFlow({
+  pricingPlans,
+  fixedCountry,
+  fixedPlan,
+}: {
+  pricingPlans: PricingPlan[];
+  fixedCountry?: string | null;
+  fixedPlan?: FixedPlan;
+}) {
   const supabase = createClient();
   // Départ neutre côté serveur (navigator n'existe pas en SSR) : la vraie
   // détection se fait après montage, dans l'effet ci-dessous.
-  const [country, setCountry] = useState<string | null>(null);
-  const [editingCountry, setEditingCountry] = useState(true);
+  const [country, setCountry] = useState<string | null>(fixedCountry ?? null);
+  const [editingCountry, setEditingCountry] = useState(!fixedCountry);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [waitlistEmail, setWaitlistEmail] = useState("");
@@ -18,6 +28,8 @@ export function SubscribeFlow({ pricingPlans }: { pricingPlans: PricingPlan[] })
   const [waitlisted, setWaitlisted] = useState(false);
 
   useEffect(() => {
+    // Le pays de facturation est déjà fixé (inscription) : rien à deviner.
+    if (fixedCountry) return;
     // Lit `navigator`, indisponible en SSR : ne peut pas être calculé pendant
     // le rendu sans provoquer un décalage d'hydratation, d'où l'effet.
     const guess = guessCountryFromLocale(pricingPlans);
@@ -28,7 +40,7 @@ export function SubscribeFlow({ pricingPlans }: { pricingPlans: PricingPlan[] })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const selectedPlan = pricingPlans.find((p) => p.country_code === country);
+  const selectedPlan = fixedCountry ? fixedPlan : pricingPlans.find((p) => p.country_code === country);
 
   async function handleSubscribe() {
     if (!country) return;
@@ -55,7 +67,12 @@ export function SubscribeFlow({ pricingPlans }: { pricingPlans: PricingPlan[] })
 
   return (
     <div className="flex flex-col gap-3">
-      {!editingCountry && selectedPlan ? (
+      {fixedCountry && selectedPlan ? (
+        <p className="text-sm text-neutral-600">
+          Pays de facturation : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
+          {formatPriceHt(selectedPlan)}
+        </p>
+      ) : !editingCountry && selectedPlan ? (
         <p className="text-sm text-neutral-600">
           Pays de facturation : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
           {formatPriceHt(selectedPlan)}{" "}

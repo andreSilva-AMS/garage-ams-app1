@@ -6,6 +6,12 @@ export interface PricingPlan {
   stripe_price_id: string | null;
 }
 
+/**
+ * Code du tarif « autre pays » (pricing_plans.is_fallback = true), utilisé
+ * quand le pays de facturation du garage n'a pas de ligne dédiée.
+ */
+export const FALLBACK_PRICING_CODE = "EU";
+
 /** Formate un prix HT pour l'affichage, ex. "39.00 CHF HT / mois". */
 export function formatPriceHt(plan: Pick<PricingPlan, "amount_ht" | "currency">): string {
   return `${plan.amount_ht.toFixed(2)} ${plan.currency} HT / mois`;

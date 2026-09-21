@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
-import { formatPriceHt, type PricingPlan } from "@/lib/pricing";
+import { formatPriceHt, FALLBACK_PRICING_CODE, type PricingPlan } from "@/lib/pricing";
 import { SubscribeFlow, ManageSubscriptionButton } from "./BillingActions";
 
 function daysLeftUntil(date: Date): number {
@@ -27,24 +27,35 @@ export default async function BillingPage() {
   const { data: garage } = await supabase
     .from("garages")
     .select(
-      "id, name, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country",
+      "id, name, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country, checkout_billing_address_country, checkout_country_mismatch",
     )
     .eq("id", profile.garage_id)
     .single();
   if (!garage) redirect("/dashboard");
 
-  const { data: plan } = garage.billing_country
+  const { data: dedicatedPlan } = garage.billing_country
     ? await supabase
         .from("pricing_plans")
         .select("country_label, currency, amount_ht")
         .eq("country_code", garage.billing_country)
-        .single()
+        .maybeSingle()
     : { data: null };
+
+  const { data: fallbackPlan } = garage.billing_country && !dedicatedPlan
+    ? await supabase
+        .from("pricing_plans")
+        .select("country_label, currency, amount_ht")
+        .eq("country_code", FALLBACK_PRICING_CODE)
+        .maybeSingle()
+    : { data: null };
+
+  const plan = dedicatedPlan ?? fallbackPlan;
 
   const { data: pricingPlans } = await supabase
     .from("pricing_plans")
     .select("country_code, country_label, currency, amount_ht, stripe_price_id")
     .eq("active", true)
+    .eq("is_fallback", false)
     .order("country_code");
 
   const { data: subscription } = await supabase
@@ -98,6 +109,12 @@ export default async function BillingPage() {
             {plan.country_label} — {formatPriceHt(plan)}
           </p>
         )}
+        {garage.checkout_country_mismatch && (
+          <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs text-amber-800">
+            Le pays indiqué sur la dernière facturation ({garage.checkout_billing_address_country})
+            diffère du pays de facturation enregistré pour ce garage.
+          </p>
+        )}
       </div>
 
       {!active && !isOwner && (
@@ -116,7 +133,11 @@ export default async function BillingPage() {
           ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
             <ManageSubscriptionButton />
           ) : (
-            <SubscribeFlow pricingPlans={(pricingPlans ?? []) as PricingPlan[]} />
+            <SubscribeFlow
+              pricingPlans={(pricingPlans ?? []) as PricingPlan[]}
+              fixedCountry={garage.billing_country}
+              fixedPlan={plan}
+            />
           )}
         </>
       )}

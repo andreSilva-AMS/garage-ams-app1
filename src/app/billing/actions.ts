@@ -43,17 +43,37 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
   return { supabase, garage };
 }
 
-export async function createCheckoutSession(countryCode: string): Promise<ActionResult> {
+export async function createCheckoutSession(countryCode?: string): Promise<ActionResult> {
   const result = await getOwnerGarage();
   if ("error" in result) return { ok: false, error: result.error };
   const { supabase, garage } = result;
 
-  const { data: plan } = await supabase
+  // Le pays de facturation est normalement déjà fixé depuis l'inscription
+  // (voir migration 0019 : non modifiable ensuite, sauf par l'administration).
+  // `countryCode` ne sert que pour les garages créés avant cette
+  // fonctionnalité, qui n'en ont pas encore — premier choix, une seule fois.
+  const resolvedCountry = garage.billing_country ?? countryCode;
+  if (!resolvedCountry) {
+    return { ok: false, error: "Pays de facturation manquant." };
+  }
+
+  const { data: dedicatedPlan } = await supabase
     .from("pricing_plans")
     .select("country_code, stripe_price_id")
-    .eq("country_code", countryCode)
+    .eq("country_code", resolvedCountry)
     .eq("active", true)
-    .single();
+    .maybeSingle();
+
+  const plan =
+    dedicatedPlan ??
+    (
+      await supabase
+        .from("pricing_plans")
+        .select("country_code, stripe_price_id")
+        .eq("is_fallback", true)
+        .eq("active", true)
+        .maybeSingle()
+    ).data;
 
   if (!plan) {
     return { ok: false, error: "Pays de facturation non pris en charge." };
@@ -68,8 +88,8 @@ export async function createCheckoutSession(countryCode: string): Promise<Action
   const stripe = getStripeClient();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
-  if (garage.billing_country !== plan.country_code) {
-    await supabase.from("garages").update({ billing_country: plan.country_code }).eq("id", garage.id);
+  if (!garage.billing_country) {
+    await supabase.from("garages").update({ billing_country: resolvedCountry }).eq("id", garage.id);
   }
 
   let customerId = garage.stripe_customer_id;
@@ -82,10 +102,19 @@ export async function createCheckoutSession(countryCode: string): Promise<Action
     await supabase.from("garages").update({ stripe_customer_id: customerId }).eq("id", garage.id);
   }
 
+  // Stripe Tax (calcul automatique de la TVA) : préparé mais désactivé tant
+  // que la configuration fiscale n'est pas validée dans le Dashboard Stripe.
+  // À activer en réglant STRIPE_TAX_ENABLED=true (variable d'environnement).
+  const stripeTaxEnabled = process.env.STRIPE_TAX_ENABLED === "true";
+
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     customer: customerId,
     line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
+    billing_address_collection: "required",
+    tax_id_collection: { enabled: true },
+    ...(stripeTaxEnabled ? { automatic_tax: { enabled: true } } : {}),
+    metadata: { garage_id: garage.id, billing_country: resolvedCountry },
     success_url: `${baseUrl}/billing?success=true`,
     cancel_url: `${baseUrl}/billing?canceled=true`,
   });

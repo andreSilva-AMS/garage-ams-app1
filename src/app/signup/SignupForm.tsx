@@ -8,6 +8,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { Lang } from "@/lib/receptions/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import {
+  PRIORITY_BILLING_COUNTRIES,
+  countryLabel,
+  sortedOtherCountries,
+} from "@/lib/countries";
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
@@ -23,6 +28,7 @@ export function SignupForm() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [billingCountry, setBillingCountry] = useState("");
   const [language, setLanguage] = useState<Lang>(appLocale);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +50,12 @@ export function SignupForm() {
       email,
       password,
       options: {
-        data: { garage_name: garageName, full_name: fullName, preferred_language: language },
+        data: {
+          garage_name: garageName,
+          full_name: fullName,
+          preferred_language: language,
+          billing_country: billingCountry,
+        },
       },
     });
 
@@ -66,6 +77,7 @@ export function SignupForm() {
       garage_name: garageName,
       owner_full_name: fullName,
       garage_language: language,
+      garage_billing_country: billingCountry,
     });
 
     if (rpcError) {
@@ -149,6 +161,35 @@ export function SignupForm() {
             onChange={(e) => setPassword(e.target.value)}
             className="input"
           />
+        </Field>
+
+        <Field label={t("billingCountry")} htmlFor="billingCountry">
+          <select
+            id="billingCountry"
+            required
+            value={billingCountry}
+            onChange={(e) => setBillingCountry(e.target.value)}
+            className="input"
+          >
+            <option value="" disabled>
+              {t("billingCountryPlaceholder")}
+            </option>
+            <optgroup label={t("billingCountryMainGroup")}>
+              {PRIORITY_BILLING_COUNTRIES.map((code) => (
+                <option key={code} value={code}>
+                  {countryLabel(code, appLocale)}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label={t("billingCountryOtherGroup")}>
+              {sortedOtherCountries(appLocale).map((code) => (
+                <option key={code} value={code}>
+                  {countryLabel(code, appLocale)}
+                </option>
+              ))}
+            </optgroup>
+          </select>
+          <p className="text-xs text-neutral-500">{t("billingCountryHint")}</p>
         </Field>
 
         <label className="flex items-start gap-2 text-sm text-neutral-600">

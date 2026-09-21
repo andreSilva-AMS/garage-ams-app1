@@ -154,7 +154,9 @@
     "generate": "Gerar a ficha PDF",
     "generating": "A gerar…",
     "errors": {
-      "nameAndPlateRequired": "Nome do cliente e matrícula obrigatórios",
+      "requiredFields": "Nome do cliente, matrícula e quilometragem obrigatórios",
+      "invalidEmail": "O e-mail do cliente não é válido",
+      "invalidPhone": "O número de telefone do cliente não é válido",
       "missingPhotos": "Faltam fotos do veículo",
       "workRequired": "Indique pelo menos uma intervenção",
       "signatureRequired": "Assinatura obrigatória"

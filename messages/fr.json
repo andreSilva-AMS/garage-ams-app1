@@ -154,7 +154,9 @@
     "generate": "Générer la fiche PDF",
     "generating": "Génération en cours…",
     "errors": {
-      "nameAndPlateRequired": "Nom du client et plaque requis",
+      "requiredFields": "Nom du client, plaque et kilométrage requis",
+      "invalidEmail": "L'adresse e-mail du client n'est pas valide",
+      "invalidPhone": "Le numéro de téléphone du client n'est pas valide",
       "missingPhotos": "Il manque des photos du véhicule",
       "workRequired": "Précisez au moins une intervention",
       "signatureRequired": "Signature requise"

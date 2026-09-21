@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
+import { getGarageTimezone } from "@/lib/timezone";
 import { SignaturePad } from "@/components/SignaturePad";
 import {
   LANGUAGES,
@@ -32,6 +33,8 @@ interface Garage {
   name: string;
   address: string | null;
   logo_url: string | null;
+  default_language: string | null;
+  billing_country: string | null;
 }
 
 // Sauvegarde locale du texte saisi (pas les photos/signature, trop lourdes
@@ -225,8 +228,16 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   function validateStep(): boolean {
     setError(null);
     if (step === 1) {
-      if (!client.name.trim() || !client.plate.trim()) {
-        setError(t("errors.nameAndPlateRequired"));
+      if (!client.name.trim() || !client.plate.trim() || !client.mileage.trim()) {
+        setError(t("errors.requiredFields"));
+        return false;
+      }
+      if (client.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email.trim())) {
+        setError(t("errors.invalidEmail"));
+        return false;
+      }
+      if (client.phone.trim() && !/^[0-9+()\-.\s]{6,}$/.test(client.phone.trim())) {
+        setError(t("errors.invalidPhone"));
         return false;
       }
     }
@@ -369,6 +380,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         signatureDataUrl: signatureJpeg,
         extraPhotos: pdfExtraPhotos,
         lang,
+        timezone: getGarageTimezone(garage),
       });
       const pdfBlob = doc.output("blob");
       const pdfPath = await upload("fiche.pdf", pdfBlob);

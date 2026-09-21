@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { getGarageTimezone, formatGarageDateTime } from "@/lib/timezone";
 import { DeleteReceptionButton } from "./DeleteReceptionButton";
 
 export default async function ReceptionsPage() {
@@ -14,10 +15,26 @@ export default async function ReceptionsPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: receptions } = await supabase
-    .from("receptions")
-    .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
-    .order("created_at", { ascending: false });
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("garage_id")
+    .eq("id", user.id)
+    .single();
+
+  const [{ data: garage }, { data: receptions }] = await Promise.all([
+    profile
+      ? supabase
+          .from("garages")
+          .select("billing_country, default_language")
+          .eq("id", profile.garage_id)
+          .single()
+      : Promise.resolve({ data: null }),
+    supabase
+      .from("receptions")
+      .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
+      .order("created_at", { ascending: false }),
+  ]);
+  const timezone = getGarageTimezone(garage ?? {});
 
   const withUrls = await Promise.all(
     (receptions ?? []).map(async (r) => {
@@ -55,7 +72,7 @@ export default async function ReceptionsPage() {
               </p>
               <p className="text-sm text-neutral-500">
                 {r.vehicle_brand_model || "—"} ·{" "}
-                {new Date(r.created_at).toLocaleString()}
+                {formatGarageDateTime(new Date(r.created_at), timezone)}
               </p>
             </div>
             <div className="flex items-center gap-4">

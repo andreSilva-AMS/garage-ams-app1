@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf";
 import { I18N, Lang, trWorkTag, trDamageTag } from "./i18n";
+import { formatGarageDateTime, formatGarageDate } from "@/lib/timezone";
 
 export interface ReceptionPdfInput {
   garageName: string;
@@ -22,6 +23,7 @@ export interface ReceptionPdfInput {
   signatureDataUrl: string | null;
   extraPhotos: { dataUrl: string; caption: string }[];
   lang: Lang;
+  timezone: string;
 }
 
 export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
@@ -40,7 +42,7 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
   doc.setTextColor(90);
   doc.text(`${input.garageAddress ? input.garageAddress + " — " : ""}${t.docTitle}`, margin, y);
   y += 5;
-  doc.text(new Date().toLocaleString("fr-CH"), margin, y);
+  doc.text(formatGarageDateTime(new Date(), input.timezone), margin, y);
   y += 8;
   if (input.garageLogoDataUrl) {
     try {
@@ -171,7 +173,7 @@ export function buildReceptionPdf(input: ReceptionPdfInput): jsPDF {
   y += 34;
   doc.setFontSize(9);
   doc.setTextColor(20);
-  doc.text(`${t.signedOn} ${new Date().toLocaleDateString("fr-CH")}`, margin, y);
+  doc.text(`${t.signedOn} ${formatGarageDate(new Date(), input.timezone)}`, margin, y);
 
   if (input.extraPhotos.length > 0) {
     const cols = 2;

@@ -154,7 +154,9 @@
     "generate": "Genera la scheda PDF",
     "generating": "Generazione in corso…",
     "errors": {
-      "nameAndPlateRequired": "Nome del cliente e targa obbligatori",
+      "requiredFields": "Nome del cliente, targa e chilometraggio obbligatori",
+      "invalidEmail": "L'e-mail del cliente non è valida",
+      "invalidPhone": "Il numero di telefono del cliente non è valido",
       "missingPhotos": "Mancano alcune foto del veicolo",
       "workRequired": "Indica almeno un intervento",
       "signatureRequired": "Firma obbligatoria"

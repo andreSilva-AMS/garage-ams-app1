@@ -154,7 +154,9 @@
     "generate": "Generate the PDF form",
     "generating": "Generating…",
     "errors": {
-      "nameAndPlateRequired": "Customer name and plate are required",
+      "requiredFields": "Customer name, plate and mileage are required",
+      "invalidEmail": "The customer's e-mail address is not valid",
+      "invalidPhone": "The customer's phone number is not valid",
       "missingPhotos": "Some vehicle photos are missing",
       "workRequired": "Please specify at least one service",
       "signatureRequired": "Signature required"

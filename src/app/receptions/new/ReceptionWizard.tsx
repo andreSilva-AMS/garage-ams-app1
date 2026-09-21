@@ -5,13 +5,13 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Camera,
-  CheckCircle2,
   ChevronDown,
+  FileText,
   Gauge,
   IdCard,
   Loader2,
-  Mail,
   RotateCcw,
+  Share2,
   X,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -143,6 +143,36 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   );
   const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
+  // Calculé après montage (évite un décalage d'hydratation : navigator
+  // n'existe pas côté serveur, donc absent au premier rendu client aussi).
+  const [canShare, setCanShare] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCanShare(typeof navigator !== "undefined" && typeof navigator.share === "function");
+  }, []);
+
+  async function attemptSendEmail(receptionId: string) {
+    setEmailStatus("sending");
+    setEmailError(null);
+    const result = await sendReceptionEmail(receptionId);
+    if (result.ok) {
+      setEmailStatus("sent");
+    } else {
+      setEmailStatus("error");
+      setEmailError(result.error);
+    }
+  }
+
+  async function handleShare(pdfUrl: string) {
+    if (!canShare) return;
+    try {
+      await navigator.share({ title: t("doneTitle"), url: pdfUrl });
+    } catch {
+      // Partage annulé par l'utilisateur, ou navigateur sans support
+      // complet : rien à faire, ce n'est pas une erreur à signaler.
+    }
+  }
 
   const [client, setClient] = useState<ClientInfo>({
     name: "",
@@ -510,6 +540,12 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         pdfUrl: signed?.signedUrl ?? "",
         hasClientEmail: Boolean(client.email),
       });
+      if (client.email) {
+        // Envoi automatique dès la fiche prête : l'écran de succès affiche
+        // directement "Fiche envoyée à [e-mail]" plutôt que d'attendre un
+        // clic. "Renvoyer" reste disponible en cas d'échec ou de besoin.
+        void attemptSendEmail(receptionId);
+      }
       } catch (err) {
         await supabase.from("receptions").delete().eq("id", receptionId);
         throw err;
@@ -522,56 +558,72 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   }
 
   if (done) {
+    const title = !done.hasClientEmail
+      ? t("doneTitle")
+      : emailStatus === "sent"
+        ? t("doneTitleSent", { email: client.email })
+        : emailStatus === "error"
+          ? t("doneTitleError")
+          : t("doneTitle");
+
     return (
       <main className="mx-auto max-w-lg px-4 py-10 text-center">
-        <h1 className="mb-4 text-xl font-semibold">{t("doneTitle")}</h1>
-        <p className="mb-6 text-sm text-neutral-600">
-          {t("doneBody", { garageName: garage.name })}
-        </p>
+        <h1 className="mb-4 text-xl font-semibold">{title}</h1>
+        {(!done.hasClientEmail || emailStatus === "sending" || emailStatus === "idle") && (
+          <p className="mb-6 text-sm text-neutral-600">
+            {t("doneBody", { garageName: garage.name })}
+          </p>
+        )}
+        {!done.hasClientEmail && (
+          <p className="mb-6 text-sm text-neutral-500">{t("noClientEmail")}</p>
+        )}
+        {emailStatus === "error" && (
+          <p className="mb-6 rounded-2xl bg-red-50 p-3 text-sm text-red-700">{emailError}</p>
+        )}
+        {emailStatus === "sent" && (
+          <p className="mb-6 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+            {t("sentSpamNotice")}
+          </p>
+        )}
+
         <div className="flex flex-col gap-3">
-          {done.hasClientEmail ? (
+          {done.hasClientEmail && (
             <button
               type="button"
-              disabled={emailStatus === "sending" || emailStatus === "sent"}
-              onClick={async () => {
-                setEmailStatus("sending");
-                setEmailError(null);
-                const result = await sendReceptionEmail(done.id);
-                if (result.ok) {
-                  setEmailStatus("sent");
-                } else {
-                  setEmailStatus("error");
-                  setEmailError(result.error);
-                }
-              }}
-              className="btn-primary"
+              disabled={emailStatus === "sending"}
+              onClick={() => attemptSendEmail(done.id)}
+              className={emailStatus === "error" ? "btn-primary" : "btn-secondary"}
             >
               {emailStatus === "sending" ? (
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-              ) : emailStatus === "sent" ? (
-                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <Mail className="h-4 w-4" aria-hidden="true" />
+                <RotateCcw className="h-4 w-4" aria-hidden="true" />
               )}
               {emailStatus === "sending"
                 ? t("sending")
-                : emailStatus === "sent"
-                  ? t("sent")
-                  : t("sendEmail")}
+                : emailStatus === "error"
+                  ? tCommon("retry")
+                  : t("resend")}
             </button>
-          ) : (
-            <p className="text-sm text-neutral-500">{t("noClientEmail")}</p>
           )}
-          {emailStatus === "error" && <p className="text-sm text-red-600">{emailError}</p>}
-          {emailStatus === "sent" && (
-            <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
-              {t("sentSpamNotice")}
-            </p>
-          )}
-          <a href={done.pdfUrl} target="_blank" rel="noreferrer" className="text-sm underline">
+
+          <a href={done.pdfUrl} target="_blank" rel="noreferrer" className="btn-secondary">
+            <FileText className="h-4 w-4" aria-hidden="true" />
             {t("viewPdf")}
           </a>
-          <Link href="/receptions/new" className="text-sm underline">
+
+          {canShare && (
+            <button
+              type="button"
+              onClick={() => handleShare(done.pdfUrl)}
+              className="btn-secondary"
+            >
+              <Share2 className="h-4 w-4" aria-hidden="true" />
+              {t("share")}
+            </button>
+          )}
+
+          <Link href="/receptions/new" className="btn-primary">
             {t("newOne")}
           </Link>
           <Link href="/dashboard" className="text-sm underline">

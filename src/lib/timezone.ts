@@ -51,15 +51,3 @@ export function formatGarageDateTime(date: Date, timeZone: string): string {
   const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
   return `${get("day")}.${get("month")}.${get("year")} ${get("hour")}:${get("minute")}`;
 }
-
-/** Toujours "jj.mm.aaaa" (sans heure). */
-export function formatGarageDate(date: Date, timeZone: string): string {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone,
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).formatToParts(date);
-  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
-  return `${get("day")}.${get("month")}.${get("year")}`;
-}

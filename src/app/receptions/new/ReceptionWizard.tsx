@@ -20,6 +20,8 @@ import { buildReceptionPdf } from "@/lib/receptions/pdf";
 import { sendReceptionEmail, translateTexts } from "../actions";
 
 type Angle = "front" | "back" | "left" | "right";
+type FuelLevel = "empty" | "quarter" | "half" | "three_quarter" | "full";
+const FUEL_LEVELS: FuelLevel[] = ["empty", "quarter", "half", "three_quarter", "full"];
 interface PhotoData {
   blob: Blob;
   dataUrl: string;
@@ -33,6 +35,8 @@ interface Garage {
   name: string;
   address: string | null;
   logo_url: string | null;
+  phone: string | null;
+  email: string | null;
   default_language: string | null;
   billing_country: string | null;
 }
@@ -61,6 +65,14 @@ interface ReceptionDraft {
   workTags: string[];
   workText: string;
   lang: Lang;
+}
+
+/** Empreinte SHA-256 du PDF final, pour détecter toute altération ultérieure. */
+async function sha256Hex(buffer: ArrayBuffer): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function urlToDataUrl(url: string): Promise<string | null> {
@@ -129,6 +141,8 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   });
   const [photos, setPhotos] = useState<Partial<Record<Angle, PhotoData>>>({});
   const [cardGrey, setCardGrey] = useState<PhotoData | null>(null);
+  const [dashboardPhoto, setDashboardPhoto] = useState<PhotoData | null>(null);
+  const [fuelLevel, setFuelLevel] = useState<FuelLevel | "">("");
   const [extraPhotos, setExtraPhotos] = useState<ExtraPhoto[]>([]);
   const [damageTags, setDamageTags] = useState<Set<string>>(new Set());
   const [damageText, setDamageText] = useState("");
@@ -278,6 +292,11 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
     setCardGrey(resized);
   }
 
+  async function handleDashboardPhotoChange(file: File) {
+    const resized = await fileToResizedImage(file, 900, 0.6);
+    setDashboardPhoto(resized);
+  }
+
   async function handleAddExtraPhoto(file: File) {
     if (extraPhotos.length >= MAX_EXTRA_PHOTOS) return;
     const resized = await fileToResizedImage(file, 1600, 0.8);
@@ -308,36 +327,75 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         return path;
       }
 
+      // Insertion précoce (avant l'envoi des fichiers) : c'est elle qui
+      // attribue le numéro de fiche séquentiel (colonne "identity" en base),
+      // nécessaire pour l'imprimer sur le PDF généré juste après. Les champs
+      // liés aux fichiers sont mis à jour ensuite, une fois connus.
+      const { data: insertedReception, error: insertError } = await supabase
+        .from("receptions")
+        .insert({
+          id: receptionId,
+          garage_id: garage.id,
+          client_name: client.name,
+          client_phone: client.phone || null,
+          client_email: client.email || null,
+          vehicle_plate: client.plate,
+          vehicle_mileage: client.mileage ? Number(client.mileage) : null,
+          vehicle_brand_model: client.brandModel || null,
+          damage_tags: [...damageTags],
+          damage_text: damageText || null,
+          work_tags: [...workTags],
+          work_text: workText || null,
+          fuel_level: fuelLevel || null,
+          language: lang,
+        })
+        .select("reception_number")
+        .single();
+      if (insertError) throw insertError;
+      const receptionNumber = insertedReception.reception_number as number;
+
+      // À partir d'ici, la fiche existe déjà en base (avec son numéro) :
+      // si une étape suivante échoue (envoi d'un fichier, etc.), on supprime
+      // cette fiche incomplète plutôt que de laisser une entrée fantôme
+      // (sans PDF ni photos) traîner dans l'historique.
+      try {
       // Tout ce qui suit est indépendant (photos, signature, logo du garage,
       // traduction) : lancé en parallèle plutôt qu'en série pour ne pas
       // attendre chaque envoi l'un après l'autre (jusqu'à une quinzaine
       // d'envois pour une fiche avec beaucoup de photos supplémentaires).
       const angles = (["front", "back", "left", "right"] as Angle[]).filter((a) => photos[a]);
 
-      const [angleResults, cardGreyPath, extraPhotoUploads, signatureResult, garageLogoDataUrl] =
-        await Promise.all([
-          Promise.all(
-            angles.map(async (angle) => {
-              const p = photos[angle]!;
-              const path = await upload(`${angle}.jpg`, p.blob);
-              return { angle, path, dataUrl: p.dataUrl };
-            }),
-          ),
-          cardGrey ? upload("carte-grise.jpg", cardGrey.blob) : Promise.resolve(null),
-          Promise.all(
-            extraPhotos.map(async (photo, i) => {
-              const path = await upload(`extra-${i + 1}.jpg`, photo.blob);
-              return { path, caption: photo.caption, dataUrl: photo.dataUrl };
-            }),
-          ),
-          (async () => {
-            if (!signatureDataUrl) return null;
-            const signatureJpeg = await shrinkDataUrl(signatureDataUrl, 900, 0.82);
-            const path = await upload("signature.jpg", await (await fetch(signatureJpeg)).blob());
-            return { path, signatureJpeg };
-          })(),
-          garage.logo_url ? urlToDataUrl(garage.logo_url) : Promise.resolve(null),
-        ]);
+      const [
+        angleResults,
+        cardGreyPath,
+        dashboardPhotoPath,
+        extraPhotoUploads,
+        signatureResult,
+        garageLogoDataUrl,
+      ] = await Promise.all([
+        Promise.all(
+          angles.map(async (angle) => {
+            const p = photos[angle]!;
+            const path = await upload(`${angle}.jpg`, p.blob);
+            return { angle, path, dataUrl: p.dataUrl };
+          }),
+        ),
+        cardGrey ? upload("carte-grise.jpg", cardGrey.blob) : Promise.resolve(null),
+        dashboardPhoto ? upload("tableau-de-bord.jpg", dashboardPhoto.blob) : Promise.resolve(null),
+        Promise.all(
+          extraPhotos.map(async (photo, i) => {
+            const path = await upload(`extra-${i + 1}.jpg`, photo.blob);
+            return { path, caption: photo.caption, dataUrl: photo.dataUrl };
+          }),
+        ),
+        (async () => {
+          if (!signatureDataUrl) return null;
+          const signatureJpeg = await shrinkDataUrl(signatureDataUrl, 900, 0.82);
+          const path = await upload("signature.jpg", await (await fetch(signatureJpeg)).blob());
+          return { path, signatureJpeg };
+        })(),
+        garage.logo_url ? urlToDataUrl(garage.logo_url) : Promise.resolve(null),
+      ]);
 
       const photoPaths: Partial<Record<Angle, string>> = {};
       const photoDataUrls: Partial<Record<Angle, string>> = {};
@@ -367,8 +425,11 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       }
 
       const doc = buildReceptionPdf({
+        receptionNumber,
         garageName: garage.name,
         garageAddress: garage.address,
+        garagePhone: garage.phone,
+        garageEmail: garage.email,
         garageLogoDataUrl,
         client,
         workTags: [...workTags],
@@ -377,37 +438,32 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         damageText,
         photos: photoDataUrls,
         cardGreyDataUrl: cardGrey?.dataUrl ?? null,
+        dashboardPhotoDataUrl: dashboardPhoto?.dataUrl ?? null,
+        fuelLevel: fuelLevel || null,
         signatureDataUrl: signatureJpeg,
         extraPhotos: pdfExtraPhotos,
         lang,
         timezone: getGarageTimezone(garage),
       });
       const pdfBlob = doc.output("blob");
+      const pdfSha256 = await sha256Hex(await pdfBlob.arrayBuffer());
       const pdfPath = await upload("fiche.pdf", pdfBlob);
 
-      const { error: insertError } = await supabase.from("receptions").insert({
-        id: receptionId,
-        garage_id: garage.id,
-        client_name: client.name,
-        client_phone: client.phone || null,
-        client_email: client.email || null,
-        vehicle_plate: client.plate,
-        vehicle_mileage: client.mileage ? Number(client.mileage) : null,
-        vehicle_brand_model: client.brandModel || null,
-        damage_tags: [...damageTags],
-        damage_text: damageText || null,
-        work_tags: [...workTags],
-        work_text: workText || null,
-        language: lang,
-        photo_front_path: photoPaths.front ?? null,
-        photo_back_path: photoPaths.back ?? null,
-        photo_left_path: photoPaths.left ?? null,
-        photo_right_path: photoPaths.right ?? null,
-        photo_card_grey_path: cardGreyPath,
-        signature_path: signaturePath,
-        pdf_path: pdfPath,
-      });
-      if (insertError) throw insertError;
+      const { error: updateError } = await supabase
+        .from("receptions")
+        .update({
+          photo_front_path: photoPaths.front ?? null,
+          photo_back_path: photoPaths.back ?? null,
+          photo_left_path: photoPaths.left ?? null,
+          photo_right_path: photoPaths.right ?? null,
+          photo_card_grey_path: cardGreyPath,
+          photo_dashboard_path: dashboardPhotoPath,
+          signature_path: signaturePath,
+          pdf_path: pdfPath,
+          pdf_sha256: pdfSha256,
+        })
+        .eq("id", receptionId);
+      if (updateError) throw updateError;
 
       if (extraPhotoUploads.length > 0) {
         const { error: extraError } = await supabase.from("reception_extra_photos").insert(
@@ -431,6 +487,10 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         pdfUrl: signed?.signedUrl ?? "",
         hasClientEmail: Boolean(client.email),
       });
+      } catch (err) {
+        await supabase.from("receptions").delete().eq("id", receptionId);
+        throw err;
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue");
     } finally {
@@ -629,6 +689,49 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
               }}
             />
           </label>
+
+          <label className="flex items-center gap-3 rounded-2xl border border-neutral-300 p-3">
+            {dashboardPhoto ? (
+              // eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser
+              <img
+                src={dashboardPhoto.dataUrl}
+                alt={t("dashboardPhoto")}
+                className="h-14 w-14 rounded object-cover"
+              />
+            ) : (
+              <span className="text-2xl">🛞</span>
+            )}
+            <span className="text-sm">
+              <b>{t("dashboardPhoto")}</b>
+              <br />
+              {t("dashboardPhotoHint")}
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleDashboardPhotoChange(file);
+              }}
+            />
+          </label>
+
+          <Field label={t("fuelLevel")}>
+            <select
+              className="input"
+              value={fuelLevel}
+              onChange={(e) => setFuelLevel(e.target.value as FuelLevel | "")}
+            >
+              <option value="">{t("summary.none")}</option>
+              {FUEL_LEVELS.map((level) => (
+                <option key={level} value={level}>
+                  {t(`fuelLevels.${level}`)}
+                </option>
+              ))}
+            </select>
+          </Field>
 
           <div>
             <p className="mb-2 text-sm font-medium">

@@ -12,6 +12,8 @@ interface Garage {
   id: string;
   name: string;
   address: string | null;
+  phone: string | null;
+  email: string | null;
   logo_url: string | null;
   default_language: string;
 }
@@ -40,6 +42,8 @@ export function GarageSettingsForm({
 
   const [name, setName] = useState(garage.name);
   const [address, setAddress] = useState(garage.address ?? "");
+  const [phone, setPhone] = useState(garage.phone ?? "");
+  const [email, setEmail] = useState(garage.email ?? "");
   const [defaultLanguage, setDefaultLanguage] = useState<Lang>(
     (garage.default_language as Lang) ?? "fr",
   );
@@ -78,6 +82,8 @@ export function GarageSettingsForm({
         .update({
           name,
           address: address || null,
+          phone: phone || null,
+          email: email || null,
           default_language: defaultLanguage,
           logo_url: logoUrl,
         })
@@ -156,6 +162,30 @@ export function GarageSettingsForm({
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium">{t("garagePhone")}</label>
+            <input
+              className="input"
+              type="tel"
+              value={phone}
+              disabled={!isOwner}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium">{t("garageEmail")}</label>
+            <input
+              className="input"
+              type="email"
+              value={email}
+              disabled={!isOwner}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
+        <p className="-mt-2 text-xs text-neutral-500">{t("garageContactHint")}</p>
 
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium">{t("defaultLanguage")}</label>

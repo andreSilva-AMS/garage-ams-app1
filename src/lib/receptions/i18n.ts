@@ -29,6 +29,11 @@ interface Dict {
   none: string;
   extraPhotosTitle: string;
   photoLabels: { front: string; back: string; left: string; right: string };
+  receptionNumberLabel: string;
+  noDamage: string;
+  fuelLevelLabel: string;
+  fuelLevels: { empty: string; quarter: string; half: string; three_quarter: string; full: string };
+  dashboardPhotoLabel: string;
   emailSubject: (plate: string, garageName: string) => string;
   emailBody: (
     name: string,
@@ -61,6 +66,11 @@ export const I18N: Record<Lang, Dict> = {
     none: "—",
     extraPhotosTitle: "Photos supplémentaires",
     photoLabels: { front: "Avant", back: "Arrière", left: "Côté gauche", right: "Côté droit" },
+    receptionNumberLabel: "Fiche n°",
+    noDamage: "Aucun dommage constaté",
+    fuelLevelLabel: "Niveau de carburant",
+    fuelLevels: { empty: "Vide", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Plein" },
+    dashboardPhotoLabel: "Tableau de bord",
     emailSubject: (p, g) => `Fiche de réception — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Bonjour ${name},\n\nVeuillez trouver ci-joint la fiche de réception de votre véhicule (${bm || ""} — ${p}), avec les photos prises à l'arrivée et les travaux convenus.\n\n${g}\n${addr}`,
@@ -86,6 +96,11 @@ export const I18N: Record<Lang, Dict> = {
     none: "—",
     extraPhotosTitle: "Additional photos",
     photoLabels: { front: "Front", back: "Back", left: "Left side", right: "Right side" },
+    receptionNumberLabel: "Form No.",
+    noDamage: "No damage noted",
+    fuelLevelLabel: "Fuel level",
+    fuelLevels: { empty: "Empty", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Full" },
+    dashboardPhotoLabel: "Dashboard",
     emailSubject: (p, g) => `Reception form — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Hello ${name},\n\nPlease find attached the reception form for your vehicle (${bm || ""} — ${p}), including the photos taken on arrival and the agreed work.\n\n${g}\n${addr}`,
@@ -111,6 +126,11 @@ export const I18N: Record<Lang, Dict> = {
     none: "—",
     extraPhotosTitle: "Fotos adicionales",
     photoLabels: { front: "Delantera", back: "Trasera", left: "Lado izquierdo", right: "Lado derecho" },
+    receptionNumberLabel: "Ficha n.º",
+    noDamage: "Sin daños constatados",
+    fuelLevelLabel: "Nivel de combustible",
+    fuelLevels: { empty: "Vacío", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Lleno" },
+    dashboardPhotoLabel: "Salpicadero",
     emailSubject: (p, g) => `Ficha de recepción — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Hola ${name},\n\nAdjunto encontrará la ficha de recepción de su vehículo (${bm || ""} — ${p}), con las fotos tomadas a la llegada y los trabajos acordados.\n\n${g}\n${addr}`,
@@ -128,14 +148,19 @@ export const I18N: Record<Lang, Dict> = {
     workRequested: "Trabalhos solicitados",
     vehicleState: "Estado do veículo à chegada",
     damageNoted: "Danos constatados na receção",
-    cardGrey: "Documento único automóvel",
+    cardGrey: "Documento do veículo",
     signature: "Assinatura do cliente",
     consent:
       "O cliente certifica a exatidão das informações acima e aceita o estado do veículo tal como constatado e documentado por fotos na receção.",
     signedOn: "Assinado em",
     none: "—",
     extraPhotosTitle: "Fotos adicionais",
-    photoLabels: { front: "Frente", back: "Trás", left: "Lado esquerdo", right: "Lado direito" },
+    photoLabels: { front: "Frente", back: "Traseira", left: "Lado esquerdo", right: "Lado direito" },
+    receptionNumberLabel: "Ficha n.º",
+    noDamage: "Nenhum dano constatado",
+    fuelLevelLabel: "Nível de combustível",
+    fuelLevels: { empty: "Vazio", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Cheio" },
+    dashboardPhotoLabel: "Painel de instrumentos",
     emailSubject: (p, g) => `Ficha de receção — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Olá ${name},\n\nSegue em anexo a ficha de receção do seu veículo (${bm || ""} — ${p}), com as fotos tiradas à chegada e os trabalhos combinados.\n\n${g}\n${addr}`,
@@ -161,6 +186,11 @@ export const I18N: Record<Lang, Dict> = {
     none: "—",
     extraPhotosTitle: "Zusätzliche Fotos",
     photoLabels: { front: "Vorne", back: "Hinten", left: "Linke Seite", right: "Rechte Seite" },
+    receptionNumberLabel: "Protokoll Nr.",
+    noDamage: "Keine Schäden festgestellt",
+    fuelLevelLabel: "Tankfüllstand",
+    fuelLevels: { empty: "Leer", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Voll" },
+    dashboardPhotoLabel: "Armaturenbrett",
     emailSubject: (p, g) => `Annahmeprotokoll — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Guten Tag ${name},\n\nAnbei erhalten Sie das Annahmeprotokoll für Ihr Fahrzeug (${bm || ""} — ${p}) mit den bei der Ankunft aufgenommenen Fotos und den vereinbarten Arbeiten.\n\n${g}\n${addr}`,
@@ -186,6 +216,11 @@ export const I18N: Record<Lang, Dict> = {
     none: "—",
     extraPhotosTitle: "Foto aggiuntive",
     photoLabels: { front: "Anteriore", back: "Posteriore", left: "Lato sinistro", right: "Lato destro" },
+    receptionNumberLabel: "Scheda n.",
+    noDamage: "Nessun danno riscontrato",
+    fuelLevelLabel: "Livello carburante",
+    fuelLevels: { empty: "Vuoto", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Pieno" },
+    dashboardPhotoLabel: "Cruscotto",
     emailSubject: (p, g) => `Scheda di accettazione — ${p} — ${g}`,
     emailBody: (name, bm, p, g, addr) =>
       `Gentile ${name},\n\nIn allegato trova la scheda di accettazione del suo veicolo (${bm || ""} — ${p}), con le foto scattate all'arrivo e gli interventi concordati.\n\n${g}\n${addr}`,

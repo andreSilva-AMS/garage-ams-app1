@@ -3,7 +3,11 @@
     "back": "Indietro",
     "continue": "Continua",
     "save": "Salva",
-    "saving": "Salvataggio…"
+    "saving": "Salvataggio…",
+    "errorTitle": "Si è verificato un problema",
+    "errorBody": "Qualcosa è andato storto. Controlla la connessione e riprova.",
+    "retry": "Riprova",
+    "offline": "Sei offline. Alcune azioni non saranno disponibili finché la connessione non torna."
   },
   "nav": {
     "settings": "Impostazioni",

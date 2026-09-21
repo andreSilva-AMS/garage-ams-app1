@@ -3,7 +3,11 @@
     "back": "Zurück",
     "continue": "Weiter",
     "save": "Speichern",
-    "saving": "Wird gespeichert…"
+    "saving": "Wird gespeichert…",
+    "errorTitle": "Ein Problem ist aufgetreten",
+    "errorBody": "Etwas ist schiefgelaufen. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    "retry": "Erneut versuchen",
+    "offline": "Sie sind offline. Einige Aktionen sind erst wieder verfügbar, wenn die Verbindung zurück ist."
   },
   "nav": {
     "settings": "Einstellungen",

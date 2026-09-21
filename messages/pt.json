@@ -3,7 +3,11 @@
     "back": "Voltar",
     "continue": "Continuar",
     "save": "Guardar",
-    "saving": "A guardar…"
+    "saving": "A guardar…",
+    "errorTitle": "Ocorreu um problema",
+    "errorBody": "Algo correu mal. Verifique a sua ligação e tente novamente.",
+    "retry": "Tentar novamente",
+    "offline": "Está offline. Algumas ações ficarão indisponíveis até a ligação voltar."
   },
   "nav": {
     "settings": "Definições",

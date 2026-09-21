@@ -3,6 +3,7 @@ import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
+import { OfflineBanner } from "@/components/OfflineBanner";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ServiceWorkerRegister />
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <OfflineBanner />
           {children}
         </NextIntlClientProvider>
       </body>

@@ -3,7 +3,11 @@
     "back": "Volver",
     "continue": "Continuar",
     "save": "Guardar",
-    "saving": "Guardando…"
+    "saving": "Guardando…",
+    "errorTitle": "Se ha producido un problema",
+    "errorBody": "Algo ha salido mal. Compruebe su conexión e inténtelo de nuevo.",
+    "retry": "Reintentar",
+    "offline": "Está sin conexión. Algunas acciones no estarán disponibles hasta que vuelva la conexión."
   },
   "nav": {
     "settings": "Configuración",

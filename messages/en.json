@@ -3,7 +3,11 @@
     "back": "Back",
     "continue": "Continue",
     "save": "Save",
-    "saving": "Saving…"
+    "saving": "Saving…",
+    "errorTitle": "Something went wrong",
+    "errorBody": "Something went wrong. Check your connection and try again.",
+    "retry": "Try again",
+    "offline": "You're offline. Some actions will be unavailable until the connection is back."
   },
   "nav": {
     "settings": "Settings",

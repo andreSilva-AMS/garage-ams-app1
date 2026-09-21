@@ -3,7 +3,11 @@
     "back": "Retour",
     "continue": "Continuer",
     "save": "Enregistrer",
-    "saving": "Enregistrement…"
+    "saving": "Enregistrement…",
+    "errorTitle": "Un problème est survenu",
+    "errorBody": "Quelque chose s'est mal passé. Vérifiez votre connexion et réessayez.",
+    "retry": "Réessayer",
+    "offline": "Vous êtes hors ligne. Certaines actions seront indisponibles jusqu'au retour de la connexion."
   },
   "nav": {
     "settings": "Réglages",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PlusCircle } from "lucide-react";
+import { ArrowRight, CalendarCheck, PlusCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
@@ -19,12 +19,6 @@ export default async function DashboardPage() {
   const supabase = await createClient();
   const t = await getTranslations("dashboard");
   const tNav = await getTranslations("nav");
-
-  const ROLE_LABELS: Record<string, string> = {
-    owner: t("role.owner"),
-    mechanic: t("role.mechanic"),
-    reception: t("role.reception"),
-  };
 
   const {
     data: { user },
@@ -46,7 +40,7 @@ export default async function DashboardPage() {
   // est calculé côté client à partir de la même liste que "dernières
   // réceptions" (LATEST_RECEPTIONS_LIMIT), pour ne pas ajouter une 4e
   // requête réseau rien que pour un compteur.
-  const [{ data: garage }, { data: teamMembers }, { data: recentReceptions }] = await Promise.all([
+  const [{ data: garage }, { data: recentReceptions }] = await Promise.all([
     supabase
       .from("garages")
       .select(
@@ -55,13 +49,8 @@ export default async function DashboardPage() {
       .eq("id", profile.garage_id)
       .single(),
     supabase
-      .from("profiles")
-      .select("id, full_name, role")
-      .eq("garage_id", profile.garage_id)
-      .order("created_at", { ascending: true }),
-    supabase
       .from("receptions")
-      .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
+      .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path, email_status")
       .order("created_at", { ascending: false })
       .limit(LATEST_RECEPTIONS_LIMIT),
   ]);
@@ -85,6 +74,7 @@ export default async function DashboardPage() {
         vehicle_brand_model: r.vehicle_brand_model,
         dateLabel: formatGarageDateTime(new Date(r.created_at), timezone),
         pdfUrl: data?.signedUrl ?? null,
+        emailStatus: r.email_status as "sent" | "failed" | null,
       };
     }),
   );
@@ -118,31 +108,24 @@ export default async function DashboardPage() {
             <PlusCircle className="h-5 w-5" aria-hidden="true" />
             {tNav("newReception")}
           </Link>
-          <p className="text-sm font-medium text-muted">{t("todayCount", { count: todayCount })}</p>
+          <span className="badge self-start bg-accent/10 text-accent sm:self-auto">
+            <CalendarCheck className="h-3.5 w-3.5" aria-hidden="true" />
+            {t("todayCount", { count: todayCount })}
+          </span>
         </section>
 
         <section className="card mb-6 p-4">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-base font-semibold">{t("latestReceptions")}</h2>
-            <Link href="/receptions" className="text-sm underline">
+            <Link
+              href="/receptions"
+              className="inline-flex items-center gap-1 text-sm font-medium text-accent"
+            >
               {t("viewAllHistory")}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           <DashboardReceptions receptions={latestWithUrls} />
-        </section>
-
-        <section className="card p-4">
-          <h2 className="mb-2 text-sm font-medium text-muted">
-            {t("team", { count: teamMembers?.length ?? 0 })}
-          </h2>
-          <ul className="flex flex-col gap-1">
-            {teamMembers?.map((member) => (
-              <li key={member.id} className="text-sm">
-                {member.full_name ?? "—"}
-                {member.role !== "owner" && ` — ${ROLE_LABELS[member.role] ?? member.role}`}
-              </li>
-            ))}
-          </ul>
         </section>
       </main>
     </AppShell>

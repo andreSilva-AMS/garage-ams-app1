@@ -20,9 +20,9 @@ export default async function SettingsPage() {
 
   const isOwner = profile.role === "owner";
 
-  // Les deux requêtes ne dépendent que du profil déjà chargé, pas l'une de
-  // l'autre : lancées en parallèle plutôt qu'en série.
-  const [{ data: garage }, { data: pendingInvites }] = await Promise.all([
+  // Ne dépendent que du profil déjà chargé, pas les unes des autres :
+  // lancées en parallèle plutôt qu'en série.
+  const [{ data: garage }, { data: pendingInvites }, { data: teamMembers }] = await Promise.all([
     supabase
       .from("garages")
       .select("id, name, address, phone, email, logo_url, default_language, retention_days, payment_status")
@@ -35,12 +35,22 @@ export default async function SettingsPage() {
           .is("accepted_at", null)
           .order("created_at", { ascending: false })
       : Promise.resolve({ data: null }),
+    supabase
+      .from("profiles")
+      .select("id, full_name, role")
+      .eq("garage_id", profile.garage_id)
+      .order("created_at", { ascending: true }),
   ]);
   if (!garage) redirect("/dashboard");
 
   return (
     <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
-      <GarageSettingsForm garage={garage} isOwner={isOwner} pendingInvites={pendingInvites ?? []} />
+      <GarageSettingsForm
+        garage={garage}
+        isOwner={isOwner}
+        pendingInvites={pendingInvites ?? []}
+        teamMembers={teamMembers ?? []}
+      />
     </AppShell>
   );
 }

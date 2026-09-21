@@ -5,7 +5,11 @@
   --foreground: #232a33;
   --surface: #ffffff;
   --border-color: #d7dbe0;
-  --muted: #707a86;
+  /* Assombri par rapport à la maquette d'origine (#707a86, contraste 4.36:1
+     avec du blanc / 3.82:1 avec le fond de page, sous le seuil AA de 4.5:1) :
+     reste un gris discret, mais passe AA (6.2:1 / 5.4:1) partout où il sert
+     de texte (titres de section, dates, libellés secondaires). */
+  --muted: #57626f;
   /* Doré de la marque, assombri par rapport à la maquette d'origine (#a67c3d,
      contraste 3.77:1 avec du blanc, sous le seuil AA de 4.5:1 pour du texte
      normal) : reste "doré" à l'œil, mais passe AA (5.3:1) partout où l'accent

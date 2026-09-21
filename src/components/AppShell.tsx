@@ -34,16 +34,16 @@ const NAV_ITEMS: NavItem[] = [
 
 function GarageBadge({ garageName, logoUrl }: { garageName: string; logoUrl: string | null }) {
   return (
-    <div className="flex min-w-0 items-center gap-2.5">
+    <div className="flex min-w-0 items-center gap-2">
       {logoUrl ? (
         // eslint-disable-next-line @next/next/no-img-element -- logo du garage (Supabase Storage), taille variable
-        <img src={logoUrl} alt="" className="h-9 w-9 shrink-0 rounded-lg object-contain" />
+        <img src={logoUrl} alt="" className="h-10 w-10 shrink-0 rounded-lg object-contain" />
       ) : (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-neutral-100">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-100">
           <Building2 className="h-5 w-5 text-neutral-400" aria-hidden="true" />
         </div>
       )}
-      <span className="truncate font-medium">{garageName}</span>
+      <span className="truncate font-medium leading-none">{garageName}</span>
     </div>
   );
 }

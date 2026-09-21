@@ -77,12 +77,13 @@ export async function sendReceptionEmail(
   });
 
   if (sendError) {
+    await supabase.from("receptions").update({ email_status: "failed" }).eq("id", receptionId);
     return { ok: false, error: sendError.message };
   }
 
   await supabase
     .from("receptions")
-    .update({ email_sent_at: new Date().toISOString() })
+    .update({ email_sent_at: new Date().toISOString(), email_status: "sent" })
     .eq("id", receptionId);
 
   return { ok: true };

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
 import { InviteEmployeeSection } from "./InviteEmployeeSection";
+import { TeamSection } from "./TeamSection";
 
 interface Garage {
   id: string;
@@ -27,14 +28,22 @@ interface PendingInvite {
   created_at: string;
 }
 
+interface TeamMember {
+  id: string;
+  full_name: string | null;
+  role: string;
+}
+
 export function GarageSettingsForm({
   garage,
   isOwner,
   pendingInvites,
+  teamMembers,
 }: {
   garage: Garage;
   isOwner: boolean;
   pendingInvites: PendingInvite[];
+  teamMembers: TeamMember[];
 }) {
   const router = useRouter();
   const supabase = createClient();
@@ -249,6 +258,8 @@ export function GarageSettingsForm({
       </form>
 
       {isOwner && <InviteEmployeeSection pendingInvites={pendingInvites} />}
+
+      <TeamSection teamMembers={teamMembers} />
     </main>
   );
 }

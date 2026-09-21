@@ -116,6 +116,7 @@
     "cardGreyHint": "Foto do documento único automóvel",
     "damageTitle": "Danos constatados na receção",
     "damageSubtitle": "(proteção da garagem)",
+    "damageDetails": "Detalhes adicionais (texto livre)",
     "extraPhotosTitle": "Fotos adicionais de danos",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Adicionar uma foto",

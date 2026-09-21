@@ -116,6 +116,7 @@
     "cardGreyHint": "Photo du permis de circulation",
     "damageTitle": "Dommages constatés à la réception",
     "damageSubtitle": "(protection du garage)",
+    "damageDetails": "Détails supplémentaires (texte libre)",
     "extraPhotosTitle": "Photos de dégâts supplémentaires",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Ajouter une photo",

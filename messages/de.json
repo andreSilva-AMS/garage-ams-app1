@@ -116,6 +116,7 @@
     "cardGreyHint": "Foto des Fahrzeugausweises",
     "damageTitle": "Bei der Annahme festgestellte Schäden",
     "damageSubtitle": "(Schutz der Werkstatt)",
+    "damageDetails": "Zusätzliche Details (Freitext)",
     "extraPhotosTitle": "Zusätzliche Schadensfotos",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Foto hinzufügen",

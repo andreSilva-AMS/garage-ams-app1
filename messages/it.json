@@ -116,6 +116,7 @@
     "cardGreyHint": "Foto del libretto di circolazione",
     "damageTitle": "Danni riscontrati all'accettazione",
     "damageSubtitle": "(tutela dell'officina)",
+    "damageDetails": "Dettagli aggiuntivi (testo libero)",
     "extraPhotosTitle": "Foto aggiuntive dei danni",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Aggiungi una foto",

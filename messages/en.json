@@ -116,6 +116,7 @@
     "cardGreyHint": "Photo of the vehicle registration document",
     "damageTitle": "Damage noted at reception",
     "damageSubtitle": "(protects the garage)",
+    "damageDetails": "Additional details (free text)",
     "extraPhotosTitle": "Additional damage photos",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Add a photo",

@@ -54,6 +54,7 @@ interface ReceptionDraft {
   savedAt: number;
   client: ClientInfo;
   damageTags: string[];
+  damageText: string;
   workTags: string[];
   workText: string;
   lang: Lang;
@@ -127,7 +128,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   const [cardGrey, setCardGrey] = useState<PhotoData | null>(null);
   const [extraPhotos, setExtraPhotos] = useState<ExtraPhoto[]>([]);
   const [damageTags, setDamageTags] = useState<Set<string>>(new Set());
-  const [damageText] = useState("");
+  const [damageText, setDamageText] = useState("");
   const [workTags, setWorkTags] = useState<Set<string>>(new Set());
   const [workText, setWorkText] = useState("");
   const [lang, setLang] = useState<Lang>(appLocale);
@@ -152,6 +153,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         draft.client.name.trim() ||
         draft.client.plate.trim() ||
         draft.workText.trim() ||
+        draft.damageText.trim() ||
         draft.damageTags.length > 0 ||
         draft.workTags.length > 0;
       if (!hasContent) return;
@@ -162,6 +164,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setClient(draft.client);
       setDamageTags(new Set(draft.damageTags));
+      setDamageText(draft.damageText);
       setWorkTags(new Set(draft.workTags));
       setWorkText(draft.workText);
       setLang(draft.lang);
@@ -182,6 +185,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       savedAt: Date.now(),
       client,
       damageTags: [...damageTags],
+      damageText,
       workTags: [...workTags],
       workText,
       lang,
@@ -192,12 +196,13 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       // Stockage plein ou indisponible (navigation privée) : on continue
       // sans bloquer la saisie, seule la sauvegarde locale est perdue.
     }
-  }, [client, damageTags, workTags, workText, lang]);
+  }, [client, damageTags, damageText, workTags, workText, lang]);
 
   function discardDraft() {
     localStorage.removeItem(DRAFT_STORAGE_KEY);
     setClient({ name: "", phone: "", email: "", plate: "", mileage: "", brandModel: "" });
     setDamageTags(new Set());
+    setDamageText("");
     setWorkTags(new Set());
     setWorkText("");
     setDraftRestored(false);
@@ -636,6 +641,13 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 </div>
               </div>
             ))}
+            <Field label={t("damageDetails")}>
+              <textarea
+                className="input min-h-24"
+                value={damageText}
+                onChange={(e) => setDamageText(e.target.value)}
+              />
+            </Field>
           </div>
 
           <div>

@@ -116,6 +116,7 @@
     "cardGreyHint": "Foto del permiso de circulación",
     "damageTitle": "Daños constatados en la recepción",
     "damageSubtitle": "(protección del taller)",
+    "damageDetails": "Detalles adicionales (texto libre)",
     "extraPhotosTitle": "Fotos adicionales de daños",
     "extraPhotosCount": "({count}/{max})",
     "addPhoto": "Añadir una foto",

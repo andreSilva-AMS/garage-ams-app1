@@ -116,14 +116,19 @@ export default function LoginPage() {
           />
         </div>
 
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={remember}
-            onChange={(e) => setRemember(e.target.checked)}
-          />
-          {t("rememberMe")}
-        </label>
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+            />
+            {t("rememberMe")}
+          </label>
+          <Link href="/forgot-password" className="text-sm underline">
+            {t("forgotPasswordLink")}
+          </Link>
+        </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 

@@ -27,7 +27,9 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({ type, token_hash });
     if (!error) {
-      redirectTo.pathname = "/dashboard";
+      // Un lien "mot de passe oublié" doit amener sur le formulaire de
+      // nouveau mot de passe, pas directement sur le tableau de bord.
+      redirectTo.pathname = type === "recovery" ? "/reset-password" : "/dashboard";
       return NextResponse.redirect(redirectTo);
     }
   }

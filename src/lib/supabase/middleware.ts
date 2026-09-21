@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Routes accessibles sans être connecté.
-const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth"];
+const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth", "/forgot-password"];
 
 // Déconnexion automatique après une période d'inactivité (aucune requête
 // authentifiée). Fenêtre plus courte, avec message explicatif, quand

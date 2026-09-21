@@ -61,7 +61,7 @@
     "billingCountryPlaceholder": "Choose a country…",
     "billingCountryMainGroup": "Countries with a dedicated rate",
     "billingCountryOtherGroup": "Other European countries",
-    "billingCountryHint": "Determines your price. Can only be changed afterwards by contacting us.",
+    "billingCountryHint": "Used to issue your invoices and apply the VAT for your country. Can only be changed by contacting us.",
     "acceptTerms": "I accept the <terms>terms of use</terms> and the <privacy>privacy policy</privacy>.",
     "submit": "Create my garage",
     "submitting": "Creating…",

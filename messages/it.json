@@ -61,7 +61,7 @@
     "billingCountryPlaceholder": "Scegli un paese…",
     "billingCountryMainGroup": "Paesi con tariffa dedicata",
     "billingCountryOtherGroup": "Altri paesi europei",
-    "billingCountryHint": "Determina la tua tariffa. Potrà essere modificato in seguito solo contattandoci.",
+    "billingCountryHint": "Usato per emettere le tue fatture e applicare l'IVA del tuo paese. Modificabile solo contattandoci.",
     "acceptTerms": "Accetto i <terms>termini di utilizzo</terms> e l'<privacy>informativa sulla privacy</privacy>.",
     "submit": "Crea la mia officina",
     "submitting": "Creazione in corso…",

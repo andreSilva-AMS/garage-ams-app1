@@ -61,7 +61,7 @@
     "billingCountryPlaceholder": "Land auswählen…",
     "billingCountryMainGroup": "Länder mit eigenem Tarif",
     "billingCountryOtherGroup": "Weitere europäische Länder",
-    "billingCountryHint": "Bestimmt Ihren Preis. Kann danach nur noch durch Kontaktaufnahme geändert werden.",
+    "billingCountryHint": "Wird für die Rechnungsstellung und die Anwendung der Mehrwertsteuer Ihres Landes verwendet. Kann nur durch Kontaktaufnahme geändert werden.",
     "acceptTerms": "Ich akzeptiere die <terms>Nutzungsbedingungen</terms> und die <privacy>Datenschutzrichtlinie</privacy>.",
     "submit": "Werkstatt erstellen",
     "submitting": "Wird erstellt…",

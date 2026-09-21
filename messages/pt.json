@@ -61,7 +61,7 @@
     "billingCountryPlaceholder": "Escolher um país…",
     "billingCountryMainGroup": "Países com tarifa dedicada",
     "billingCountryOtherGroup": "Outros países europeus",
-    "billingCountryHint": "Determina a sua tarifa. Só poderá ser alterado depois contactando-nos.",
+    "billingCountryHint": "Utilizado para emitir as suas faturas e aplicar o IVA do seu país. Só pode ser alterado contactando-nos.",
     "acceptTerms": "Aceito os <terms>termos de utilização</terms> e a <privacy>política de privacidade</privacy>.",
     "submit": "Criar a minha garagem",
     "submitting": "A criar…",

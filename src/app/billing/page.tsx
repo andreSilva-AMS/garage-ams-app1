@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
 import { formatPriceHt, FALLBACK_PRICING_CODE, type PricingPlan } from "@/lib/pricing";
+import { AppShell } from "@/components/AppShell";
 import { SubscribeFlow, ManageSubscriptionButton } from "./BillingActions";
 
 function daysLeftUntil(date: Date): number {
@@ -27,7 +27,7 @@ export default async function BillingPage() {
   const { data: garage } = await supabase
     .from("garages")
     .select(
-      "id, name, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country, checkout_billing_address_country, checkout_country_mismatch",
+      "id, name, logo_url, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country, checkout_billing_address_country, checkout_country_mismatch",
     )
     .eq("id", profile.garage_id)
     .single();
@@ -97,54 +97,52 @@ export default async function BillingPage() {
   }
 
   return (
-    <main className="mx-auto max-w-xl px-4 py-8">
-      <h1 className="mb-6 text-xl font-semibold">Facturation</h1>
+    <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
+      <main className="mx-auto max-w-xl px-4 py-6 sm:py-10">
+        <h1 className="mb-6 text-xl font-semibold">Facturation</h1>
 
-      <div className="mb-6 rounded-2xl border border-neutral-200 p-4">
-        <p className="text-sm text-neutral-500">Statut de {garage.name}</p>
-        <p className="text-lg font-medium">{statusLabel}</p>
-        {statusDetail && <p className="mt-1 text-sm text-neutral-600">{statusDetail}</p>}
-        {plan && garage.payment_status !== "free" && (
-          <p className="mt-1 text-sm text-neutral-600">
-            {plan.country_label} — {formatPriceHt(plan)}
-          </p>
-        )}
-        {garage.checkout_country_mismatch && (
-          <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs text-amber-800">
-            Le pays indiqué sur la dernière facturation ({garage.checkout_billing_address_country})
-            diffère du pays de facturation enregistré pour ce garage.
-          </p>
-        )}
-      </div>
-
-      {!active && !isOwner && (
-        <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
-          L&apos;essai gratuit est terminé. Demandez au propriétaire du garage de s&apos;abonner
-          pour continuer à utiliser l&apos;application.
-        </p>
-      )}
-
-      {isOwner && (
-        <>
-          {garage.payment_status === "free" ? (
-            <p className="text-sm text-neutral-500">
-              Ce garage bénéficie d&apos;un accès gratuit permanent.
+        <div className="mb-6 rounded-2xl border border-neutral-200 p-4">
+          <p className="text-sm text-neutral-500">Statut de {garage.name}</p>
+          <p className="text-lg font-medium">{statusLabel}</p>
+          {statusDetail && <p className="mt-1 text-sm text-neutral-600">{statusDetail}</p>}
+          {plan && garage.payment_status !== "free" && (
+            <p className="mt-1 text-sm text-neutral-600">
+              {plan.country_label} — {formatPriceHt(plan)}
             </p>
-          ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
-            <ManageSubscriptionButton />
-          ) : (
-            <SubscribeFlow
-              pricingPlans={(pricingPlans ?? []) as PricingPlan[]}
-              fixedCountry={garage.billing_country}
-              fixedPlan={plan}
-            />
           )}
-        </>
-      )}
+          {garage.checkout_country_mismatch && (
+            <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs text-amber-800">
+              Le pays indiqué sur la dernière facturation ({garage.checkout_billing_address_country})
+              diffère du pays de facturation enregistré pour ce garage.
+            </p>
+          )}
+        </div>
 
-      <Link href="/dashboard" className="mt-8 inline-block text-sm underline">
-        Retour au tableau de bord
-      </Link>
-    </main>
+        {!active && !isOwner && (
+          <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+            L&apos;essai gratuit est terminé. Demandez au propriétaire du garage de s&apos;abonner
+            pour continuer à utiliser l&apos;application.
+          </p>
+        )}
+
+        {isOwner && (
+          <>
+            {garage.payment_status === "free" ? (
+              <p className="text-sm text-neutral-500">
+                Ce garage bénéficie d&apos;un accès gratuit permanent.
+              </p>
+            ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
+              <ManageSubscriptionButton />
+            ) : (
+              <SubscribeFlow
+                pricingPlans={(pricingPlans ?? []) as PricingPlan[]}
+                fixedCountry={garage.billing_country}
+                fixedPlan={plan}
+              />
+            )}
+          </>
+        )}
+      </main>
+    </AppShell>
   );
 }

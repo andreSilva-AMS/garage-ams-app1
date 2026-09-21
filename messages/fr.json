@@ -10,12 +10,16 @@
     "offline": "Vous êtes hors ligne. Certaines actions seront indisponibles jusqu'au retour de la connexion."
   },
   "nav": {
+    "dashboard": "Tableau de bord",
     "settings": "Réglages",
     "signOut": "Se déconnecter",
     "newReception": "Nouvelle réception",
     "history": "Historique des réceptions",
     "backToDashboard": "Retour au tableau de bord",
-    "billing": "Facturation"
+    "billing": "Facturation",
+    "menu": "Menu principal",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "login": {
     "title": "Connexion",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "Votre essai gratuit se termine dans {days} jour(s).",
     "trialExpired": "Votre essai gratuit est terminé.",
     "paymentIssue": "Un problème est survenu avec votre dernier paiement.",
-    "subscribeCta": "S'abonner"
+    "subscribeCta": "S'abonner",
+    "todayCount": "{count} fiche(s) aujourd'hui",
+    "latestReceptions": "Dernières réceptions",
+    "viewAllHistory": "Voir tout l'historique",
+    "noReceptionsYet": "Aucune fiche pour l'instant."
   },
   "settings": {
     "title": "Réglages du garage",

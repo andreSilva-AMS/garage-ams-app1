@@ -1,10 +1,15 @@
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PlusCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
-import { signOut } from "./actions";
+import { getGarageTimezone, formatGarageDateTime, startOfTodayInTimezone } from "@/lib/timezone";
+import { AppShell } from "@/components/AppShell";
+import { DashboardReceptions } from "./DashboardReceptions";
+
+const LATEST_RECEPTIONS_LIMIT = 20;
+const LATEST_RECEPTIONS_SHOWN = 6;
 
 function daysLeftUntil(date: Date): number {
   return Math.ceil((date.getTime() - Date.now()) / 86_400_000);
@@ -36,14 +41,16 @@ export default async function DashboardPage() {
     redirect("/signup");
   }
 
-  // Les deux requêtes ne dépendent que de profile.garage_id, pas l'une de
-  // l'autre : lancées en parallèle plutôt qu'en série pour économiser un
-  // aller-retour réseau vers la base de données.
-  const [{ data: garage }, { data: teamMembers }] = await Promise.all([
+  // Ne dépendent que de profile.garage_id, pas les unes des autres :
+  // lancées en parallèle plutôt qu'en série. Le "nombre de fiches du jour"
+  // est calculé côté client à partir de la même liste que "dernières
+  // réceptions" (LATEST_RECEPTIONS_LIMIT), pour ne pas ajouter une 4e
+  // requête réseau rien que pour un compteur.
+  const [{ data: garage }, { data: teamMembers }, { data: recentReceptions }] = await Promise.all([
     supabase
       .from("garages")
       .select(
-        "id, name, address, logo_url, default_language, subscription_plan, payment_status, trial_ends_at",
+        "id, name, address, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at",
       )
       .eq("id", profile.garage_id)
       .single(),
@@ -52,7 +59,35 @@ export default async function DashboardPage() {
       .select("id, full_name, role")
       .eq("garage_id", profile.garage_id)
       .order("created_at", { ascending: true }),
+    supabase
+      .from("receptions")
+      .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
+      .order("created_at", { ascending: false })
+      .limit(LATEST_RECEPTIONS_LIMIT),
   ]);
+
+  const timezone = getGarageTimezone(garage ?? {});
+  const startOfToday = startOfTodayInTimezone(timezone);
+  const todayCount = (recentReceptions ?? []).filter(
+    (r) => new Date(r.created_at) >= startOfToday,
+  ).length;
+
+  const latest = (recentReceptions ?? []).slice(0, LATEST_RECEPTIONS_SHOWN);
+  const latestWithUrls = await Promise.all(
+    latest.map(async (r) => {
+      const { data } = r.pdf_path
+        ? await supabase.storage.from("receptions").createSignedUrl(r.pdf_path, 3600)
+        : { data: null };
+      return {
+        id: r.id,
+        client_name: r.client_name,
+        vehicle_plate: r.vehicle_plate,
+        vehicle_brand_model: r.vehicle_brand_model,
+        dateLabel: formatGarageDateTime(new Date(r.created_at), timezone),
+        pdfUrl: data?.signedUrl ?? null,
+      };
+    }),
+  );
 
   const billingBanner = (() => {
     if (!garage) return null;
@@ -67,76 +102,49 @@ export default async function DashboardPage() {
   })();
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex items-center gap-3">
-          <Image src="/logo.png" alt="ReceptCar" width={40} height={40} className="rounded-xl" />
-          <div>
-            <p className="text-sm text-neutral-500">{t("connectedTo")}</p>
-            <h1 className="text-2xl">{garage?.name}</h1>
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <Link href="/billing" className="text-sm underline">
-            {tNav("billing")}
+    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null}>
+      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
+        {billingBanner && (
+          <Link
+            href="/billing"
+            className="mb-6 block rounded-2xl bg-amber-50 p-3 text-sm text-amber-800 underline"
+          >
+            {billingBanner} — {t("subscribeCta")}
           </Link>
-          <Link href="/settings" className="text-sm underline">
-            {tNav("settings")}
-          </Link>
-          <form action={signOut}>
-            <button type="submit" className="text-sm underline">
-              {tNav("signOut")}
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {billingBanner && (
-        <Link
-          href="/billing"
-          className="mb-6 block rounded-2xl bg-amber-50 p-3 text-sm text-amber-800 underline"
-        >
-          {billingBanner} — {t("subscribeCta")}
-        </Link>
-      )}
-
-      <section className="mb-8 flex gap-3">
-        <Link href="/receptions/new" className="btn-primary">
-          {tNav("newReception")}
-        </Link>
-        <Link href="/receptions" className="btn-secondary">
-          {tNav("history")}
-        </Link>
-      </section>
-
-      <section className="mb-8 flex items-center justify-center rounded-2xl border border-neutral-200 p-4">
-        {garage?.logo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element -- logo du garage (Supabase Storage), taille variable
-          <img
-            src={garage.logo_url}
-            alt={garage.name}
-            className="h-20 w-20 rounded-xl object-contain"
-          />
-        ) : (
-          <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-neutral-100 text-3xl">
-            🏢
-          </div>
         )}
-      </section>
 
-      <section className="rounded-2xl border border-neutral-200 p-4">
-        <h2 className="mb-2 text-sm font-medium text-neutral-500">
-          {t("team", { count: teamMembers?.length ?? 0 })}
-        </h2>
-        <ul className="flex flex-col gap-1">
-          {teamMembers?.map((member) => (
-            <li key={member.id} className="text-sm">
-              {member.full_name ?? "—"}
-              {member.role !== "owner" && ` — ${ROLE_LABELS[member.role] ?? member.role}`}
-            </li>
-          ))}
-        </ul>
-      </section>
-    </main>
+        <section className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/receptions/new" className="btn-primary justify-center text-base">
+            <PlusCircle className="h-5 w-5" aria-hidden="true" />
+            {tNav("newReception")}
+          </Link>
+          <p className="text-sm font-medium text-muted">{t("todayCount", { count: todayCount })}</p>
+        </section>
+
+        <section className="card mb-6 p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-base font-semibold">{t("latestReceptions")}</h2>
+            <Link href="/receptions" className="text-sm underline">
+              {t("viewAllHistory")}
+            </Link>
+          </div>
+          <DashboardReceptions receptions={latestWithUrls} />
+        </section>
+
+        <section className="card p-4">
+          <h2 className="mb-2 text-sm font-medium text-muted">
+            {t("team", { count: teamMembers?.length ?? 0 })}
+          </h2>
+          <ul className="flex flex-col gap-1">
+            {teamMembers?.map((member) => (
+              <li key={member.id} className="text-sm">
+                {member.full_name ?? "—"}
+                {member.role !== "owner" && ` — ${ROLE_LABELS[member.role] ?? member.role}`}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </AppShell>
   );
 }

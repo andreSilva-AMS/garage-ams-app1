@@ -10,12 +10,16 @@
     "offline": "You're offline. Some actions will be unavailable until the connection is back."
   },
   "nav": {
+    "dashboard": "Dashboard",
     "settings": "Settings",
     "signOut": "Sign out",
     "newReception": "New reception",
     "history": "Reception history",
     "backToDashboard": "Back to dashboard",
-    "billing": "Billing"
+    "billing": "Billing",
+    "menu": "Main menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "login": {
     "title": "Sign in",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "Your free trial ends in {days} day(s).",
     "trialExpired": "Your free trial has ended.",
     "paymentIssue": "There was a problem with your last payment.",
-    "subscribeCta": "Subscribe"
+    "subscribeCta": "Subscribe",
+    "todayCount": "{count} form(s) today",
+    "latestReceptions": "Latest receptions",
+    "viewAllHistory": "View full history",
+    "noReceptionsYet": "No forms yet."
   },
   "settings": {
     "title": "Garage settings",

@@ -10,12 +10,16 @@
     "offline": "Está sin conexión. Algunas acciones no estarán disponibles hasta que vuelva la conexión."
   },
   "nav": {
+    "dashboard": "Panel",
     "settings": "Configuración",
     "signOut": "Cerrar sesión",
     "newReception": "Nueva recepción",
     "history": "Historial de recepciones",
     "backToDashboard": "Volver al panel",
-    "billing": "Facturación"
+    "billing": "Facturación",
+    "menu": "Menú principal",
+    "openMenu": "Abrir el menú",
+    "closeMenu": "Cerrar el menú"
   },
   "login": {
     "title": "Iniciar sesión",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "Su período de prueba gratuito termina en {days} día(s).",
     "trialExpired": "Su período de prueba gratuito ha terminado.",
     "paymentIssue": "Hubo un problema con su último pago.",
-    "subscribeCta": "Suscribirse"
+    "subscribeCta": "Suscribirse",
+    "todayCount": "{count} ficha(s) hoy",
+    "latestReceptions": "Últimas recepciones",
+    "viewAllHistory": "Ver todo el historial",
+    "noReceptionsYet": "Todavía no hay fichas."
   },
   "settings": {
     "title": "Configuración del taller",

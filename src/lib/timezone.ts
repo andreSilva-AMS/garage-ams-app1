@@ -37,6 +37,32 @@ export function getGarageTimezone(garage: {
   return DEFAULT_TIMEZONE;
 }
 
+/**
+ * Minuit, dans le fuseau du garage, pour le jour "maintenant" — sert à filtrer
+ * les fiches du jour. Calculé en comparant l'heure actuelle formatée dans ce
+ * fuseau (traitée comme si elle était UTC) à l'heure UTC réelle, pour obtenir
+ * le décalage exact (DST compris) sans dépendance externe.
+ */
+export function startOfTodayInTimezone(timeZone: string): Date {
+  const now = new Date();
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(now);
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value ?? 0);
+
+  const localAsUtc = Date.UTC(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"), get("second"));
+  const offsetMs = localAsUtc - now.getTime();
+  const localMidnightAsUtc = Date.UTC(get("year"), get("month") - 1, get("day"), 0, 0, 0);
+  return new Date(localMidnightAsUtc - offsetMs);
+}
+
 /** Toujours "jj.mm.aaaa hh:mm" (24h), quel que soit le fuseau/la locale de l'environnement d'exécution. */
 export function formatGarageDateTime(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat("en-GB", {

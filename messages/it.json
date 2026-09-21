@@ -10,12 +10,16 @@
     "offline": "Sei offline. Alcune azioni non saranno disponibili finché la connessione non torna."
   },
   "nav": {
+    "dashboard": "Pannello",
     "settings": "Impostazioni",
     "signOut": "Disconnetti",
     "newReception": "Nuova accettazione",
     "history": "Storico accettazioni",
     "backToDashboard": "Torna alla dashboard",
-    "billing": "Fatturazione"
+    "billing": "Fatturazione",
+    "menu": "Menu principale",
+    "openMenu": "Apri il menu",
+    "closeMenu": "Chiudi il menu"
   },
   "login": {
     "title": "Accedi",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "La tua prova gratuita termina tra {days} giorno/i.",
     "trialExpired": "La tua prova gratuita è terminata.",
     "paymentIssue": "Si è verificato un problema con il tuo ultimo pagamento.",
-    "subscribeCta": "Abbonati"
+    "subscribeCta": "Abbonati",
+    "todayCount": "{count} scheda/e oggi",
+    "latestReceptions": "Ultime accettazioni",
+    "viewAllHistory": "Vedi tutto lo storico",
+    "noReceptionsYet": "Nessuna scheda per ora."
   },
   "settings": {
     "title": "Impostazioni dell'officina",

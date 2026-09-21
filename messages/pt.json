@@ -10,12 +10,16 @@
     "offline": "Está offline. Algumas ações ficarão indisponíveis até a ligação voltar."
   },
   "nav": {
+    "dashboard": "Painel",
     "settings": "Definições",
     "signOut": "Terminar sessão",
     "newReception": "Nova receção",
     "history": "Histórico de receções",
     "backToDashboard": "Voltar ao painel",
-    "billing": "Faturação"
+    "billing": "Faturação",
+    "menu": "Menu principal",
+    "openMenu": "Abrir o menu",
+    "closeMenu": "Fechar o menu"
   },
   "login": {
     "title": "Iniciar sessão",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "O seu período de teste gratuito termina em {days} dia(s).",
     "trialExpired": "O seu período de teste gratuito terminou.",
     "paymentIssue": "Ocorreu um problema com o seu último pagamento.",
-    "subscribeCta": "Subscrever"
+    "subscribeCta": "Subscrever",
+    "todayCount": "{count} ficha(s) hoje",
+    "latestReceptions": "Últimas receções",
+    "viewAllHistory": "Ver todo o histórico",
+    "noReceptionsYet": "Ainda não há fichas."
   },
   "settings": {
     "title": "Definições da garagem",

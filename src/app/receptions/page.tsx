@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getGarageTimezone, formatGarageDateTime } from "@/lib/timezone";
+import { AppShell } from "@/components/AppShell";
 import { ReceptionsList } from "./ReceptionsList";
 
 export default async function ReceptionsPage() {
@@ -25,7 +26,7 @@ export default async function ReceptionsPage() {
     profile
       ? supabase
           .from("garages")
-          .select("billing_country, default_language, retention_days")
+          .select("name, logo_url, billing_country, default_language, retention_days")
           .eq("id", profile.garage_id)
           .single()
       : Promise.resolve({ data: null }),
@@ -53,23 +54,21 @@ export default async function ReceptionsPage() {
   );
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{t("title")}</h1>
-        <Link href="/receptions/new" className="btn-primary">
-          {tNav("newReception")}
-        </Link>
-      </div>
+    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null}>
+      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-xl font-semibold">{t("title")}</h1>
+          <Link href="/receptions/new" className="btn-primary">
+            {tNav("newReception")}
+          </Link>
+        </div>
 
-      <p className="mb-6 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
-        {t("retentionNotice", { days: garage?.retention_days ?? 30 })}
-      </p>
+        <p className="mb-6 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+          {t("retentionNotice", { days: garage?.retention_days ?? 30 })}
+        </p>
 
-      <ReceptionsList receptions={withUrls} />
-
-      <Link href="/dashboard" className="mt-8 inline-block text-sm underline">
-        {tNav("backToDashboard")}
-      </Link>
-    </main>
+        <ReceptionsList receptions={withUrls} />
+      </main>
+    </AppShell>
   );
 }

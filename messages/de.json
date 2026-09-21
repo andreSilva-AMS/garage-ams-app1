@@ -10,12 +10,16 @@
     "offline": "Sie sind offline. Einige Aktionen sind erst wieder verfügbar, wenn die Verbindung zurück ist."
   },
   "nav": {
+    "dashboard": "Übersicht",
     "settings": "Einstellungen",
     "signOut": "Abmelden",
     "newReception": "Neue Annahme",
     "history": "Annahmeverlauf",
     "backToDashboard": "Zurück zum Dashboard",
-    "billing": "Abrechnung"
+    "billing": "Abrechnung",
+    "menu": "Hauptmenü",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
   },
   "login": {
     "title": "Anmelden",
@@ -82,7 +86,11 @@
     "trialEndingSoon": "Ihre kostenlose Testphase endet in {days} Tag(en).",
     "trialExpired": "Ihre kostenlose Testphase ist abgelaufen.",
     "paymentIssue": "Bei Ihrer letzten Zahlung ist ein Problem aufgetreten.",
-    "subscribeCta": "Abonnieren"
+    "subscribeCta": "Abonnieren",
+    "todayCount": "{count} Protokoll(e) heute",
+    "latestReceptions": "Letzte Annahmen",
+    "viewAllHistory": "Gesamten Verlauf anzeigen",
+    "noReceptionsYet": "Noch keine Protokolle."
   },
   "settings": {
     "title": "Werkstatt-Einstellungen",

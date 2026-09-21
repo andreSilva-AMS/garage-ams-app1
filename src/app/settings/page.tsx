@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { AppShell } from "@/components/AppShell";
 import { GarageSettingsForm } from "./GarageSettingsForm";
 
 export default async function SettingsPage() {
@@ -38,6 +39,8 @@ export default async function SettingsPage() {
   if (!garage) redirect("/dashboard");
 
   return (
-    <GarageSettingsForm garage={garage} isOwner={isOwner} pendingInvites={pendingInvites ?? []} />
+    <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
+      <GarageSettingsForm garage={garage} isOwner={isOwner} pendingInvites={pendingInvites ?? []} />
+    </AppShell>
   );
 }

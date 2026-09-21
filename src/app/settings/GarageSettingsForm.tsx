@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
@@ -39,7 +39,6 @@ export function GarageSettingsForm({
   const router = useRouter();
   const supabase = createClient();
   const t = useTranslations("settings");
-  const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
 
   const [name, setName] = useState(garage.name);
@@ -126,8 +125,8 @@ export function GarageSettingsForm({
                 className="h-16 w-16 rounded object-contain"
               />
             ) : (
-              <div className="flex h-16 w-16 items-center justify-center rounded bg-neutral-100 text-2xl">
-                🏢
+              <div className="flex h-16 w-16 items-center justify-center rounded bg-neutral-100">
+                <Building2 className="h-7 w-7 text-neutral-400" aria-hidden="true" />
               </div>
             )}
             <label
@@ -250,10 +249,6 @@ export function GarageSettingsForm({
       </form>
 
       {isOwner && <InviteEmployeeSection pendingInvites={pendingInvites} />}
-
-      <Link href="/dashboard" className="mt-8 inline-block text-sm underline">
-        {tNav("backToDashboard")}
-      </Link>
     </main>
   );
 }

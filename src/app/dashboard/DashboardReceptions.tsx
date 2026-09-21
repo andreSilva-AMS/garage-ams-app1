@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { AlertTriangle, CheckCircle2, FileText, Loader2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, FileText, HelpCircle, Loader2 } from "lucide-react";
 import { EmptyState } from "@/components/EmptyState";
 import { sendReceptionEmail } from "../receptions/actions";
 
@@ -64,7 +64,7 @@ export function DashboardReceptions({ receptions }: { receptions: Reception[] })
           return (
             <li key={r.id}>
               <div
-                className="flex min-h-11 flex-col gap-2 py-3 sm:flex-row sm:items-center"
+                className="flex min-h-11 items-center gap-2 py-2"
                 onClick={() => openPdf(r.pdfUrl)}
                 style={{ cursor: r.pdfUrl ? "pointer" : "default" }}
               >
@@ -108,17 +108,23 @@ export function DashboardReceptions({ receptions }: { receptions: Reception[] })
                       </button>
                     </>
                   )}
+                  {status === null && (
+                    <span className="badge bg-neutral-100 text-muted">
+                      <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                      {t("statusUnknown")}
+                    </span>
+                  )}
 
                   {r.pdfUrl && (
                     <a
                       href={r.pdfUrl}
                       target="_blank"
                       rel="noreferrer"
-                      aria-label={t("pdf")}
                       onClick={(e) => e.stopPropagation()}
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-foreground hover:bg-black/5"
+                      className="flex h-11 shrink-0 items-center gap-1.5 rounded-lg border border-border-color px-3 text-sm font-medium text-foreground hover:bg-black/5"
                     >
-                      <FileText className="h-5 w-5" aria-hidden="true" />
+                      <FileText className="h-4 w-4" aria-hidden="true" />
+                      {t("pdf")}
                     </a>
                   )}
                 </div>

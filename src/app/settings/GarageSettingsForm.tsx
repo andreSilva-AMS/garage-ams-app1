@@ -5,6 +5,7 @@ import { Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { cropLogoToSquare } from "@/lib/image";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
 import { InviteEmployeeSection } from "./InviteEmployeeSection";
 import { TeamSection } from "./TeamSection";
@@ -60,14 +61,24 @@ export function GarageSettingsForm({
     (garage.default_language as Lang) ?? "fr",
   );
   const [logoPreview, setLogoPreview] = useState<string | null>(garage.logo_url);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoBlob, setLogoBlob] = useState<Blob | null>(null);
+  const [logoProcessing, setLogoProcessing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
 
-  function onLogoChange(file: File) {
-    setLogoFile(file);
-    setLogoPreview(URL.createObjectURL(file));
+  async function onLogoChange(file: File) {
+    setLogoProcessing(true);
+    setError(null);
+    try {
+      const { blob, dataUrl } = await cropLogoToSquare(file);
+      setLogoBlob(blob);
+      setLogoPreview(dataUrl);
+    } catch {
+      setError(t("logoProcessingError"));
+    } finally {
+      setLogoProcessing(false);
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -78,12 +89,12 @@ export function GarageSettingsForm({
 
     try {
       let logoUrl = garage.logo_url;
-      if (logoFile) {
-        const ext = logoFile.name.split(".").pop() ?? "png";
-        const path = `${garage.id}/logo.${ext}`;
+      if (logoBlob) {
+        // Toujours un PNG carré 256×256 : voir cropLogoToSquare().
+        const path = `${garage.id}/logo.png`;
         const { error: uploadError } = await supabase.storage
           .from("garage-logos")
-          .upload(path, logoFile, { upsert: true, contentType: logoFile.type });
+          .upload(path, logoBlob, { upsert: true, contentType: "image/png" });
         if (uploadError) throw uploadError;
         const { data } = supabase.storage.from("garage-logos").getPublicUrl(path);
         logoUrl = data.publicUrl;
@@ -139,13 +150,13 @@ export function GarageSettingsForm({
               </div>
             )}
             <label
-              className={`btn-secondary cursor-pointer ${!isOwner ? "pointer-events-none opacity-60" : ""}`}
+              className={`btn-secondary cursor-pointer ${!isOwner || logoProcessing ? "pointer-events-none opacity-60" : ""}`}
             >
-              {t("chooseFile")}
+              {logoProcessing ? tCommon("saving") : t("chooseFile")}
               <input
                 type="file"
                 accept="image/*"
-                disabled={!isOwner}
+                disabled={!isOwner || logoProcessing}
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
@@ -154,6 +165,7 @@ export function GarageSettingsForm({
               />
             </label>
           </div>
+          <p className="text-xs text-neutral-500">{t("logoHint")}</p>
         </div>
 
         <div className="flex flex-col gap-1">

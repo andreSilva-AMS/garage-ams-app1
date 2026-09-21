@@ -6,8 +6,25 @@
   --surface: #ffffff;
   --border-color: #d7dbe0;
   --muted: #707a86;
-  --accent: #a67c3d;
+  /* Doré de la marque, assombri par rapport à la maquette d'origine (#a67c3d,
+     contraste 3.77:1 avec du blanc, sous le seuil AA de 4.5:1 pour du texte
+     normal) : reste "doré" à l'œil, mais passe AA (5.3:1) partout où l'accent
+     sert de fond avec du texte blanc (boutons, badges). */
+  --accent: #8c6329;
   --accent-foreground: #ffffff;
+  --danger: #b3261e;
+  --danger-foreground: #ffffff;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent);
+  --shadow-md: 0 4px 16px color-mix(in srgb, var(--foreground) 10%, transparent);
+
+  /* Zone tactile minimale recommandée (WCAG 2.5.5 / Apple HIG). */
+  --tap-target: 44px;
 }
 
 @theme inline {
@@ -18,6 +35,8 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
   --font-sans: var(--font-plex-sans);
   --font-serif: var(--font-plex-serif);
 }
@@ -50,51 +69,86 @@ h2 {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: var(--accent-foreground);
-  border-radius: 1rem;
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--tap-target);
+  border-radius: var(--radius-lg);
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: filter 150ms ease, transform 100ms ease, opacity 150ms ease;
+  transition: filter 150ms ease, background-color 150ms ease, transform 100ms ease, opacity 150ms ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .btn-primary:hover:not(:disabled) {
-  filter: brightness(1.08);
-}
-
-.btn-primary:active:not(:disabled) {
-  transform: scale(0.97);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  filter: brightness(1.1);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--foreground);
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background-color 150ms ease, transform 100ms ease, opacity 150ms ease;
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: color-mix(in srgb, var(--foreground) 6%, transparent);
 }
 
-.btn-secondary:active:not(:disabled) {
+.btn-danger {
+  background: var(--danger);
+  color: var(--danger-foreground);
+}
+
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.btn-primary:active:not(:disabled),
+.btn-secondary:active:not(:disabled),
+.btn-danger:active:not(:disabled) {
   transform: scale(0.97);
 }
 
-.btn-secondary:disabled {
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: var(--radius-md);
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Anneau de focus visible et cohérent, uniquement au clavier (souris/tactile
+   ne déclenchent pas :focus-visible) — requis par les règles d'accessibilité
+   du projet, distinct de l'anneau interne des champs (.input:focus). */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 /* Apparition douce du contenu d'une étape (formulaire de réception, etc.) */
@@ -116,6 +170,7 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .btn-primary,
   .btn-secondary,
+  .btn-danger,
   .input,
   .step-content {
     transition: none;

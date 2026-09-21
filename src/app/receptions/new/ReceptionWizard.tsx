@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowLeft, Camera, CheckCircle2, Gauge, IdCard, Loader2, Mail, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
@@ -523,6 +524,13 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
               }}
               className="btn-primary"
             >
+              {emailStatus === "sending" ? (
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : emailStatus === "sent" ? (
+                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Mail className="h-4 w-4" aria-hidden="true" />
+              )}
               {emailStatus === "sending"
                 ? t("sending")
                 : emailStatus === "sent"
@@ -554,8 +562,12 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
-      <Link href="/dashboard" className="mb-4 inline-block text-sm underline text-neutral-500">
-        ← {tNav("backToDashboard")}
+      <Link
+        href="/dashboard"
+        className="mb-4 inline-flex items-center gap-1 text-sm underline text-neutral-500"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        {tNav("backToDashboard")}
       </Link>
       <p className="mb-1 text-sm text-neutral-500">{t("step", { step })}</p>
       <div className="mb-6 h-1 w-full rounded bg-neutral-200">
@@ -646,7 +658,10 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <span>📷 {ANGLE_LABELS[angle]}</span>
+                  <span className="flex flex-col items-center gap-1">
+                    <Camera className="h-5 w-5 text-neutral-400" aria-hidden="true" />
+                    {ANGLE_LABELS[angle]}
+                  </span>
                 )}
                 <input
                   type="file"
@@ -671,7 +686,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 className="h-14 w-14 rounded object-cover"
               />
             ) : (
-              <span className="text-2xl">🪪</span>
+              <IdCard className="h-8 w-8 text-neutral-400" aria-hidden="true" />
             )}
             <span className="text-sm">
               <b>{t("cardGrey")}</b>
@@ -699,7 +714,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 className="h-14 w-14 rounded object-cover"
               />
             ) : (
-              <span className="text-2xl">🛞</span>
+              <Gauge className="h-8 w-8 text-neutral-400" aria-hidden="true" />
             )}
             <span className="text-sm">
               <b>{t("dashboardPhoto")}</b>
@@ -786,9 +801,9 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                       type="button"
                       onClick={() => removeExtraPhoto(i)}
                       aria-label={t("removePhoto")}
-                      className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white"
+                      className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white"
                     >
-                      ✕
+                      <X className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>
                   </div>
                   <input

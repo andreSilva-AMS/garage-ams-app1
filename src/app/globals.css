@@ -41,6 +41,13 @@ h2 {
   font-size: 0.875rem;
   background: var(--surface);
   color: var(--foreground);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .btn-primary {
@@ -50,10 +57,20 @@ h2 {
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
+  transition: filter 150ms ease, transform 100ms ease, opacity 150ms ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .btn-primary:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-secondary {
@@ -64,8 +81,44 @@ h2 {
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 500;
+  transition: background-color 150ms ease, transform 100ms ease, opacity 150ms ease;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .btn-secondary:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Apparition douce du contenu d'une étape (formulaire de réception, etc.) */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-content {
+  animation: fade-in-up 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-secondary,
+  .input,
+  .step-content {
+    transition: none;
+    animation: none;
+  }
 }

@@ -87,7 +87,7 @@ function Tag({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full border px-3 py-1.5 text-sm ${
+      className={`rounded-full border px-3 py-1.5 text-sm transition-colors duration-150 active:scale-95 ${
         active ? "border-accent bg-accent text-accent-foreground" : "border-neutral-300"
       }`}
     >
@@ -498,7 +498,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       )}
 
       {step === 1 && (
-        <section className="flex flex-col gap-4">
+        <section className="step-content flex flex-col gap-4">
           <h2 className="text-lg font-semibold">{t("step1Title")}</h2>
           <Field label={t("clientName")}>
             <input
@@ -553,7 +553,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       )}
 
       {step === 2 && (
-        <section className="flex flex-col gap-6">
+        <section className="step-content flex flex-col gap-6">
           <h2 className="text-lg font-semibold">{t("step2Title")}</h2>
           <div className="grid grid-cols-2 gap-3">
             {(["front", "back", "left", "right"] as Angle[]).map((angle) => (
@@ -695,7 +695,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       )}
 
       {step === 3 && (
-        <section className="flex flex-col gap-4">
+        <section className="step-content flex flex-col gap-4">
           <h2 className="text-lg font-semibold">{t("step3Title")}</h2>
           <p className="text-sm font-medium">{t("commonWork")}</p>
           <div className="flex flex-wrap gap-2">
@@ -716,7 +716,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       )}
 
       {step === 4 && (
-        <section className="flex flex-col gap-4">
+        <section className="step-content flex flex-col gap-4">
           <h2 className="text-lg font-semibold">{t("step4Title")}</h2>
           <SignaturePad onChange={setSignatureDataUrl} clearLabel={t("clearSignature")} />
           <p className="text-xs text-neutral-500">{t("consent")}</p>
@@ -724,7 +724,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       )}
 
       {step === 5 && (
-        <section className="flex flex-col gap-4">
+        <section className="step-content flex flex-col gap-4">
           <h2 className="text-lg font-semibold">{t("step5Title")}</h2>
           <Field label={t("docLanguage")}>
             <select

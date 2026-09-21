@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowRight, CalendarCheck, PlusCircle } from "lucide-react";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfile } from "@/lib/supabase/profile";
@@ -10,6 +11,11 @@ import { DashboardReceptions } from "./DashboardReceptions";
 
 const LATEST_RECEPTIONS_LIMIT = 20;
 const LATEST_RECEPTIONS_SHOWN = 6;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("nav");
+  return { title: t("dashboard") };
+}
 
 function daysLeftUntil(date: Date): number {
   return Math.ceil((date.getTime() - Date.now()) / 86_400_000);
@@ -112,7 +118,7 @@ export default async function DashboardPage() {
             <PlusCircle className="h-5 w-5" aria-hidden="true" />
             {tNav("newReception")}
           </Link>
-          <span className="badge self-start bg-accent/10 text-accent sm:self-auto">
+          <span className="badge self-start bg-accent/10 text-accent-strong sm:self-auto">
             <CalendarCheck className="h-3.5 w-3.5" aria-hidden="true" />
             {t("todayCount", { count: todayCount })}
           </span>

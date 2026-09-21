@@ -7,7 +7,8 @@
     "errorTitle": "Se ha producido un problema",
     "errorBody": "Algo ha salido mal. Compruebe su conexión e inténtelo de nuevo.",
     "retry": "Reintentar",
-    "offline": "Está sin conexión. Algunas acciones no estarán disponibles hasta que vuelva la conexión."
+    "offline": "Está sin conexión. Algunas acciones no estarán disponibles hasta que vuelva la conexión.",
+    "language": "Idioma"
   },
   "nav": {
     "dashboard": "Panel",
@@ -21,6 +22,11 @@
     "openMenu": "Abrir el menú",
     "closeMenu": "Cerrar el menú",
     "help": "Ayuda"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "body": "Esta página no existe o se ha movido.",
+    "cta": "Volver al inicio"
   },
   "login": {
     "title": "Iniciar sesión",
@@ -123,6 +129,7 @@
     "invitePending": "pendiente"
   },
   "onboarding": {
+    "pageTitle": "Configuración del taller",
     "step": "Paso {step} / 3",
     "stepNames": {
       "logo": "Logotipo",

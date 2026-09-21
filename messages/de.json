@@ -7,7 +7,8 @@
     "errorTitle": "Ein Problem ist aufgetreten",
     "errorBody": "Etwas ist schiefgelaufen. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
     "retry": "Erneut versuchen",
-    "offline": "Sie sind offline. Einige Aktionen sind erst wieder verfügbar, wenn die Verbindung zurück ist."
+    "offline": "Sie sind offline. Einige Aktionen sind erst wieder verfügbar, wenn die Verbindung zurück ist.",
+    "language": "Sprache"
   },
   "nav": {
     "dashboard": "Übersicht",
@@ -21,6 +22,11 @@
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
     "help": "Hilfe"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Diese Seite existiert nicht oder wurde verschoben.",
+    "cta": "Zurück zur Startseite"
   },
   "login": {
     "title": "Anmelden",
@@ -123,6 +129,7 @@
     "invitePending": "ausstehend"
   },
   "onboarding": {
+    "pageTitle": "Werkstatt einrichten",
     "step": "Schritt {step} / 3",
     "stepNames": {
       "logo": "Logo",

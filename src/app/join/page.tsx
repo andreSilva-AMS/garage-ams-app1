@@ -1,11 +1,35 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { JoinForm } from "./JoinForm";
 
-export default async function JoinPage({
-  searchParams,
-}: {
+type JoinPageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+};
+
+export async function generateMetadata({ searchParams }: JoinPageProps): Promise<Metadata> {
+  const t = await getTranslations("join");
+  const { token } = await searchParams;
+  if (!token || typeof token !== "string") return { title: t("submit") };
+
+  const supabase = createServiceClient();
+  const { data: invite } = await supabase
+    .from("garage_invites")
+    .select("garage_id")
+    .eq("token", token)
+    .maybeSingle();
+  if (!invite) return { title: t("submit") };
+
+  const { data: garage } = await supabase
+    .from("garages")
+    .select("name")
+    .eq("id", invite.garage_id)
+    .single();
+
+  return { title: t("title", { garageName: garage?.name ?? "" }) };
+}
+
+export default async function JoinPage({ searchParams }: JoinPageProps) {
   const { token } = await searchParams;
 
   if (!token || typeof token !== "string") {

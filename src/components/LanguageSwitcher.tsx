@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
 
 /**
@@ -14,6 +15,7 @@ export function LanguageSwitcher({
   value: Lang;
   onChange: (value: Lang) => void;
 }) {
+  const t = useTranslations("common");
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,10 +35,10 @@ export function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Language"
         aria-expanded={open}
         className="flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium shadow-sm"
       >
+        <span className="sr-only">{t("language")}</span>
         <span aria-hidden="true">{flag}</span>
         <span>{value.toUpperCase()}</span>
       </button>

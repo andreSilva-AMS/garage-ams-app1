@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { SignupForm } from "./SignupForm";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("signup");
+  const t = await getTranslations("login");
   return { title: t("title") };
 }
 
-export default function SignupPage() {
-  return <SignupForm />;
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return children;
 }

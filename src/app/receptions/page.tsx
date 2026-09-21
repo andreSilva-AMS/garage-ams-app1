@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getGarageTimezone, formatGarageDateTime } from "@/lib/timezone";
 import { AppShell } from "@/components/AppShell";
 import { ReceptionsList } from "./ReceptionsList";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("receptionsHistory");
+  return { title: t("title") };
+}
 
 export default async function ReceptionsPage() {
   const supabase = await createClient();

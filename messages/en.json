@@ -7,7 +7,8 @@
     "errorTitle": "Something went wrong",
     "errorBody": "Something went wrong. Check your connection and try again.",
     "retry": "Try again",
-    "offline": "You're offline. Some actions will be unavailable until the connection is back."
+    "offline": "You're offline. Some actions will be unavailable until the connection is back.",
+    "language": "Language"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -21,6 +22,11 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "help": "Help"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This page doesn't exist or has been moved.",
+    "cta": "Back to home"
   },
   "login": {
     "title": "Sign in",
@@ -123,6 +129,7 @@
     "invitePending": "pending"
   },
   "onboarding": {
+    "pageTitle": "Garage setup",
     "step": "Step {step} / 3",
     "stepNames": {
       "logo": "Logo",

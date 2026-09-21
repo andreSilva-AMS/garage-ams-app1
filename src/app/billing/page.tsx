@@ -1,9 +1,16 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
 import { formatPriceHt, FALLBACK_PRICING_CODE, type PricingPlan } from "@/lib/pricing";
 import { AppShell } from "@/components/AppShell";
 import { SubscribeFlow, ManageSubscriptionButton } from "./BillingActions";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("nav");
+  return { title: t("billing") };
+}
 
 function daysLeftUntil(date: Date): number {
   return Math.max(0, Math.ceil((date.getTime() - Date.now()) / 86_400_000));

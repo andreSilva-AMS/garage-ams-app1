@@ -16,6 +16,10 @@
      sert de fond avec du texte blanc (boutons, badges). */
   --accent: #8c6329;
   --accent-foreground: #ffffff;
+  /* Variante plus sombre de l'accent, pour du texte sur fond accent/10
+     (badges, icônes de contexte) : à --accent seul, ce duo ne fait que
+     4.13:1 (sous le seuil AA de 4.5:1) ; --accent-strong y passe (6.18:1). */
+  --accent-strong: #6b4a1f;
   --danger: #b3261e;
   --danger-foreground: #ffffff;
 
@@ -39,6 +43,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-strong: var(--accent-strong);
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
   --font-sans: var(--font-plex-sans);

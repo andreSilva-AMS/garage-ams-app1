@@ -1,8 +1,14 @@
 import { redirect } from "next/navigation";
 import { PlusCircle, ListChecks, Send, History as HistoryIcon, Settings } from "lucide-react";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/AppShell";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("help");
+  return { title: t("title") };
+}
 
 export default async function HelpPage() {
   const supabase = await createClient();
@@ -43,7 +49,7 @@ export default async function HelpPage() {
         <ol className="flex flex-col gap-4">
           {steps.map(({ icon: Icon, title, body }) => (
             <li key={title} className="card flex gap-3 p-4">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent-strong">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </div>
               <div>

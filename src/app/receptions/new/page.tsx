@@ -1,7 +1,14 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { hasActiveAccess } from "@/lib/billing";
 import { ReceptionWizard } from "./ReceptionWizard";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("nav");
+  return { title: t("newReception") };
+}
 
 export default async function NewReceptionPage() {
   const supabase = await createClient();

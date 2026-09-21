@@ -7,7 +7,8 @@
     "errorTitle": "Un problème est survenu",
     "errorBody": "Quelque chose s'est mal passé. Vérifiez votre connexion et réessayez.",
     "retry": "Réessayer",
-    "offline": "Vous êtes hors ligne. Certaines actions seront indisponibles jusqu'au retour de la connexion."
+    "offline": "Vous êtes hors ligne. Certaines actions seront indisponibles jusqu'au retour de la connexion.",
+    "language": "Langue"
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -21,6 +22,11 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "help": "Aide"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "body": "Cette page n'existe pas ou a été déplacée.",
+    "cta": "Retour à l'accueil"
   },
   "login": {
     "title": "Connexion",
@@ -123,6 +129,7 @@
     "invitePending": "en attente"
   },
   "onboarding": {
+    "pageTitle": "Configuration du garage",
     "step": "Étape {step} / 3",
     "stepNames": {
       "logo": "Logo",

@@ -7,7 +7,8 @@
     "errorTitle": "Ocorreu um problema",
     "errorBody": "Algo correu mal. Verifique a sua ligação e tente novamente.",
     "retry": "Tentar novamente",
-    "offline": "Está offline. Algumas ações ficarão indisponíveis até a ligação voltar."
+    "offline": "Está offline. Algumas ações ficarão indisponíveis até a ligação voltar.",
+    "language": "Idioma"
   },
   "nav": {
     "dashboard": "Painel",
@@ -21,6 +22,11 @@
     "openMenu": "Abrir o menu",
     "closeMenu": "Fechar o menu",
     "help": "Ajuda"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "body": "Esta página não existe ou foi movida.",
+    "cta": "Voltar ao início"
   },
   "login": {
     "title": "Iniciar sessão",
@@ -123,6 +129,7 @@
     "invitePending": "pendente"
   },
   "onboarding": {
+    "pageTitle": "Configuração da garagem",
     "step": "Etapa {step} / 3",
     "stepNames": {
       "logo": "Logótipo",

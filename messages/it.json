@@ -7,7 +7,8 @@
     "errorTitle": "Si è verificato un problema",
     "errorBody": "Qualcosa è andato storto. Controlla la connessione e riprova.",
     "retry": "Riprova",
-    "offline": "Sei offline. Alcune azioni non saranno disponibili finché la connessione non torna."
+    "offline": "Sei offline. Alcune azioni non saranno disponibili finché la connessione non torna.",
+    "language": "Lingua"
   },
   "nav": {
     "dashboard": "Pannello",
@@ -21,6 +22,11 @@
     "openMenu": "Apri il menu",
     "closeMenu": "Chiudi il menu",
     "help": "Guida"
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "body": "Questa pagina non esiste o è stata spostata.",
+    "cta": "Torna alla home"
   },
   "login": {
     "title": "Accedi",
@@ -123,6 +129,7 @@
     "invitePending": "in attesa"
   },
   "onboarding": {
+    "pageTitle": "Configurazione dell'officina",
     "step": "Passo {step} / 3",
     "stepNames": {
       "logo": "Logo",

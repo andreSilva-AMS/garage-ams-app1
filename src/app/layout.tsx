@@ -19,7 +19,7 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ReceptCar",
+  title: { default: "ReceptCar", template: "%s — ReceptCar" },
   description: "Réception véhicule et véhicules de prêt, multi-garage",
   icons: {
     icon: [

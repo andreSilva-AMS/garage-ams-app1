@@ -866,7 +866,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                 {t("damageTitle")}{" "}
                 <span className="font-normal text-neutral-500">{t("damageSubtitle")}</span>
               </p>
-              <span className="badge bg-accent/10 text-accent">{damageTags.size}</span>
+              <span className="badge bg-accent/10 text-accent-strong">{damageTags.size}</span>
             </div>
             {damageTags.size > 0 && (
               <p className="mb-3 text-sm text-muted">
@@ -881,7 +881,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                     <span>{trCategoryTitle(title, appLocale)}</span>
                     <span className="flex items-center gap-2">
                       {selectedCount > 0 && (
-                        <span className="badge bg-accent/10 text-accent">{selectedCount}</span>
+                        <span className="badge bg-accent/10 text-accent-strong">{selectedCount}</span>
                       )}
                       <ChevronDown
                         className="h-4 w-4 text-muted transition-transform group-open:rotate-180"

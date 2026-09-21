@@ -38,6 +38,7 @@ export function JoinForm({
       email,
       password,
       options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/confirm`,
         data: { full_name: fullName, invite_token: token },
       },
     });

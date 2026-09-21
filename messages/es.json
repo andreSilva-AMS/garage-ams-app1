@@ -62,6 +62,7 @@
     "billingCountryMainGroup": "Países con tarifa dedicada",
     "billingCountryOtherGroup": "Otros países europeos",
     "billingCountryHint": "Se usa para emitir sus facturas y aplicar el IVA de su país. Solo puede modificarse contactándonos.",
+    "billingCountryUnsupported": "Este país aún no está disponible. <contact>Contáctenos</contact> para hablarlo.",
     "acceptTerms": "Acepto las <terms>condiciones de uso</terms> y la <privacy>política de privacidad</privacy>.",
     "submit": "Crear mi taller",
     "submitting": "Creando…",
@@ -81,6 +82,21 @@
     "pendingTitle": "Revise su correo",
     "pendingBody": "Se ha enviado un enlace de confirmación a {email}. Haga clic en él y luego vuelva a iniciar sesión: se unirá al equipo automáticamente.",
     "goToLogin": "Ir a la página de inicio de sesión"
+  },
+  "authConfirm": {
+    "title": "Confirme su inscripción",
+    "body": "Haga clic en el botón de abajo para activar su cuenta ReceptCar.",
+    "confirmButton": "Confirmar mi cuenta",
+    "confirming": "Confirmando…",
+    "recoveryTitle": "Restablecer su contraseña",
+    "recoveryBody": "Haga clic en el botón de abajo para continuar.",
+    "continueButton": "Continuar",
+    "expiredTitle": "Enlace no válido o caducado",
+    "expiredBody": "Este enlace ya no es válido (usado o caducado). Indique su correo para recibir uno nuevo.",
+    "resendEmailPlaceholder": "Su correo electrónico",
+    "resendButton": "Reenviar el correo",
+    "resendSending": "Enviando…",
+    "resendSent": "Si existe una cuenta pendiente de confirmación para {email}, se acaba de enviar un nuevo correo."
   },
   "dashboard": {
     "connectedTo": "Conectado a",

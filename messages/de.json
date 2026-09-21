@@ -62,6 +62,7 @@
     "billingCountryMainGroup": "Länder mit eigenem Tarif",
     "billingCountryOtherGroup": "Weitere europäische Länder",
     "billingCountryHint": "Wird für die Rechnungsstellung und die Anwendung der Mehrwertsteuer Ihres Landes verwendet. Kann nur durch Kontaktaufnahme geändert werden.",
+    "billingCountryUnsupported": "Dieses Land wird noch nicht unterstützt. <contact>Kontaktieren Sie uns</contact>, um das zu besprechen.",
     "acceptTerms": "Ich akzeptiere die <terms>Nutzungsbedingungen</terms> und die <privacy>Datenschutzrichtlinie</privacy>.",
     "submit": "Werkstatt erstellen",
     "submitting": "Wird erstellt…",
@@ -81,6 +82,21 @@
     "pendingTitle": "Prüfen Sie Ihr E-Mail-Postfach",
     "pendingBody": "Ein Bestätigungslink wurde an {email} gesendet. Klicken Sie darauf und melden Sie sich anschließend an: Sie treten dem Team automatisch bei.",
     "goToLogin": "Zur Anmeldeseite"
+  },
+  "authConfirm": {
+    "title": "Bestätigen Sie Ihre Registrierung",
+    "body": "Klicken Sie auf die Schaltfläche unten, um Ihr ReceptCar-Konto zu aktivieren.",
+    "confirmButton": "Mein Konto bestätigen",
+    "confirming": "Wird bestätigt…",
+    "recoveryTitle": "Passwort zurücksetzen",
+    "recoveryBody": "Klicken Sie auf die Schaltfläche unten, um fortzufahren.",
+    "continueButton": "Weiter",
+    "expiredTitle": "Ungültiger oder abgelaufener Link",
+    "expiredBody": "Dieser Link ist nicht mehr gültig (bereits verwendet oder abgelaufen). Geben Sie Ihre E-Mail-Adresse ein, um einen neuen zu erhalten.",
+    "resendEmailPlaceholder": "Ihre E-Mail-Adresse",
+    "resendButton": "E-Mail erneut senden",
+    "resendSending": "Wird gesendet…",
+    "resendSent": "Falls ein noch zu bestätigendes Konto für {email} existiert, wurde soeben eine neue E-Mail gesendet."
   },
   "dashboard": {
     "connectedTo": "Verbunden mit",

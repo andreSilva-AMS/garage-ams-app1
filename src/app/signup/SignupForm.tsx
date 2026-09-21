@@ -18,11 +18,12 @@ function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
 }
 
-export function SignupForm() {
+export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[] }) {
   const router = useRouter();
   const supabase = createClient();
   const t = useTranslations("signup");
   const appLocale = useLocale() as Lang;
+  const activeCountrySet = new Set(activeCountryCodes);
 
   const [garageName, setGarageName] = useState("");
   const [fullName, setFullName] = useState("");
@@ -33,6 +34,7 @@ export function SignupForm() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [countryUnsupported, setCountryUnsupported] = useState(false);
   const [pendingConfirmation, setPendingConfirmation] = useState(false);
 
   function handleLanguageChange(value: Lang) {
@@ -45,11 +47,13 @@ export function SignupForm() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setCountryUnsupported(false);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/confirm`,
         data: {
           garage_name: garageName,
           full_name: fullName,
@@ -81,7 +85,11 @@ export function SignupForm() {
     });
 
     if (rpcError) {
-      setError(rpcError.message);
+      if (rpcError.message.includes("BILLING_COUNTRY_UNSUPPORTED")) {
+        setCountryUnsupported(true);
+      } else {
+        setError(rpcError.message);
+      }
       setLoading(false);
       return;
     }
@@ -175,18 +183,20 @@ export function SignupForm() {
               {t("billingCountryPlaceholder")}
             </option>
             <optgroup label={t("billingCountryMainGroup")}>
-              {PRIORITY_BILLING_COUNTRIES.map((code) => (
+              {PRIORITY_BILLING_COUNTRIES.filter((code) => activeCountrySet.has(code)).map((code) => (
                 <option key={code} value={code}>
                   {countryLabel(code, appLocale)}
                 </option>
               ))}
             </optgroup>
             <optgroup label={t("billingCountryOtherGroup")}>
-              {sortedOtherCountries(appLocale).map((code) => (
-                <option key={code} value={code}>
-                  {countryLabel(code, appLocale)}
-                </option>
-              ))}
+              {sortedOtherCountries(appLocale)
+                .filter((code) => activeCountrySet.has(code))
+                .map((code) => (
+                  <option key={code} value={code}>
+                    {countryLabel(code, appLocale)}
+                  </option>
+                ))}
             </optgroup>
           </select>
           <p className="text-xs text-neutral-500">{t("billingCountryHint")}</p>
@@ -216,6 +226,17 @@ export function SignupForm() {
           </span>
         </label>
 
+        {countryUnsupported && (
+          <p className="text-sm text-red-600">
+            {t.rich("billingCountryUnsupported", {
+              contact: (chunks) => (
+                <a href="mailto:info@receptcar.com" className="underline">
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
+        )}
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" disabled={loading || !acceptedTerms} className="btn-primary">

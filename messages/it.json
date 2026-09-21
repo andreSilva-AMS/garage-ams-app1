@@ -62,6 +62,7 @@
     "billingCountryMainGroup": "Paesi con tariffa dedicata",
     "billingCountryOtherGroup": "Altri paesi europei",
     "billingCountryHint": "Usato per emettere le tue fatture e applicare l'IVA del tuo paese. Modificabile solo contattandoci.",
+    "billingCountryUnsupported": "Questo paese non è ancora supportato. <contact>Contattaci</contact> per parlarne.",
     "acceptTerms": "Accetto i <terms>termini di utilizzo</terms> e l'<privacy>informativa sulla privacy</privacy>.",
     "submit": "Crea la mia officina",
     "submitting": "Creazione in corso…",
@@ -81,6 +82,21 @@
     "pendingTitle": "Controlla la tua casella e-mail",
     "pendingBody": "Un link di conferma è stato inviato a {email}. Cliccalo, poi torna ad accedere: ti unirai automaticamente al team.",
     "goToLogin": "Vai alla pagina di accesso"
+  },
+  "authConfirm": {
+    "title": "Conferma la tua registrazione",
+    "body": "Fai clic sul pulsante qui sotto per attivare il tuo account ReceptCar.",
+    "confirmButton": "Conferma il mio account",
+    "confirming": "Conferma in corso…",
+    "recoveryTitle": "Reimposta la tua password",
+    "recoveryBody": "Fai clic sul pulsante qui sotto per continuare.",
+    "continueButton": "Continua",
+    "expiredTitle": "Link non valido o scaduto",
+    "expiredBody": "Questo link non è più valido (già utilizzato o scaduto). Indica la tua e-mail per riceverne uno nuovo.",
+    "resendEmailPlaceholder": "La tua e-mail",
+    "resendButton": "Invia di nuovo l'e-mail",
+    "resendSending": "Invio…",
+    "resendSent": "Se esiste un account in attesa di conferma per {email}, è stata appena inviata una nuova e-mail."
   },
   "dashboard": {
     "connectedTo": "Connesso a",

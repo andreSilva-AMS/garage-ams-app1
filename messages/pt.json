@@ -62,6 +62,7 @@
     "billingCountryMainGroup": "Países com tarifa dedicada",
     "billingCountryOtherGroup": "Outros países europeus",
     "billingCountryHint": "Utilizado para emitir as suas faturas e aplicar o IVA do seu país. Só pode ser alterado contactando-nos.",
+    "billingCountryUnsupported": "Este país ainda não está disponível. <contact>Contacte-nos</contact> para o discutir.",
     "acceptTerms": "Aceito os <terms>termos de utilização</terms> e a <privacy>política de privacidade</privacy>.",
     "submit": "Criar a minha garagem",
     "submitting": "A criar…",
@@ -81,6 +82,21 @@
     "pendingTitle": "Verifique o seu e-mail",
     "pendingBody": "Foi enviado um link de confirmação para {email}. Clique nele e depois volte para iniciar sessão: juntar-se-á à equipa automaticamente.",
     "goToLogin": "Ir para a página de início de sessão"
+  },
+  "authConfirm": {
+    "title": "Confirme a sua inscrição",
+    "body": "Clique no botão abaixo para ativar a sua conta ReceptCar.",
+    "confirmButton": "Confirmar a minha conta",
+    "confirming": "A confirmar…",
+    "recoveryTitle": "Redefinir a sua palavra-passe",
+    "recoveryBody": "Clique no botão abaixo para continuar.",
+    "continueButton": "Continuar",
+    "expiredTitle": "Link inválido ou expirado",
+    "expiredBody": "Este link já não é válido (já utilizado ou expirado). Indique o seu e-mail para receber um novo.",
+    "resendEmailPlaceholder": "O seu e-mail",
+    "resendButton": "Reenviar o e-mail",
+    "resendSending": "A enviar…",
+    "resendSent": "Se existir uma conta a aguardar confirmação para {email}, um novo e-mail acabou de ser enviado."
   },
   "dashboard": {
     "connectedTo": "Ligado a",

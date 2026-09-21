@@ -40,12 +40,22 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     garage.billing_country && billingAddressCountry && billingAddressCountry !== garage.billing_country,
   );
 
+  // Le préfixe pays d'un numéro de TVA UE correspond normalement au pays de
+  // facturation, à l'exception de la Grèce (code pays GR, préfixe TVA "EL").
+  const vatCountryPrefix = vatNumber ? vatNumber.trim().slice(0, 2).toUpperCase() : null;
+  const vatMismatch = Boolean(
+    garage.billing_country &&
+      vatCountryPrefix &&
+      vatCountryPrefix !== garage.billing_country &&
+      !(garage.billing_country === "GR" && vatCountryPrefix === "EL"),
+  );
+
   await supabase
     .from("garages")
     .update({
       checkout_billing_address_country: billingAddressCountry,
       checkout_country_mismatch: mismatch,
-      ...(vatNumber ? { vat_number: vatNumber } : {}),
+      ...(vatNumber ? { vat_number: vatNumber, vat_country_mismatch: vatMismatch } : {}),
     })
     .eq("id", garage.id);
 }

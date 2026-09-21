@@ -62,6 +62,7 @@
     "billingCountryMainGroup": "Countries with a dedicated rate",
     "billingCountryOtherGroup": "Other European countries",
     "billingCountryHint": "Used to issue your invoices and apply the VAT for your country. Can only be changed by contacting us.",
+    "billingCountryUnsupported": "This country isn't supported yet. <contact>Contact us</contact> to discuss it.",
     "acceptTerms": "I accept the <terms>terms of use</terms> and the <privacy>privacy policy</privacy>.",
     "submit": "Create my garage",
     "submitting": "Creating…",
@@ -81,6 +82,21 @@
     "pendingTitle": "Check your inbox",
     "pendingBody": "A confirmation link was sent to {email}. Click it, then come back and sign in: you'll join the team automatically.",
     "goToLogin": "Go to the sign-in page"
+  },
+  "authConfirm": {
+    "title": "Confirm your sign-up",
+    "body": "Click the button below to activate your ReceptCar account.",
+    "confirmButton": "Confirm my account",
+    "confirming": "Confirming…",
+    "recoveryTitle": "Reset your password",
+    "recoveryBody": "Click the button below to continue.",
+    "continueButton": "Continue",
+    "expiredTitle": "Invalid or expired link",
+    "expiredBody": "This link is no longer valid (already used or expired). Enter your email to receive a new one.",
+    "resendEmailPlaceholder": "Your email",
+    "resendButton": "Resend the email",
+    "resendSending": "Sending…",
+    "resendSent": "If an account awaiting confirmation exists for {email}, a new email has just been sent."
   },
   "dashboard": {
     "connectedTo": "Connected to",

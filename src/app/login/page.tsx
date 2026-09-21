@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { Lang } from "@/lib/receptions/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { resendConfirmationEmail } from "@/app/auth/confirm/actions";
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
@@ -27,6 +28,8 @@ export default function LoginPage() {
   const [language, setLanguage] = useState<Lang>(appLocale);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [unconfirmed, setUnconfirmed] = useState(false);
+  const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">("idle");
 
   function handleLanguageChange(value: Lang) {
     setLanguage(value);
@@ -38,6 +41,8 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setUnconfirmed(false);
+    setResendStatus("idle");
 
     // Marqueur lu par le middleware pour appliquer le même choix lors du
     // rafraîchissement automatique du jeton (voir middleware.ts).
@@ -52,13 +57,31 @@ export default function LoginPage() {
     });
 
     if (signInError) {
-      setError(signInError.message);
+      // Compte existant mais e-mail jamais confirmé (lien reçu cassé,
+      // expiré, ou jamais cliqué) : proposer un renvoi plutôt qu'un simple
+      // message d'erreur, ici même sans avoir besoin de cliquer un lien.
+      const isUnconfirmed =
+        signInError.code === "email_not_confirmed" ||
+        /email not confirmed/i.test(signInError.message);
+      if (isUnconfirmed) {
+        setUnconfirmed(true);
+      } else {
+        setError(signInError.message);
+      }
       setLoading(false);
       return;
     }
 
     router.push("/dashboard");
     router.refresh();
+  }
+
+  async function handleResend() {
+    setResendStatus("sending");
+    await resendConfirmationEmail(email, "email");
+    // Toujours "envoyé", que l'adresse existe ou non (même logique que le
+    // renvoi sur /auth/confirm).
+    setResendStatus("sent");
   }
 
   return (
@@ -130,6 +153,23 @@ export default function LoginPage() {
           </Link>
         </div>
 
+        {unconfirmed && (
+          <div className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+            <p className="mb-2">{t("emailNotConfirmed")}</p>
+            {resendStatus === "sent" ? (
+              <p className="font-medium">{t("emailNotConfirmedSent", { email })}</p>
+            ) : (
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resendStatus === "sending"}
+                className="font-medium underline"
+              >
+                {resendStatus === "sending" ? t("emailNotConfirmedSending") : t("emailNotConfirmedResend")}
+              </button>
+            )}
+          </div>
+        )}
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <button type="submit" disabled={loading} className="btn-primary">

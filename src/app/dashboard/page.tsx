@@ -29,13 +29,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  await ensureProfile(supabase, user);
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("garage_id")
-    .eq("id", user.id)
-    .single();
+  const profile = await ensureProfile(supabase, user);
 
   if (!profile) {
     // Le profil n'a pas pu être créé (ex : inscription incomplète).

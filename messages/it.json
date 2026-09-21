@@ -139,6 +139,14 @@
   },
   "receptionWizard": {
     "step": "Passo {step} / 5",
+    "stepNames": {
+      "client": "Cliente",
+      "photos": "Foto",
+      "work": "Interventi",
+      "signature": "Firma",
+      "summary": "Riepilogo"
+    },
+    "retakePhoto": "Ripeti",
     "draftRestored": "Bozza ripristinata (inserimento precedente non completato).",
     "draftDiscard": "Cancella e ricomincia",
     "step1Title": "Cliente e veicolo",

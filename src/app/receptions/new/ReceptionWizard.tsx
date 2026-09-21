@@ -2,12 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Camera, CheckCircle2, Gauge, IdCard, Loader2, Mail, X } from "lucide-react";
+import {
+  ArrowLeft,
+  Camera,
+  CheckCircle2,
+  ChevronDown,
+  Gauge,
+  IdCard,
+  Loader2,
+  Mail,
+  RotateCcw,
+  X,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
 import { getGarageTimezone } from "@/lib/timezone";
 import { SignaturePad } from "@/components/SignaturePad";
+import { CarOutline } from "@/components/CarOutline";
 import {
   LANGUAGES,
   Lang,
@@ -233,6 +245,16 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
     right: t("angleRight"),
   };
 
+  const STEP_NAMES = [
+    t("stepNames.client"),
+    t("stepNames.photos"),
+    t("stepNames.work"),
+    t("stepNames.signature"),
+    t("stepNames.summary"),
+  ];
+
+  const angleInputRefs = useRef<Partial<Record<Angle, HTMLInputElement | null>>>({});
+
   function toggle(set: Set<string>, setFn: (v: Set<string>) => void, value: string) {
     const next = new Set(set);
     if (next.has(value)) next.delete(value);
@@ -284,7 +306,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   }
 
   async function handlePhotoChange(angle: Angle, file: File) {
-    const resized = await fileToResizedImage(file, 780, 0.5);
+    const resized = await fileToResizedImage(file, 1600, 0.8);
     setPhotos((p) => ({ ...p, [angle]: resized }));
   }
 
@@ -561,7 +583,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-8">
+    <main className="mx-auto max-w-2xl px-4 py-8 pb-28">
       <Link
         href="/dashboard"
         className="mb-4 inline-flex items-center gap-1 text-sm underline text-neutral-500"
@@ -569,13 +591,30 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         {tNav("backToDashboard")}
       </Link>
-      <p className="mb-1 text-sm text-neutral-500">{t("step", { step })}</p>
-      <div className="mb-6 h-1 w-full rounded bg-neutral-200">
-        <div
-          className="h-1 rounded bg-accent transition-all"
-          style={{ width: `${(step / 5) * 100}%` }}
-        />
-      </div>
+      <ol className="mb-6 flex items-start justify-between gap-1" aria-label={t("step", { step })}>
+        {STEP_NAMES.map((name, i) => {
+          const stepIndex = i + 1;
+          const isCurrent = stepIndex === step;
+          const isDone = stepIndex < step;
+          return (
+            <li key={name} className="flex flex-1 flex-col items-center gap-1.5">
+              <div
+                className={`h-1.5 w-full rounded-full ${
+                  isDone || isCurrent ? "bg-accent" : "bg-neutral-200"
+                }`}
+                aria-hidden="true"
+              />
+              <span
+                className={`text-center text-xs ${
+                  isCurrent ? "font-semibold text-foreground" : "text-muted"
+                }`}
+              >
+                {name}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
 
       {draftRestored && (
         <p className="mb-6 flex items-center justify-between gap-3 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
@@ -646,24 +685,14 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
           <h2 className="text-lg font-semibold">{t("step2Title")}</h2>
           <div className="grid grid-cols-2 gap-3">
             {(["front", "back", "left", "right"] as Angle[]).map((angle) => (
-              <label
+              <div
                 key={angle}
-                className="flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border border-neutral-300 bg-neutral-50 text-sm"
+                className="relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border border-neutral-300 bg-neutral-50 text-sm"
               >
-                {photos[angle] ? (
-                  // eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser
-                  <img
-                    src={photos[angle]!.dataUrl}
-                    alt={ANGLE_LABELS[angle]}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="flex flex-col items-center gap-1">
-                    <Camera className="h-5 w-5 text-neutral-400" aria-hidden="true" />
-                    {ANGLE_LABELS[angle]}
-                  </span>
-                )}
                 <input
+                  ref={(el) => {
+                    angleInputRefs.current[angle] = el;
+                  }}
                   type="file"
                   accept="image/*"
                   capture="environment"
@@ -671,9 +700,40 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) handlePhotoChange(angle, file);
+                    e.target.value = "";
                   }}
                 />
-              </label>
+                {photos[angle] ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local (data URL), rien à optimiser */}
+                    <img
+                      src={photos[angle]!.dataUrl}
+                      alt={ANGLE_LABELS[angle]}
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => angleInputRefs.current[angle]?.click()}
+                      className="absolute bottom-2 flex min-h-11 items-center gap-1.5 rounded-full bg-black/60 px-3 text-sm font-medium text-white"
+                    >
+                      <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                      {t("retakePhoto")}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => angleInputRefs.current[angle]?.click()}
+                    className="flex h-full w-full flex-col items-center justify-center gap-1.5"
+                  >
+                    <CarOutline angle={angle} className="h-16 w-24 text-neutral-300" />
+                    <span className="flex items-center gap-1.5 text-neutral-500">
+                      <Camera className="h-4 w-4" aria-hidden="true" />
+                      {ANGLE_LABELS[angle]}
+                    </span>
+                  </button>
+                )}
+              </div>
             ))}
           </div>
 
@@ -749,28 +809,48 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
           </Field>
 
           <div>
-            <p className="mb-2 text-sm font-medium">
-              {t("damageTitle")}{" "}
-              <span className="font-normal text-neutral-500">{t("damageSubtitle")}</span>
-            </p>
-            {Object.entries(DAMAGE_GROUPS).map(([title, tags]) => (
-              <div key={title} className="mb-3">
-                <p className="mb-1 text-xs font-semibold uppercase text-neutral-500">
-                  {trCategoryTitle(title, appLocale)}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <Tag
-                      key={tag}
-                      active={damageTags.has(tag)}
-                      onClick={() => toggle(damageTags, setDamageTags, tag)}
-                    >
-                      {trDamageTag(tag, appLocale)}
-                    </Tag>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-sm font-medium">
+                {t("damageTitle")}{" "}
+                <span className="font-normal text-neutral-500">{t("damageSubtitle")}</span>
+              </p>
+              <span className="badge bg-accent/10 text-accent">{damageTags.size}</span>
+            </div>
+            {damageTags.size > 0 && (
+              <p className="mb-3 text-sm text-muted">
+                {[...damageTags].map((tag) => trDamageTag(tag, appLocale)).join(" · ")}
+              </p>
+            )}
+            {Object.entries(DAMAGE_GROUPS).map(([title, tags]) => {
+              const selectedCount = tags.filter((tag) => damageTags.has(tag)).length;
+              return (
+                <details key={title} className="group mb-2 rounded-xl border border-border-color">
+                  <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-sm font-medium marker:content-none [&::-webkit-details-marker]:hidden">
+                    <span>{trCategoryTitle(title, appLocale)}</span>
+                    <span className="flex items-center gap-2">
+                      {selectedCount > 0 && (
+                        <span className="badge bg-accent/10 text-accent">{selectedCount}</span>
+                      )}
+                      <ChevronDown
+                        className="h-4 w-4 text-muted transition-transform group-open:rotate-180"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </summary>
+                  <div className="flex flex-wrap gap-2 px-3 pb-3">
+                    {tags.map((tag) => (
+                      <Tag
+                        key={tag}
+                        active={damageTags.has(tag)}
+                        onClick={() => toggle(damageTags, setDamageTags, tag)}
+                      >
+                        {trDamageTag(tag, appLocale)}
+                      </Tag>
+                    ))}
+                  </div>
+                </details>
+              );
+            })}
             <Field label={t("damageDetails")}>
               <textarea
                 className="input min-h-24"
@@ -861,6 +941,9 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
         <section className="step-content flex flex-col gap-4">
           <h2 className="text-lg font-semibold">{t("step4Title")}</h2>
           <SignaturePad onChange={setSignatureDataUrl} clearLabel={t("clearSignature")} />
+          {signatureDataUrl && client.name && (
+            <p className="-mt-2 text-sm font-medium text-muted">{client.name}</p>
+          )}
           <p className="text-xs text-neutral-500">{t("consent")}</p>
         </section>
       )}
@@ -898,32 +981,30 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
-          <button
-            type="button"
-            disabled={saving}
-            onClick={handleSubmit}
-            className="btn-primary"
-          >
-            {saving ? t("generating") : t("generate")}
-          </button>
         </section>
       )}
 
       {error && step !== 5 && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
-      <div className="mt-8 flex justify-between">
-        {step > 1 ? (
-          <button type="button" onClick={back} className="text-sm underline">
-            {tCommon("back")}
-          </button>
-        ) : (
-          <span />
-        )}
-        {step < 5 && (
-          <button type="button" onClick={next} className="btn-primary">
-            {tCommon("continue")}
-          </button>
-        )}
+      <div className="fixed inset-x-0 bottom-0 border-t border-border-color bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
+          {step > 1 ? (
+            <button type="button" onClick={back} className="text-sm font-medium underline">
+              {tCommon("back")}
+            </button>
+          ) : (
+            <span />
+          )}
+          {step < 5 ? (
+            <button type="button" onClick={next} className="btn-primary">
+              {tCommon("continue")}
+            </button>
+          ) : (
+            <button type="button" disabled={saving} onClick={handleSubmit} className="btn-primary">
+              {saving ? t("generating") : t("generate")}
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );

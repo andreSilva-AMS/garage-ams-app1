@@ -139,6 +139,14 @@
   },
   "receptionWizard": {
     "step": "Paso {step} / 5",
+    "stepNames": {
+      "client": "Cliente",
+      "photos": "Fotos",
+      "work": "Trabajos",
+      "signature": "Firma",
+      "summary": "Resumen"
+    },
+    "retakePhoto": "Repetir",
     "draftRestored": "Borrador restaurado (entrada anterior sin terminar).",
     "draftDiscard": "Borrar y volver a empezar",
     "step1Title": "Cliente y vehículo",

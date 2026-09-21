@@ -84,7 +84,7 @@ export function SignaturePad({
     <div className="flex flex-col gap-2">
       <canvas
         ref={canvasRef}
-        className="h-40 w-full touch-none rounded-2xl border border-neutral-300 bg-white"
+        className="h-40 w-full touch-none rounded-2xl border border-neutral-300 bg-white sm:h-56 landscape:h-56"
         onPointerDown={start}
         onPointerMove={move}
         onPointerUp={end}

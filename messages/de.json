@@ -139,6 +139,14 @@
   },
   "receptionWizard": {
     "step": "Schritt {step} / 5",
+    "stepNames": {
+      "client": "Kunde",
+      "photos": "Fotos",
+      "work": "Arbeiten",
+      "signature": "Unterschrift",
+      "summary": "Zusammenfassung"
+    },
+    "retakePhoto": "Wiederholen",
     "draftRestored": "Entwurf wiederhergestellt (vorherige unvollständige Eingabe).",
     "draftDiscard": "Löschen und neu beginnen",
     "step1Title": "Kunde & Fahrzeug",

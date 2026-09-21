@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
@@ -32,6 +32,31 @@ interface Garage {
   name: string;
   address: string | null;
   logo_url: string | null;
+}
+
+// Sauvegarde locale du texte saisi (pas les photos/signature, trop lourdes
+// et rapides à reprendre) : évite de perdre 10 minutes de saisie client si
+// la tablette perd la connexion, se recharge par erreur, ou si l'employé
+// change d'écran en cours de route.
+const DRAFT_STORAGE_KEY = "receptcar_reception_draft";
+const DRAFT_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+interface ClientInfo {
+  name: string;
+  phone: string;
+  email: string;
+  plate: string;
+  mileage: string;
+  brandModel: string;
+}
+
+interface ReceptionDraft {
+  savedAt: number;
+  client: ClientInfo;
+  damageTags: string[];
+  workTags: string[];
+  workText: string;
+  lang: Lang;
 }
 
 async function urlToDataUrl(url: string): Promise<string | null> {
@@ -90,7 +115,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
 
-  const [client, setClient] = useState({
+  const [client, setClient] = useState<ClientInfo>({
     name: "",
     phone: "",
     email: "",
@@ -107,6 +132,76 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
   const [workText, setWorkText] = useState("");
   const [lang, setLang] = useState<Lang>(appLocale);
   const [signatureDataUrl, setSignatureDataUrl] = useState<string | null>(null);
+  const [draftRestored, setDraftRestored] = useState(false);
+  const skipNextDraftSaveRef = useRef(true);
+
+  // Restaure un brouillon laissé par une saisie interrompue (une seule fois,
+  // au montage). Fait après le premier rendu (plutôt que dans l'état initial)
+  // pour que le HTML généré côté serveur corresponde à celui du premier
+  // rendu client — sinon React signale une erreur d'hydratation.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw) as ReceptionDraft;
+      if (Date.now() - draft.savedAt > DRAFT_MAX_AGE_MS) {
+        localStorage.removeItem(DRAFT_STORAGE_KEY);
+        return;
+      }
+      const hasContent =
+        draft.client.name.trim() ||
+        draft.client.plate.trim() ||
+        draft.workText.trim() ||
+        draft.damageTags.length > 0 ||
+        draft.workTags.length > 0;
+      if (!hasContent) return;
+      // Restauration ponctuelle depuis localStorage au montage (pas une
+      // synchronisation continue avec un état externe changeant) : le cas
+      // d'usage prévu par la règle react-hooks/set-state-in-effect ne
+      // s'applique pas ici.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setClient(draft.client);
+      setDamageTags(new Set(draft.damageTags));
+      setWorkTags(new Set(draft.workTags));
+      setWorkText(draft.workText);
+      setLang(draft.lang);
+      setDraftRestored(true);
+    } catch {
+      // Brouillon corrompu ou stockage indisponible : on l'ignore.
+    }
+  }, []);
+
+  // Sauvegarde continue du texte saisi (pas la première fois, pour ne pas
+  // écraser un brouillon tout juste restauré avec l'état initial vide).
+  useEffect(() => {
+    if (skipNextDraftSaveRef.current) {
+      skipNextDraftSaveRef.current = false;
+      return;
+    }
+    const draft: ReceptionDraft = {
+      savedAt: Date.now(),
+      client,
+      damageTags: [...damageTags],
+      workTags: [...workTags],
+      workText,
+      lang,
+    };
+    try {
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+    } catch {
+      // Stockage plein ou indisponible (navigation privée) : on continue
+      // sans bloquer la saisie, seule la sauvegarde locale est perdue.
+    }
+  }, [client, damageTags, workTags, workText, lang]);
+
+  function discardDraft() {
+    localStorage.removeItem(DRAFT_STORAGE_KEY);
+    setClient({ name: "", phone: "", email: "", plate: "", mileage: "", brandModel: "" });
+    setDamageTags(new Set());
+    setWorkTags(new Set());
+    setWorkText("");
+    setDraftRestored(false);
+  }
 
   const ANGLE_LABELS: Record<Angle, string> = {
     front: t("angleFront"),
@@ -313,6 +408,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       const { data: signed } = await supabase.storage
         .from("receptions")
         .createSignedUrl(pdfPath, 3600);
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
       setDone({
         id: receptionId,
         pdfUrl: signed?.signedUrl ?? "",
@@ -391,6 +487,15 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
           style={{ width: `${(step / 5) * 100}%` }}
         />
       </div>
+
+      {draftRestored && (
+        <p className="mb-6 flex items-center justify-between gap-3 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+          <span>{t("draftRestored")}</span>
+          <button type="button" onClick={discardDraft} className="shrink-0 underline">
+            {t("draftDiscard")}
+          </button>
+        </p>
+      )}
 
       {step === 1 && (
         <section className="flex flex-col gap-4">

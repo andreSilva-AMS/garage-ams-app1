@@ -98,6 +98,8 @@
   },
   "receptionWizard": {
     "step": "Paso {step} / 5",
+    "draftRestored": "Borrador restaurado (entrada anterior sin terminar).",
+    "draftDiscard": "Borrar y volver a empezar",
     "step1Title": "Cliente y vehículo",
     "clientName": "Nombre del cliente",
     "phone": "Teléfono",

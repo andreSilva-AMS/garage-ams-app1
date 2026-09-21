@@ -98,6 +98,8 @@
   },
   "receptionWizard": {
     "step": "Step {step} / 5",
+    "draftRestored": "Draft restored (previous unfinished entry).",
+    "draftDiscard": "Clear and start over",
     "step1Title": "Customer & vehicle",
     "clientName": "Customer name",
     "phone": "Phone",

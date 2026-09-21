@@ -98,6 +98,8 @@
   },
   "receptionWizard": {
     "step": "Étape {step} / 5",
+    "draftRestored": "Brouillon restauré (saisie précédente non terminée).",
+    "draftDiscard": "Effacer et recommencer",
     "step1Title": "Client & véhicule",
     "clientName": "Nom du client",
     "phone": "Téléphone",

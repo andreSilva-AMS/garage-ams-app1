@@ -98,6 +98,8 @@
   },
   "receptionWizard": {
     "step": "Schritt {step} / 5",
+    "draftRestored": "Entwurf wiederhergestellt (vorherige unvollständige Eingabe).",
+    "draftDiscard": "Löschen und neu beginnen",
     "step1Title": "Kunde & Fahrzeug",
     "clientName": "Name des Kunden",
     "phone": "Telefon",

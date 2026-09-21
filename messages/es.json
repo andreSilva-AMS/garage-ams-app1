@@ -73,7 +73,6 @@
       "reception": "Recepción"
     },
     "team": "Equipo del taller ({count})",
-    "isolationNote": "garage_id: {id} — estos datos solo son visibles para los miembros de este taller (aislamiento aplicado a nivel de base de datos).",
     "trialEndingSoon": "Su período de prueba gratuito termina en {days} día(s).",
     "trialExpired": "Su período de prueba gratuito ha terminado.",
     "paymentIssue": "Hubo un problema con su último pago.",
@@ -91,6 +90,11 @@
     "garageContactHint": "Se muestran en el encabezado de las fichas PDF enviadas a los clientes.",
     "defaultLanguage": "Idioma predeterminado",
     "defaultLanguageHint": "Se usa para la interfaz de la aplicación y, por defecto, para los documentos enviados a los clientes (modificable en cada ficha).",
+    "retentionDays": "Duración de conservación de las fichas",
+    "retention30": "30 días",
+    "retention365": "12 meses",
+    "retentionHint": "Pasado ese plazo, las fichas (incluidas fotos y PDF) se eliminan automáticamente.",
+    "retentionUpsellHint": "La opción de 12 meses está reservada a los talleres con una suscripción activa.",
     "saved": "Configuración guardada.",
     "inviteTitle": "Invitar a un empleado",
     "inviteEmail": "Correo del empleado",
@@ -103,8 +107,10 @@
   "receptionsHistory": {
     "title": "Historial de recepciones",
     "empty": "Todavía no hay fichas.",
+    "searchPlaceholder": "Buscar por matrícula o nombre del cliente…",
+    "searchEmpty": "Ninguna ficha coincide con esta búsqueda.",
     "pdf": "PDF",
-    "retentionNotice": "Las fichas se conservan 30 días y luego se eliminan automáticamente (incluidas las fotos y el PDF).",
+    "retentionNotice": "Las fichas se conservan {days} días y luego se eliminan automáticamente (incluidas las fotos y el PDF).",
     "delete": "Eliminar",
     "deleteConfirm": "¿Eliminar definitivamente esta ficha y sus fotos/PDF? Esta acción no se puede deshacer.",
     "deleting": "Eliminando…"
@@ -130,7 +136,13 @@
     "dashboardPhoto": "Salpicadero",
     "dashboardPhotoHint": "Foto del salpicadero (kilometraje, testigos)",
     "fuelLevel": "Nivel de combustible",
-    "fuelLevels": { "empty": "Vacío", "quarter": "1/4", "half": "1/2", "three_quarter": "3/4", "full": "Lleno" },
+    "fuelLevels": {
+      "empty": "Vacío",
+      "quarter": "1/4",
+      "half": "1/2",
+      "three_quarter": "3/4",
+      "full": "Lleno"
+    },
     "damageTitle": "Daños constatados en la recepción",
     "damageSubtitle": "(protección del taller)",
     "damageDetails": "Detalles adicionales (texto libre)",

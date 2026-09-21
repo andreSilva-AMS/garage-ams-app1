@@ -143,10 +143,6 @@ export default async function DashboardPage() {
           ))}
         </ul>
       </section>
-
-      <p className="mt-8 text-xs text-neutral-400">
-        {t("isolationNote", { id: garage?.id ?? "" })}
-      </p>
     </main>
   );
 }

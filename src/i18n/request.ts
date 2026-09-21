@@ -1,18 +1,37 @@
 import { getRequestConfig } from "next-intl/server";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 
 export const SUPPORTED_LOCALES = ["fr", "en", "es", "pt", "de", "it"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
-// Anglais par défaut : avant inscription/connexion, on ne sait pas encore
-// d'où vient la personne (produit vendu dans plusieurs pays) — l'anglais
-// est compris plus largement que le français par un premier visiteur.
+// Repli final si le navigateur n'indique aucune des langues prises en
+// charge (ex. Accept-Language absent, ou une langue tierce comme le
+// japonais) : l'anglais reste compris plus largement que le français par un
+// visiteur dont on ne connaît pas encore le pays.
 export const DEFAULT_LOCALE: SupportedLocale = "en";
+
+/** Langue préférée du navigateur (en-tête Accept-Language), si prise en charge. */
+async function browserLocale(): Promise<SupportedLocale | null> {
+  const headerStore = await headers();
+  const acceptLanguage = headerStore.get("accept-language");
+  if (!acceptLanguage) return null;
+
+  const preferred = acceptLanguage
+    .split(",")
+    .map((part) => part.split(";")[0].trim().split("-")[0].toLowerCase());
+
+  for (const lang of preferred) {
+    if (isSupported(lang)) return lang;
+  }
+  return null;
+}
 
 /**
  * La langue de l'interface suit la langue par défaut du garage (partagée par
  * toute l'équipe), une fois connecté. Avant la connexion (login/signup), on
- * retombe sur un cookie choisi par la personne qui s'inscrit.
+ * retombe sur un cookie choisi explicitement par la personne (ex. via le
+ * sélecteur de langue), puis sur la langue de son navigateur (ex. français
+ * par défaut en Suisse romande), et enfin sur l'anglais.
  */
 async function resolveLocale(): Promise<SupportedLocale> {
   try {
@@ -43,7 +62,9 @@ async function resolveLocale(): Promise<SupportedLocale> {
 
   const cookieStore = await cookies();
   const cookieLocale = cookieStore.get("NEXT_LOCALE")?.value;
-  return cookieLocale && isSupported(cookieLocale) ? cookieLocale : DEFAULT_LOCALE;
+  if (cookieLocale && isSupported(cookieLocale)) return cookieLocale;
+
+  return (await browserLocale()) ?? DEFAULT_LOCALE;
 }
 
 function isSupported(value: string): value is SupportedLocale {

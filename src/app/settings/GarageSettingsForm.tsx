@@ -16,6 +16,8 @@ interface Garage {
   email: string | null;
   logo_url: string | null;
   default_language: string;
+  retention_days: number;
+  payment_status: string;
 }
 
 interface PendingInvite {
@@ -44,6 +46,8 @@ export function GarageSettingsForm({
   const [address, setAddress] = useState(garage.address ?? "");
   const [phone, setPhone] = useState(garage.phone ?? "");
   const [email, setEmail] = useState(garage.email ?? "");
+  const [retentionDays, setRetentionDays] = useState(garage.retention_days);
+  const canChooseLongRetention = garage.payment_status === "active" || garage.payment_status === "free";
   const [defaultLanguage, setDefaultLanguage] = useState<Lang>(
     (garage.default_language as Lang) ?? "fr",
   );
@@ -85,6 +89,7 @@ export function GarageSettingsForm({
           phone: phone || null,
           email: email || null,
           default_language: defaultLanguage,
+          retention_days: canChooseLongRetention ? retentionDays : 30,
           logo_url: logoUrl,
         })
         .eq("id", garage.id);
@@ -202,6 +207,26 @@ export function GarageSettingsForm({
             ))}
           </select>
           <p className="text-xs text-neutral-500">{t("defaultLanguageHint")}</p>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">{t("retentionDays")}</label>
+          {canChooseLongRetention ? (
+            <select
+              className="input"
+              value={retentionDays}
+              disabled={!isOwner}
+              onChange={(e) => setRetentionDays(Number(e.target.value))}
+            >
+              <option value={30}>{t("retention30")}</option>
+              <option value={365}>{t("retention365")}</option>
+            </select>
+          ) : (
+            <p className="text-sm text-neutral-600">{t("retention30")}</p>
+          )}
+          <p className="text-xs text-neutral-500">
+            {canChooseLongRetention ? t("retentionHint") : t("retentionUpsellHint")}
+          </p>
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}

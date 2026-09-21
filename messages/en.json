@@ -73,7 +73,6 @@
       "reception": "Reception"
     },
     "team": "Garage team ({count})",
-    "isolationNote": "garage_id: {id} — this data is only visible to members of this garage (isolation enforced at the database level).",
     "trialEndingSoon": "Your free trial ends in {days} day(s).",
     "trialExpired": "Your free trial has ended.",
     "paymentIssue": "There was a problem with your last payment.",
@@ -91,6 +90,11 @@
     "garageContactHint": "Shown in the header of PDF forms sent to customers.",
     "defaultLanguage": "Default language",
     "defaultLanguageHint": "Used for the application interface and, by default, for documents sent to customers (can be changed for each form).",
+    "retentionDays": "Form retention period",
+    "retention30": "30 days",
+    "retention365": "12 months",
+    "retentionHint": "Beyond this, forms (including photos and PDF) are deleted automatically.",
+    "retentionUpsellHint": "The 12-month option is reserved for garages with an active subscription.",
     "saved": "Settings saved.",
     "inviteTitle": "Invite an employee",
     "inviteEmail": "Employee's e-mail",
@@ -103,8 +107,10 @@
   "receptionsHistory": {
     "title": "Reception history",
     "empty": "No forms yet.",
+    "searchPlaceholder": "Search by plate or customer name…",
+    "searchEmpty": "No form matches this search.",
     "pdf": "PDF",
-    "retentionNotice": "Forms are kept for 30 days, then deleted automatically (including photos and PDF).",
+    "retentionNotice": "Forms are kept for {days} days, then deleted automatically (including photos and PDF).",
     "delete": "Delete",
     "deleteConfirm": "Permanently delete this form and its photos/PDF? This cannot be undone.",
     "deleting": "Deleting…"
@@ -130,7 +136,13 @@
     "dashboardPhoto": "Dashboard",
     "dashboardPhotoHint": "Photo of the dashboard (mileage, warning lights)",
     "fuelLevel": "Fuel level",
-    "fuelLevels": { "empty": "Empty", "quarter": "1/4", "half": "1/2", "three_quarter": "3/4", "full": "Full" },
+    "fuelLevels": {
+      "empty": "Empty",
+      "quarter": "1/4",
+      "half": "1/2",
+      "three_quarter": "3/4",
+      "full": "Full"
+    },
     "damageTitle": "Damage noted at reception",
     "damageSubtitle": "(protects the garage)",
     "damageDetails": "Additional details (free text)",

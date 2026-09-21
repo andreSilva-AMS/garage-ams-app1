@@ -73,7 +73,6 @@
       "reception": "Réception"
     },
     "team": "Équipe du garage ({count})",
-    "isolationNote": "garage_id : {id} — ces données ne sont visibles que par les membres de ce garage (isolation appliquée au niveau de la base de données).",
     "trialEndingSoon": "Votre essai gratuit se termine dans {days} jour(s).",
     "trialExpired": "Votre essai gratuit est terminé.",
     "paymentIssue": "Un problème est survenu avec votre dernier paiement.",
@@ -91,6 +90,11 @@
     "garageContactHint": "Affichés en en-tête des fiches PDF envoyées aux clients.",
     "defaultLanguage": "Langue par défaut",
     "defaultLanguageHint": "Utilisée pour l'interface de l'application et par défaut pour les documents envoyés aux clients (modifiable pour chaque fiche).",
+    "retentionDays": "Durée de conservation des fiches",
+    "retention30": "30 jours",
+    "retention365": "12 mois",
+    "retentionHint": "Au-delà, les fiches (photos et PDF compris) sont supprimées automatiquement.",
+    "retentionUpsellHint": "L'option 12 mois est réservée aux garages avec un abonnement actif.",
     "saved": "Réglages enregistrés.",
     "inviteTitle": "Inviter un employé",
     "inviteEmail": "E-mail de l'employé",
@@ -103,8 +107,10 @@
   "receptionsHistory": {
     "title": "Historique des réceptions",
     "empty": "Aucune fiche pour l'instant.",
+    "searchPlaceholder": "Rechercher par plaque ou nom de client…",
+    "searchEmpty": "Aucune fiche ne correspond à cette recherche.",
     "pdf": "PDF",
-    "retentionNotice": "Les fiches sont conservées 30 jours, puis supprimées automatiquement (photos et PDF compris).",
+    "retentionNotice": "Les fiches sont conservées {days} jours, puis supprimées automatiquement (photos et PDF compris).",
     "delete": "Supprimer",
     "deleteConfirm": "Supprimer définitivement cette fiche et ses photos/PDF ? Cette action est irréversible.",
     "deleting": "Suppression…"
@@ -130,7 +136,13 @@
     "dashboardPhoto": "Tableau de bord",
     "dashboardPhotoHint": "Photo du tableau de bord (kilométrage, voyants)",
     "fuelLevel": "Niveau de carburant",
-    "fuelLevels": { "empty": "Vide", "quarter": "1/4", "half": "1/2", "three_quarter": "3/4", "full": "Plein" },
+    "fuelLevels": {
+      "empty": "Vide",
+      "quarter": "1/4",
+      "half": "1/2",
+      "three_quarter": "3/4",
+      "full": "Plein"
+    },
     "damageTitle": "Dommages constatés à la réception",
     "damageSubtitle": "(protection du garage)",
     "damageDetails": "Détails supplémentaires (texte libre)",

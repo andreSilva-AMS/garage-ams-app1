@@ -73,7 +73,6 @@
       "reception": "Annahme"
     },
     "team": "Team der Werkstatt ({count})",
-    "isolationNote": "garage_id: {id} — diese Daten sind nur für Mitglieder dieser Werkstatt sichtbar (Isolation auf Datenbankebene durchgesetzt).",
     "trialEndingSoon": "Ihre kostenlose Testphase endet in {days} Tag(en).",
     "trialExpired": "Ihre kostenlose Testphase ist abgelaufen.",
     "paymentIssue": "Bei Ihrer letzten Zahlung ist ein Problem aufgetreten.",
@@ -91,6 +90,11 @@
     "garageContactHint": "Werden im Kopfbereich der an Kunden gesendeten PDF-Protokolle angezeigt.",
     "defaultLanguage": "Standardsprache",
     "defaultLanguageHint": "Wird für die Benutzeroberfläche der Anwendung und standardmäßig für an Kunden gesendete Dokumente verwendet (pro Protokoll änderbar).",
+    "retentionDays": "Aufbewahrungsdauer der Protokolle",
+    "retention30": "30 Tage",
+    "retention365": "12 Monate",
+    "retentionHint": "Danach werden Protokolle (inklusive Fotos und PDF) automatisch gelöscht.",
+    "retentionUpsellHint": "Die 12-Monats-Option ist Werkstätten mit einem aktiven Abonnement vorbehalten.",
     "saved": "Einstellungen gespeichert.",
     "inviteTitle": "Mitarbeiter einladen",
     "inviteEmail": "E-Mail des Mitarbeiters",
@@ -103,8 +107,10 @@
   "receptionsHistory": {
     "title": "Annahmeverlauf",
     "empty": "Noch keine Protokolle.",
+    "searchPlaceholder": "Suche nach Kennzeichen oder Kundenname…",
+    "searchEmpty": "Kein Protokoll entspricht dieser Suche.",
     "pdf": "PDF",
-    "retentionNotice": "Protokolle werden 30 Tage lang aufbewahrt und danach automatisch gelöscht (inklusive Fotos und PDF).",
+    "retentionNotice": "Protokolle werden {days} Tage lang aufbewahrt und danach automatisch gelöscht (inklusive Fotos und PDF).",
     "delete": "Löschen",
     "deleteConfirm": "Dieses Protokoll samt Fotos/PDF endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "deleting": "Wird gelöscht…"
@@ -130,7 +136,13 @@
     "dashboardPhoto": "Armaturenbrett",
     "dashboardPhotoHint": "Foto des Armaturenbretts (Kilometerstand, Warnleuchten)",
     "fuelLevel": "Tankfüllstand",
-    "fuelLevels": { "empty": "Leer", "quarter": "1/4", "half": "1/2", "three_quarter": "3/4", "full": "Voll" },
+    "fuelLevels": {
+      "empty": "Leer",
+      "quarter": "1/4",
+      "half": "1/2",
+      "three_quarter": "3/4",
+      "full": "Voll"
+    },
     "damageTitle": "Bei der Annahme festgestellte Schäden",
     "damageSubtitle": "(Schutz der Werkstatt)",
     "damageDetails": "Zusätzliche Details (Freitext)",

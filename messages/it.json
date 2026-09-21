@@ -73,7 +73,6 @@
       "reception": "Accettazione"
     },
     "team": "Team dell'officina ({count})",
-    "isolationNote": "garage_id: {id} — questi dati sono visibili solo ai membri di questa officina (isolamento applicato a livello di database).",
     "trialEndingSoon": "La tua prova gratuita termina tra {days} giorno/i.",
     "trialExpired": "La tua prova gratuita è terminata.",
     "paymentIssue": "Si è verificato un problema con il tuo ultimo pagamento.",
@@ -91,6 +90,11 @@
     "garageContactHint": "Mostrati nell'intestazione delle schede PDF inviate ai clienti.",
     "defaultLanguage": "Lingua predefinita",
     "defaultLanguageHint": "Usata per l'interfaccia dell'applicazione e, per impostazione predefinita, per i documenti inviati ai clienti (modificabile per ogni scheda).",
+    "retentionDays": "Durata di conservazione delle schede",
+    "retention30": "30 giorni",
+    "retention365": "12 mesi",
+    "retentionHint": "Oltre questo termine, le schede (incluse foto e PDF) vengono eliminate automaticamente.",
+    "retentionUpsellHint": "L'opzione 12 mesi è riservata alle officine con un abbonamento attivo.",
     "saved": "Impostazioni salvate.",
     "inviteTitle": "Invita un dipendente",
     "inviteEmail": "E-mail del dipendente",
@@ -103,8 +107,10 @@
   "receptionsHistory": {
     "title": "Storico accettazioni",
     "empty": "Nessuna scheda per ora.",
+    "searchPlaceholder": "Cerca per targa o nome cliente…",
+    "searchEmpty": "Nessuna scheda corrisponde a questa ricerca.",
     "pdf": "PDF",
-    "retentionNotice": "Le schede vengono conservate per 30 giorni, poi eliminate automaticamente (incluse foto e PDF).",
+    "retentionNotice": "Le schede vengono conservate per {days} giorni, poi eliminate automaticamente (incluse foto e PDF).",
     "delete": "Elimina",
     "deleteConfirm": "Eliminare definitivamente questa scheda e le sue foto/PDF? Questa azione non può essere annullata.",
     "deleting": "Eliminazione…"
@@ -130,7 +136,13 @@
     "dashboardPhoto": "Cruscotto",
     "dashboardPhotoHint": "Foto del cruscotto (chilometraggio, spie)",
     "fuelLevel": "Livello carburante",
-    "fuelLevels": { "empty": "Vuoto", "quarter": "1/4", "half": "1/2", "three_quarter": "3/4", "full": "Pieno" },
+    "fuelLevels": {
+      "empty": "Vuoto",
+      "quarter": "1/4",
+      "half": "1/2",
+      "three_quarter": "3/4",
+      "full": "Pieno"
+    },
     "damageTitle": "Danni riscontrati all'accettazione",
     "damageSubtitle": "(tutela dell'officina)",
     "damageDetails": "Dettagli aggiuntivi (testo libero)",

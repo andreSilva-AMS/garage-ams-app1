@@ -24,7 +24,7 @@ export default async function SettingsPage() {
   const [{ data: garage }, { data: pendingInvites }] = await Promise.all([
     supabase
       .from("garages")
-      .select("id, name, address, phone, email, logo_url, default_language")
+      .select("id, name, address, phone, email, logo_url, default_language, retention_days, payment_status")
       .eq("id", profile.garage_id)
       .single(),
     isOwner

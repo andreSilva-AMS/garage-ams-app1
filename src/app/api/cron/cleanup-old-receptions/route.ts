@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
 
-const RETENTION_DAYS = 30;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 /**
  * Supprime automatiquement les fiches de réception (et leurs fichiers) plus
- * vieilles que 30 jours, tous garages confondus. Déclenché quotidiennement
- * par un Cron Vercel (voir vercel.json) — jamais appelable publiquement,
- * protégé par CRON_SECRET.
+ * vieilles que la durée de conservation du garage (30 jours par défaut, 12
+ * mois en option pour les garages avec un accès actif — voir
+ * garages.retention_days). Déclenché quotidiennement par un Cron Vercel
+ * (voir vercel.json) — jamais appelable publiquement, protégé par
+ * CRON_SECRET.
  */
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
@@ -16,19 +18,22 @@ export async function GET(request: Request) {
   }
 
   const supabase = createServiceClient();
-  const cutoff = new Date(Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-  const { data: oldReceptions, error: selectError } = await supabase
-    .from("receptions")
-    .select(
-      "id, photo_front_path, photo_back_path, photo_left_path, photo_right_path, photo_card_grey_path, signature_path, pdf_path",
-    )
-    .lt("created_at", cutoff);
+  const { data: allReceptions, error: selectError } = await supabase.from("receptions").select(
+    "id, created_at, photo_front_path, photo_back_path, photo_left_path, photo_right_path, photo_card_grey_path, signature_path, pdf_path, photo_dashboard_path, garages(retention_days)",
+  );
 
   if (selectError) {
     return NextResponse.json({ error: selectError.message }, { status: 500 });
   }
-  if (!oldReceptions || oldReceptions.length === 0) {
+
+  const now = Date.now();
+  const oldReceptions = (allReceptions ?? []).filter((r) => {
+    const retentionDays = (r.garages as unknown as { retention_days: number } | null)?.retention_days ?? 30;
+    return now - new Date(r.created_at).getTime() > retentionDays * DAY_MS;
+  });
+
+  if (oldReceptions.length === 0) {
     return NextResponse.json({ deleted: 0 });
   }
 
@@ -46,6 +51,7 @@ export async function GET(request: Request) {
       r.photo_left_path,
       r.photo_right_path,
       r.photo_card_grey_path,
+      r.photo_dashboard_path,
       r.signature_path,
       r.pdf_path,
     ]),

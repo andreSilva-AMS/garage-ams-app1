@@ -24,7 +24,6 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
   const [language, setLanguage] = useState<Lang>(appLocale);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +43,7 @@ export default function LoginPage() {
     setUnconfirmed(false);
     setResendStatus("idle");
 
-    // Marqueur lu par le middleware pour appliquer le même choix lors du
-    // rafraîchissement automatique du jeton (voir middleware.ts).
-    document.cookie = remember
-      ? "sb_remember=; path=/; max-age=0"
-      : "sb_remember=0; path=/; SameSite=Lax";
-
-    const supabase = createClient({ remember });
+    const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -139,19 +132,9 @@ export default function LoginPage() {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
-            {t("rememberMe")}
-          </label>
-          <Link href="/forgot-password" className="text-sm underline">
-            {t("forgotPasswordLink")}
-          </Link>
-        </div>
+        <Link href="/forgot-password" className="text-sm underline">
+          {t("forgotPasswordLink")}
+        </Link>
 
         {unconfirmed && (
           <div className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">

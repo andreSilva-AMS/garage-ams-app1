@@ -30,6 +30,13 @@ export default function LoginPage() {
   const [unconfirmed, setUnconfirmed] = useState(false);
   const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">("idle");
 
+  // Filet de sécurité : si après une connexion réussie le serveur renvoie
+  // quand même vers /login (ex. session aussitôt invalidée côté serveur), le
+  // bouton ne doit pas rester bloqué sur "Connexion..." indéfiniment — la
+  // page ne change pas forcément d'URL donc "loading" ne se réinitialise pas
+  // tout seul. On l'ignore dès que la bannière de déconnexion est affichée.
+  const isSubmitting = loading && !timedOut;
+
   function handleLanguageChange(value: Lang) {
     setLanguage(value);
     setLocaleCookie(value);
@@ -155,8 +162,8 @@ export default function LoginPage() {
         )}
         {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button type="submit" disabled={loading} className="btn-primary">
-          {loading ? t("submitting") : t("submit")}
+        <button type="submit" disabled={isSubmitting} className="btn-primary">
+          {isSubmitting ? t("submitting") : t("submit")}
         </button>
       </form>
 

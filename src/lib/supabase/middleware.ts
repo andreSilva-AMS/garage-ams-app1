@@ -55,6 +55,12 @@ export async function updateSession(request: NextRequest) {
       await supabase.auth.signOut();
       user = null;
       timedOut = true;
+      // Sans ça, ce cookie périmé reste en place (son maxAge est volontairement
+      // long, 30 jours) et toute connexion future — pourtant valide — est
+      // immédiatement tuée par ce même test au tour suivant : la personne se
+      // reconnecte avec succès, puis se retrouve réexpulsée en moins d'une
+      // seconde, en boucle, jusqu'à ce que le cookie expire tout seul.
+      supabaseResponse.cookies.delete("sb_last_activity");
     } else {
       // Marqueur d'activité : maxAge volontairement plus long que la fenêtre
       // d'inactivité (2h), pour survivre à une fermeture de navigateur

@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
         ],
       },
+      {
+        // Le navigateur doit revérifier ce fichier à chaque chargement de
+        // l'app, sinon une ancienne version du Service Worker (avec un bug
+        // déjà corrigé) peut rester active pendant des heures après un
+        // déploiement.
+        source: "/sw.js",
+        headers: [{ key: "Cache-Control", value: "no-cache" }],
+      },
     ];
   },
 };

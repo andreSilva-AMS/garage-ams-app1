@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Países con tarifa dedicada",
     "billingCountryOtherGroup": "Otros países europeos",
     "billingCountryHint": "Se usa para emitir sus facturas y aplicar el IVA de su país. Solo puede modificarse contactándonos.",
+    "activitiesLabel": "Actividades de la empresa",
+    "activityWorkshop": "Taller mecánico",
+    "activitySales": "Venta / depósito-venta de vehículos",
+    "activitiesHint": "Determina los tipos de ficha y los roles disponibles para su equipo. Se puede cambiar luego en los ajustes.",
+    "activitiesRequired": "Seleccione al menos una actividad.",
     "billingCountryUnsupported": "Este país aún no está disponible. <contact>Contáctenos</contact> para hablarlo.",
     "acceptTerms": "Acepto las <terms>condiciones de uso</terms> y la <privacy>política de privacidad</privacy>.",
     "submit": "Crear mi taller",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Propietario",
       "mechanic": "Mecánico",
-      "reception": "Recepción"
+      "reception": "Recepción",
+      "seller": "Vendedor"
     },
     "team": "Equipo del taller ({count})",
     "trialEndingSoon": "Su período de prueba gratuito termina en {days} día(s).",
@@ -142,6 +148,7 @@
     "inviteTitle": "Invitar a un empleado",
     "inviteEmail": "Correo del empleado",
     "inviteRole": "Rol",
+    "inviteRoleRequired": "Seleccione al menos un rol.",
     "inviteSend": "Enviar invitación",
     "inviteSending": "Enviando…",
     "inviteSent": "Invitación enviada.",

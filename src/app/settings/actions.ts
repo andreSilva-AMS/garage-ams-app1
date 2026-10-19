@@ -4,20 +4,20 @@ import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
 import type { Lang } from "@/lib/receptions/i18n";
 
-type InviteRole = "mechanic" | "reception";
+type InviteRole = "mechanic" | "reception" | "seller";
 
 const ROLE_LABEL: Record<Lang, Record<InviteRole, string>> = {
-  fr: { mechanic: "Mécanicien", reception: "Réception" },
-  en: { mechanic: "Mechanic", reception: "Reception" },
-  es: { mechanic: "Mecánico", reception: "Recepción" },
-  pt: { mechanic: "Mecânico", reception: "Receção" },
-  de: { mechanic: "Mechaniker", reception: "Empfang" },
-  it: { mechanic: "Meccanico", reception: "Reception" },
+  fr: { mechanic: "Mécanicien", reception: "Réception", seller: "Vendeur" },
+  en: { mechanic: "Mechanic", reception: "Reception", seller: "Seller" },
+  es: { mechanic: "Mecánico", reception: "Recepción", seller: "Vendedor" },
+  pt: { mechanic: "Mecânico", reception: "Receção", seller: "Vendedor" },
+  de: { mechanic: "Mechaniker", reception: "Empfang", seller: "Verkäufer" },
+  it: { mechanic: "Meccanico", reception: "Reception", seller: "Venditore" },
 };
 
 const INVITE_EMAIL: Record<
   Lang,
-  { subject: (garageName: string) => string; body: (garageName: string, role: string, url: string) => string }
+  { subject: (garageName: string) => string; body: (garageName: string, roles: string, url: string) => string }
 > = {
   fr: {
     subject: (g) => `Invitation à rejoindre ${g} sur ReceptCar`,
@@ -53,7 +53,7 @@ const INVITE_EMAIL: Record<
 
 export async function inviteEmployee(
   email: string,
-  role: InviteRole,
+  roles: InviteRole[],
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const supabase = await createClient();
 
@@ -64,23 +64,35 @@ export async function inviteEmployee(
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .single();
-  if (!profile || profile.role !== "owner") {
+  if (!profile || !profile.roles.includes("owner")) {
     return { ok: false, error: "Seul le propriétaire peut inviter des employés." };
+  }
+
+  if (roles.length === 0) {
+    return { ok: false, error: "Au moins un rôle doit être sélectionné." };
   }
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("name, default_language")
+    .select("name, default_language, has_workshop, has_sales")
     .eq("id", profile.garage_id)
     .single();
   if (!garage) return { ok: false, error: "Garage introuvable." };
 
+  const allowedRoles: InviteRole[] = [
+    ...(garage.has_workshop ? (["reception", "mechanic"] as const) : []),
+    ...(garage.has_sales ? (["seller"] as const) : []),
+  ];
+  if (roles.some((r) => !allowedRoles.includes(r))) {
+    return { ok: false, error: "Rôle non autorisé pour les activités de ce garage." };
+  }
+
   const { data: invite, error: insertError } = await supabase
     .from("garage_invites")
-    .insert({ garage_id: profile.garage_id, email, role, invited_by: user.id })
+    .insert({ garage_id: profile.garage_id, email, roles, invited_by: user.id })
     .select("token")
     .single();
   if (insertError || !invite) {
@@ -89,7 +101,7 @@ export async function inviteEmployee(
 
   const lang = (garage.default_language as Lang) ?? "fr";
   const t = INVITE_EMAIL[lang] ?? INVITE_EMAIL.fr;
-  const roleLabel = (ROLE_LABEL[lang] ?? ROLE_LABEL.fr)[role];
+  const roleLabel = roles.map((r) => (ROLE_LABEL[lang] ?? ROLE_LABEL.fr)[r]).join(", ");
   const joinUrl = `${process.env.NEXT_PUBLIC_APP_URL}/join?token=${invite.token}`;
 
   const resend = new Resend(process.env.RESEND_API_KEY);

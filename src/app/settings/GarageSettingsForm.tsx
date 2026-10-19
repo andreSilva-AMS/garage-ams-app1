@@ -20,19 +20,21 @@ interface Garage {
   default_language: string;
   retention_days: number;
   payment_status: string;
+  has_workshop: boolean;
+  has_sales: boolean;
 }
 
 interface PendingInvite {
   id: string;
   email: string;
-  role: string;
+  roles: string[];
   created_at: string;
 }
 
 interface TeamMember {
   id: string;
   full_name: string | null;
-  role: string;
+  roles: string[];
 }
 
 export function GarageSettingsForm({
@@ -269,7 +271,13 @@ export function GarageSettingsForm({
         )}
       </form>
 
-      {isOwner && <InviteEmployeeSection pendingInvites={pendingInvites} />}
+      {isOwner && (
+        <InviteEmployeeSection
+          pendingInvites={pendingInvites}
+          hasWorkshop={garage.has_workshop}
+          hasSales={garage.has_sales}
+        />
+      )}
 
       <TeamSection teamMembers={teamMembers} />
     </main>

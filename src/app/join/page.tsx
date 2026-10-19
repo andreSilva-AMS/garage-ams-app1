@@ -39,7 +39,7 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
   const supabase = createServiceClient();
   const { data: invite } = await supabase
     .from("garage_invites")
-    .select("garage_id, email, role, accepted_at, expires_at")
+    .select("garage_id, email, roles, accepted_at, expires_at")
     .eq("token", token)
     .maybeSingle();
 
@@ -57,7 +57,7 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
     <JoinForm
       token={token}
       email={invite.email}
-      role={invite.role as "mechanic" | "reception"}
+      roles={invite.roles as ("mechanic" | "reception" | "seller")[]}
       garageName={garage?.name ?? ""}
     />
   );

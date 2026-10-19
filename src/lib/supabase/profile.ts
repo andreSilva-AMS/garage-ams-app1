@@ -14,7 +14,7 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 export async function ensureProfile(supabase: SupabaseClient, user: User) {
   const { data: existing } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -32,20 +32,24 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
     const garageName = user.user_metadata?.garage_name as string | undefined;
     const preferredLanguage = user.user_metadata?.preferred_language as string | undefined;
     const billingCountry = user.user_metadata?.billing_country as string | undefined;
+    const hasWorkshop = (user.user_metadata?.has_workshop as boolean | undefined) ?? true;
+    const hasSales = (user.user_metadata?.has_sales as boolean | undefined) ?? false;
 
     if (!garageName) return null;
 
-    await supabase.rpc("create_garage_and_owner", {
+    await supabase.rpc("create_garage_and_owner_v2", {
       garage_name: garageName,
       owner_full_name: fullName ?? null,
       garage_language: preferredLanguage ?? "fr",
       garage_billing_country: billingCountry ?? null,
+      p_has_workshop: hasWorkshop,
+      p_has_sales: hasSales,
     });
   }
 
   const { data: created } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .maybeSingle();
 

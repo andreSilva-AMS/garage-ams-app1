@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Países com tarifa dedicada",
     "billingCountryOtherGroup": "Outros países europeus",
     "billingCountryHint": "Utilizado para emitir as suas faturas e aplicar o IVA do seu país. Só pode ser alterado contactando-nos.",
+    "activitiesLabel": "Atividades da empresa",
+    "activityWorkshop": "Oficina mecânica",
+    "activitySales": "Venda / consignação de veículos",
+    "activitiesHint": "Determina os tipos de ficha e as funções disponíveis para a sua equipa. Pode ser alterado depois nas definições.",
+    "activitiesRequired": "Selecione pelo menos uma atividade.",
     "billingCountryUnsupported": "Este país ainda não está disponível. <contact>Contacte-nos</contact> para o discutir.",
     "acceptTerms": "Aceito os <terms>termos de utilização</terms> e a <privacy>política de privacidade</privacy>.",
     "submit": "Criar a minha garagem",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Proprietário",
       "mechanic": "Mecânico",
-      "reception": "Receção"
+      "reception": "Receção",
+      "seller": "Vendedor"
     },
     "team": "Equipa da garagem ({count})",
     "trialEndingSoon": "O seu período de teste gratuito termina em {days} dia(s).",
@@ -142,6 +148,7 @@
     "inviteTitle": "Convidar um empregado",
     "inviteEmail": "E-mail do empregado",
     "inviteRole": "Função",
+    "inviteRoleRequired": "Selecione pelo menos uma função.",
     "inviteSend": "Enviar convite",
     "inviteSending": "A enviar…",
     "inviteSent": "Convite enviado.",

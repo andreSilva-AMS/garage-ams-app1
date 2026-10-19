@@ -26,7 +26,7 @@ export default async function BillingPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/dashboard");
@@ -73,7 +73,7 @@ export default async function BillingPage() {
     .limit(1)
     .maybeSingle();
 
-  const isOwner = profile.role === "owner";
+  const isOwner = profile.roles.includes("owner");
   const active = hasActiveAccess(garage);
 
   let statusLabel: string;

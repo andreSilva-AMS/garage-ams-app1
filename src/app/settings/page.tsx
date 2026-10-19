@@ -20,31 +20,33 @@ export default async function SettingsPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/dashboard");
 
-  const isOwner = profile.role === "owner";
+  const isOwner = profile.roles.includes("owner");
 
   // Ne dépendent que du profil déjà chargé, pas les unes des autres :
   // lancées en parallèle plutôt qu'en série.
   const [{ data: garage }, { data: pendingInvites }, { data: teamMembers }] = await Promise.all([
     supabase
       .from("garages")
-      .select("id, name, address, phone, email, logo_url, default_language, retention_days, payment_status")
+      .select(
+        "id, name, address, phone, email, logo_url, default_language, retention_days, payment_status, has_workshop, has_sales",
+      )
       .eq("id", profile.garage_id)
       .single(),
     isOwner
       ? supabase
           .from("garage_invites")
-          .select("id, email, role, created_at")
+          .select("id, email, roles, created_at")
           .is("accepted_at", null)
           .order("created_at", { ascending: false })
       : Promise.resolve({ data: null }),
     supabase
       .from("profiles")
-      .select("id, full_name, role")
+      .select("id, full_name, roles")
       .eq("garage_id", profile.garage_id)
       .order("created_at", { ascending: true }),
   ]);

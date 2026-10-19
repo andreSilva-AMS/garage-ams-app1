@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Länder mit eigenem Tarif",
     "billingCountryOtherGroup": "Weitere europäische Länder",
     "billingCountryHint": "Wird für die Rechnungsstellung und die Anwendung der Mehrwertsteuer Ihres Landes verwendet. Kann nur durch Kontaktaufnahme geändert werden.",
+    "activitiesLabel": "Tätigkeiten des Unternehmens",
+    "activityWorkshop": "Mechanikwerkstatt",
+    "activitySales": "Fahrzeugverkauf / Kommission",
+    "activitiesHint": "Bestimmt die verfügbaren Formulartypen und Rollen für Ihr Team. Später in den Einstellungen änderbar.",
+    "activitiesRequired": "Wählen Sie mindestens eine Tätigkeit aus.",
     "billingCountryUnsupported": "Dieses Land wird noch nicht unterstützt. <contact>Kontaktieren Sie uns</contact>, um das zu besprechen.",
     "acceptTerms": "Ich akzeptiere die <terms>Nutzungsbedingungen</terms> und die <privacy>Datenschutzrichtlinie</privacy>.",
     "submit": "Werkstatt erstellen",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Inhaber",
       "mechanic": "Mechaniker",
-      "reception": "Annahme"
+      "reception": "Annahme",
+      "seller": "Verkäufer"
     },
     "team": "Team der Werkstatt ({count})",
     "trialEndingSoon": "Ihre kostenlose Testphase endet in {days} Tag(en).",
@@ -142,6 +148,7 @@
     "inviteTitle": "Mitarbeiter einladen",
     "inviteEmail": "E-Mail des Mitarbeiters",
     "inviteRole": "Rolle",
+    "inviteRoleRequired": "Wählen Sie mindestens eine Rolle aus.",
     "inviteSend": "Einladung senden",
     "inviteSending": "Wird gesendet…",
     "inviteSent": "Einladung gesendet.",

@@ -10,12 +10,12 @@ import { createClient } from "@/lib/supabase/client";
 export function JoinForm({
   token,
   email,
-  role,
+  roles,
   garageName,
 }: {
   token: string;
   email: string;
-  role: "mechanic" | "reception";
+  roles: ("mechanic" | "reception" | "seller")[];
   garageName: string;
 }) {
   const router = useRouter();
@@ -94,7 +94,7 @@ export function JoinForm({
       </div>
       <h1 className="mb-1 text-xl">{t("title", { garageName })}</h1>
       <p className="mb-6 text-sm text-neutral-600">
-        {t("subtitle", { email, role: tDashboard(`role.${role}`) })}
+        {t("subtitle", { email, role: roles.map((r) => tDashboard(`role.${r}`)).join(", ") })}
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

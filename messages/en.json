@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Countries with a dedicated rate",
     "billingCountryOtherGroup": "Other European countries",
     "billingCountryHint": "Used to issue your invoices and apply the VAT for your country. Can only be changed by contacting us.",
+    "activitiesLabel": "Business activities",
+    "activityWorkshop": "Mechanical workshop",
+    "activitySales": "Vehicle sales / consignment",
+    "activitiesHint": "Determines the form types and roles available to your team. Can be changed later in settings.",
+    "activitiesRequired": "Select at least one activity.",
     "billingCountryUnsupported": "This country isn't supported yet. <contact>Contact us</contact> to discuss it.",
     "acceptTerms": "I accept the <terms>terms of use</terms> and the <privacy>privacy policy</privacy>.",
     "submit": "Create my garage",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Owner",
       "mechanic": "Mechanic",
-      "reception": "Reception"
+      "reception": "Reception",
+      "seller": "Seller"
     },
     "team": "Garage team ({count})",
     "trialEndingSoon": "Your free trial ends in {days} day(s).",
@@ -142,6 +148,7 @@
     "inviteTitle": "Invite an employee",
     "inviteEmail": "Employee's e-mail",
     "inviteRole": "Role",
+    "inviteRoleRequired": "Select at least one role.",
     "inviteSend": "Send invitation",
     "inviteSending": "Sending…",
     "inviteSent": "Invitation sent.",

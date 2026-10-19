@@ -5,23 +5,42 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { inviteEmployee } from "./actions";
 
+type InviteRole = "mechanic" | "reception" | "seller";
+
 interface PendingInvite {
   id: string;
   email: string;
-  role: string;
+  roles: string[];
   created_at: string;
 }
 
-export function InviteEmployeeSection({ pendingInvites }: { pendingInvites: PendingInvite[] }) {
+export function InviteEmployeeSection({
+  pendingInvites,
+  hasWorkshop,
+  hasSales,
+}: {
+  pendingInvites: PendingInvite[];
+  hasWorkshop: boolean;
+  hasSales: boolean;
+}) {
   const router = useRouter();
   const t = useTranslations("settings");
   const tDashboard = useTranslations("dashboard");
 
+  const availableRoles: InviteRole[] = [
+    ...(hasWorkshop ? (["reception", "mechanic"] as const) : []),
+    ...(hasSales ? (["seller"] as const) : []),
+  ];
+
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState<"mechanic" | "reception">("mechanic");
+  const [roles, setRoles] = useState<InviteRole[]>(availableRoles.slice(0, 1));
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+
+  function toggleRole(r: InviteRole) {
+    setRoles((prev) => (prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]));
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -29,7 +48,13 @@ export function InviteEmployeeSection({ pendingInvites }: { pendingInvites: Pend
     setError(null);
     setSent(false);
 
-    const result = await inviteEmployee(email, role);
+    if (roles.length === 0) {
+      setError(t("inviteRoleRequired"));
+      setSending(false);
+      return;
+    }
+
+    const result = await inviteEmployee(email, roles);
     if (!result.ok) {
       setError(result.error);
       setSending(false);
@@ -46,8 +71,8 @@ export function InviteEmployeeSection({ pendingInvites }: { pendingInvites: Pend
     <section className="mt-8 rounded-2xl border border-neutral-200 p-4">
       <h2 className="mb-4 text-sm font-medium text-neutral-500">{t("inviteTitle")}</h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-end">
-        <div className="flex flex-1 flex-col gap-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1">
           <label htmlFor="inviteEmail" className="text-sm font-medium">
             {t("inviteEmail")}
           </label>
@@ -61,20 +86,17 @@ export function InviteEmployeeSection({ pendingInvites }: { pendingInvites: Pend
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="inviteRole" className="text-sm font-medium">
-            {t("inviteRole")}
-          </label>
-          <select
-            id="inviteRole"
-            value={role}
-            onChange={(e) => setRole(e.target.value as "mechanic" | "reception")}
-            className="input"
-          >
-            <option value="mechanic">{tDashboard("role.mechanic")}</option>
-            <option value="reception">{tDashboard("role.reception")}</option>
-          </select>
+          <span className="text-sm font-medium">{t("inviteRole")}</span>
+          <div className="flex flex-wrap gap-3">
+            {availableRoles.map((r) => (
+              <label key={r} className="flex items-center gap-1.5 text-sm">
+                <input type="checkbox" checked={roles.includes(r)} onChange={() => toggleRole(r)} />
+                {tDashboard(`role.${r}`)}
+              </label>
+            ))}
+          </div>
         </div>
-        <button type="submit" disabled={sending} className="btn-primary">
+        <button type="submit" disabled={sending} className="btn-primary self-start">
           {sending ? t("inviteSending") : t("inviteSend")}
         </button>
       </form>
@@ -88,7 +110,7 @@ export function InviteEmployeeSection({ pendingInvites }: { pendingInvites: Pend
             <li key={invite.id} className="flex items-center justify-between text-sm">
               <span>{invite.email}</span>
               <span className="text-neutral-500">
-                {tDashboard(`role.${invite.role}`)} · {t("invitePending")}
+                {invite.roles.map((r) => tDashboard(`role.${r}`)).join(", ")} · {t("invitePending")}
               </span>
             </li>
           ))}

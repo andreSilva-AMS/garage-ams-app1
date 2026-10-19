@@ -61,7 +61,7 @@ export default async function DashboardPage() {
       .limit(LATEST_RECEPTIONS_LIMIT),
   ]);
 
-  if (garage && !garage.onboarding_completed && profile.role === "owner") {
+  if (garage && !garage.onboarding_completed && profile.roles.includes("owner")) {
     redirect("/onboarding");
   }
 

@@ -25,11 +25,11 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, role")
+    .select("garage_id, roles")
     .eq("id", user.id)
     .single();
   if (!profile) return { error: "Profil introuvable." as const };
-  if (profile.role !== "owner") {
+  if (!profile.roles.includes("owner")) {
     return { error: "Seul le propriétaire du garage peut gérer la facturation." as const };
   }
 

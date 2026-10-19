@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Paesi con tariffa dedicata",
     "billingCountryOtherGroup": "Altri paesi europei",
     "billingCountryHint": "Usato per emettere le tue fatture e applicare l'IVA del tuo paese. Modificabile solo contattandoci.",
+    "activitiesLabel": "Attività dell'azienda",
+    "activityWorkshop": "Officina meccanica",
+    "activitySales": "Vendita / conto vendita veicoli",
+    "activitiesHint": "Determina i tipi di scheda e i ruoli disponibili per il tuo team. Modificabile in seguito nelle impostazioni.",
+    "activitiesRequired": "Seleziona almeno un'attività.",
     "billingCountryUnsupported": "Questo paese non è ancora supportato. <contact>Contattaci</contact> per parlarne.",
     "acceptTerms": "Accetto i <terms>termini di utilizzo</terms> e l'<privacy>informativa sulla privacy</privacy>.",
     "submit": "Crea la mia officina",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Proprietario",
       "mechanic": "Meccanico",
-      "reception": "Accettazione"
+      "reception": "Accettazione",
+      "seller": "Venditore"
     },
     "team": "Team dell'officina ({count})",
     "trialEndingSoon": "La tua prova gratuita termina tra {days} giorno/i.",
@@ -142,6 +148,7 @@
     "inviteTitle": "Invita un dipendente",
     "inviteEmail": "E-mail del dipendente",
     "inviteRole": "Ruolo",
+    "inviteRoleRequired": "Seleziona almeno un ruolo.",
     "inviteSend": "Invia invito",
     "inviteSending": "Invio…",
     "inviteSent": "Invito inviato.",

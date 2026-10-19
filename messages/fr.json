@@ -65,6 +65,11 @@
     "billingCountryMainGroup": "Pays avec tarif dédié",
     "billingCountryOtherGroup": "Autres pays européens",
     "billingCountryHint": "Utilisé pour établir vos factures et appliquer la TVA de votre pays. Ne pourra être modifié qu'en nous contactant.",
+    "activitiesLabel": "Activités de l'entreprise",
+    "activityWorkshop": "Atelier mécanique",
+    "activitySales": "Vente / dépôt-vente de véhicules",
+    "activitiesHint": "Détermine les types de fiches et les rôles disponibles pour votre équipe. Modifiable ensuite dans les réglages.",
+    "activitiesRequired": "Sélectionnez au moins une activité.",
     "billingCountryUnsupported": "Ce pays n'est pas encore pris en charge. <contact>Contactez-nous</contact> pour en discuter.",
     "acceptTerms": "J'accepte les <terms>conditions d'utilisation</terms> et la <privacy>politique de confidentialité</privacy>.",
     "submit": "Créer mon garage",
@@ -106,7 +111,8 @@
     "role": {
       "owner": "Propriétaire",
       "mechanic": "Mécanicien",
-      "reception": "Réception"
+      "reception": "Réception",
+      "seller": "Vendeur"
     },
     "team": "Équipe du garage ({count})",
     "trialEndingSoon": "Votre essai gratuit se termine dans {days} jour(s).",
@@ -142,6 +148,7 @@
     "inviteTitle": "Inviter un employé",
     "inviteEmail": "E-mail de l'employé",
     "inviteRole": "Rôle",
+    "inviteRoleRequired": "Sélectionnez au moins un rôle.",
     "inviteSend": "Envoyer l'invitation",
     "inviteSending": "Envoi…",
     "inviteSent": "Invitation envoyée.",

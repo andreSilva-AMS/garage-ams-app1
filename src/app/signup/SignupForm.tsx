@@ -31,6 +31,8 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
   const [password, setPassword] = useState("");
   const [billingCountry, setBillingCountry] = useState("");
   const [language, setLanguage] = useState<Lang>(appLocale);
+  const [hasWorkshop, setHasWorkshop] = useState(true);
+  const [hasSales, setHasSales] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +51,12 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
     setError(null);
     setCountryUnsupported(false);
 
+    if (!hasWorkshop && !hasSales) {
+      setError(t("activitiesRequired"));
+      setLoading(false);
+      return;
+    }
+
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -59,6 +67,8 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
           full_name: fullName,
           preferred_language: language,
           billing_country: billingCountry,
+          has_workshop: hasWorkshop,
+          has_sales: hasSales,
         },
       },
     });
@@ -77,11 +87,13 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
       return;
     }
 
-    const { error: rpcError } = await supabase.rpc("create_garage_and_owner", {
+    const { error: rpcError } = await supabase.rpc("create_garage_and_owner_v2", {
       garage_name: garageName,
       owner_full_name: fullName,
       garage_language: language,
       garage_billing_country: billingCountry,
+      p_has_workshop: hasWorkshop,
+      p_has_sales: hasSales,
     });
 
     if (rpcError) {
@@ -201,6 +213,27 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
           </select>
           <p className="text-xs text-neutral-500">{t("billingCountryHint")}</p>
         </Field>
+
+        <div className="flex flex-col gap-1">
+          <span className="text-sm font-medium">{t("activitiesLabel")}</span>
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
+            <input
+              type="checkbox"
+              checked={hasWorkshop}
+              onChange={(e) => setHasWorkshop(e.target.checked)}
+            />
+            {t("activityWorkshop")}
+          </label>
+          <label className="flex items-center gap-2 text-sm text-neutral-700">
+            <input
+              type="checkbox"
+              checked={hasSales}
+              onChange={(e) => setHasSales(e.target.checked)}
+            />
+            {t("activitySales")}
+          </label>
+          <p className="text-xs text-neutral-500">{t("activitiesHint")}</p>
+        </div>
 
         <label className="flex items-start gap-2 text-sm text-neutral-600">
           <input

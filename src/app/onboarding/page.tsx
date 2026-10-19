@@ -35,7 +35,7 @@ export default async function OnboardingPage() {
 
   // Seul le propriétaire configure le garage ; un employé invité ne doit
   // jamais se retrouver bloqué sur cet assistant.
-  if (!garage || garage.onboarding_completed || profile.role !== "owner") {
+  if (!garage || garage.onboarding_completed || !profile.roles.includes("owner")) {
     redirect("/dashboard");
   }
 

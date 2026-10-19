@@ -1,0 +1,138 @@
+-- =============================================================================
+-- ReceptCar — Module dépôt-vente : table consignments + photos
+-- Non destructif : nouvelles tables uniquement, aucune table existante
+-- modifiée. Réutilise le bucket de stockage "receptions" déjà en place
+-- (mêmes policies, dossier <garage_id>/<consignment_id>/nom-du-fichier) :
+-- aucune nouvelle policy de stockage nécessaire.
+-- =============================================================================
+
+create table public.consignments (
+  id uuid primary key default gen_random_uuid(),
+  garage_id uuid not null references public.garages (id) on delete cascade,
+  created_by uuid references public.profiles (id) on delete set null,
+  -- Rôle de la personne au moment de la création (pas une lecture en direct
+  -- de profiles.roles) : si ses rôles changent plus tard, les fiches déjà
+  -- émises doivent rester historiquement exactes sur le PDF.
+  created_by_role text not null,
+
+  -- Propriétaire du véhicule (déposant)
+  owner_name text not null,
+  owner_phone text,
+  owner_email text,
+
+  -- Véhicule
+  vehicle_plate text not null,
+  vehicle_mileage integer,
+  vehicle_brand_model text,
+
+  -- Documents (stockage privé, liens signés uniquement — mêmes garanties
+  -- que les photos de réception existantes)
+  registration_front_path text,
+  registration_back_path text,
+  owner_id_front_path text,
+  owner_id_back_path text,
+  dashboard_photo_path text,
+
+  -- Leasing : déclaration manuelle (pas de lecture automatique du permis).
+  -- Si "false", l'interface affiche une alerte avant de poursuivre.
+  leasing_free boolean not null default true,
+
+  last_inspection_date date,
+  keys_count integer,
+
+  -- Dommages constatés : même format que receptions (étiquettes + texte).
+  damage_tags text[] not null default '{}',
+  damage_text text,
+
+  -- Commercial
+  asking_price numeric(10, 2),
+  minimum_price numeric(10, 2),
+  commission_amount numeric(10, 2),
+  commission_percent numeric(5, 2),
+  deposit_duration_days integer,
+  insured_by text,
+
+  -- Contrat : deux signatures (propriétaire ET vendeur/garage)
+  signature_owner_path text,
+  signature_seller_path text,
+
+  language text not null default 'fr'
+    check (language in ('fr', 'en', 'es', 'pt', 'de', 'it')),
+  pdf_path text,
+  email_status text,
+  email_sent_at timestamptz,
+
+  created_at timestamptz not null default now()
+);
+
+comment on table public.consignments is
+  'Un dossier de dépôt-vente de véhicule, rattaché à garage_id.';
+
+create index consignments_garage_id_idx on public.consignments (garage_id);
+create index consignments_created_by_idx on public.consignments (created_by);
+
+alter table public.consignments enable row level security;
+alter table public.consignments force row level security;
+
+create policy "Voir les dossiers de dépôt-vente de son garage"
+  on public.consignments for select
+  to authenticated
+  using (garage_id = public.current_garage_id());
+
+-- Création réservée aux vendeurs (et à l'administrateur, qui a toujours le
+-- rôle "owner" et, dès que la vente est activée, "seller" aussi) : un
+-- mécanicien ou réceptionniste seul ne peut pas créer de dossier dépôt-vente.
+create policy "Un vendeur crée un dossier pour son garage"
+  on public.consignments for insert
+  to authenticated
+  with check (
+    garage_id = public.current_garage_id()
+    and 'seller' = any(public.current_user_roles())
+  );
+
+create policy "Modifier les dossiers de dépôt-vente de son garage"
+  on public.consignments for update
+  to authenticated
+  using (garage_id = public.current_garage_id())
+  with check (garage_id = public.current_garage_id());
+
+create policy "Supprimer les dossiers de dépôt-vente de son garage"
+  on public.consignments for delete
+  to authenticated
+  using (garage_id = public.current_garage_id());
+
+-- ---------------------------------------------------------------------------
+-- Photos liées (carnet d'entretien optionnel, photos pour l'annonce jusqu'à
+-- 12) : même format que reception_extra_photos, garage_id dénormalisé pour
+-- des policies RLS simples (pas de jointure).
+-- ---------------------------------------------------------------------------
+create table public.consignment_photos (
+  id uuid primary key default gen_random_uuid(),
+  consignment_id uuid not null references public.consignments (id) on delete cascade,
+  garage_id uuid not null references public.garages (id) on delete cascade,
+  kind text not null check (kind in ('maintenance', 'marketing')),
+  storage_path text not null,
+  caption text,
+  position smallint not null default 0,
+  created_at timestamptz not null default now()
+);
+
+comment on table public.consignment_photos is
+  'Photos liées à un dossier de dépôt-vente : carnet d''entretien (optionnel) ou photos pour l''annonce (jusqu''à 12).';
+
+create index consignment_photos_consignment_id_idx on public.consignment_photos (consignment_id);
+
+alter table public.consignment_photos enable row level security;
+alter table public.consignment_photos force row level security;
+
+create policy "Voir les photos de dépôt-vente de son garage"
+  on public.consignment_photos for select
+  to authenticated
+  using (garage_id = public.current_garage_id());
+
+create policy "Ajouter des photos de dépôt-vente pour son garage"
+  on public.consignment_photos for insert
+  to authenticated
+  with check (garage_id = public.current_garage_id());
+
+NOTIFY pgrst, 'reload schema';

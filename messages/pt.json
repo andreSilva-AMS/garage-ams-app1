@@ -199,7 +199,16 @@
     "retentionNotice": "As fichas são conservadas durante {days} dias e depois eliminadas automaticamente (incluindo fotos e PDF).",
     "delete": "Eliminar",
     "deleteConfirm": "Eliminar definitivamente esta ficha e as suas fotos/PDF? Esta ação não pode ser desfeita.",
-    "deleting": "A eliminar…"
+    "deleting": "A eliminar…",
+    "typeFilter": {
+      "all": "Tudo",
+      "reception": "Oficina",
+      "consignment": "Consignação"
+    },
+    "typeBadge": {
+      "reception": "Oficina",
+      "consignment": "Consignação"
+    }
   },
   "receptionWizard": {
     "step": "Etapa {step} / 5",

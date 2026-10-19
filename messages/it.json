@@ -199,7 +199,16 @@
     "retentionNotice": "Le schede vengono conservate per {days} giorni, poi eliminate automaticamente (incluse foto e PDF).",
     "delete": "Elimina",
     "deleteConfirm": "Eliminare definitivamente questa scheda e le sue foto/PDF? Questa azione non può essere annullata.",
-    "deleting": "Eliminazione…"
+    "deleting": "Eliminazione…",
+    "typeFilter": {
+      "all": "Tutto",
+      "reception": "Officina",
+      "consignment": "Conto vendita"
+    },
+    "typeBadge": {
+      "reception": "Officina",
+      "consignment": "Conto vendita"
+    }
   },
   "receptionWizard": {
     "step": "Passo {step} / 5",

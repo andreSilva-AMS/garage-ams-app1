@@ -46,7 +46,7 @@ export default async function DashboardPage() {
   // est calculé côté client à partir de la même liste que "dernières
   // réceptions" (LATEST_RECEPTIONS_LIMIT), pour ne pas ajouter une 4e
   // requête réseau rien que pour un compteur.
-  const [{ data: garage }, { data: recentReceptions }] = await Promise.all([
+  const [{ data: garage }, { data: recentReceptions }, { data: recentConsignments }] = await Promise.all([
     supabase
       .from("garages")
       .select(
@@ -59,6 +59,11 @@ export default async function DashboardPage() {
       .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path, email_status")
       .order("created_at", { ascending: false })
       .limit(LATEST_RECEPTIONS_LIMIT),
+    supabase
+      .from("consignments")
+      .select("id, owner_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path, email_status")
+      .order("created_at", { ascending: false })
+      .limit(LATEST_RECEPTIONS_LIMIT),
   ]);
 
   if (garage && !garage.onboarding_completed && profile.roles.includes("owner")) {
@@ -67,11 +72,13 @@ export default async function DashboardPage() {
 
   const timezone = getGarageTimezone(garage ?? {});
   const startOfToday = startOfTodayInTimezone(timezone);
-  const todayCount = (recentReceptions ?? []).filter(
-    (r) => new Date(r.created_at) >= startOfToday,
-  ).length;
+  const allRecent = [
+    ...(recentReceptions ?? []).map((r) => ({ ...r, type: "reception" as const, name: r.client_name })),
+    ...(recentConsignments ?? []).map((c) => ({ ...c, type: "consignment" as const, name: c.owner_name })),
+  ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  const todayCount = allRecent.filter((r) => new Date(r.created_at) >= startOfToday).length;
 
-  const latest = (recentReceptions ?? []).slice(0, LATEST_RECEPTIONS_SHOWN);
+  const latest = allRecent.slice(0, LATEST_RECEPTIONS_SHOWN);
   const latestWithUrls = await Promise.all(
     latest.map(async (r) => {
       const { data } = r.pdf_path
@@ -79,7 +86,8 @@ export default async function DashboardPage() {
         : { data: null };
       return {
         id: r.id,
-        client_name: r.client_name,
+        type: r.type,
+        client_name: r.name,
         vehicle_plate: r.vehicle_plate,
         vehicle_brand_model: r.vehicle_brand_model,
         dateLabel: formatGarageDateTime(new Date(r.created_at), timezone),

@@ -199,7 +199,16 @@
     "retentionNotice": "Forms are kept for {days} days, then deleted automatically (including photos and PDF).",
     "delete": "Delete",
     "deleteConfirm": "Permanently delete this form and its photos/PDF? This cannot be undone.",
-    "deleting": "Deleting…"
+    "deleting": "Deleting…",
+    "typeFilter": {
+      "all": "All",
+      "reception": "Workshop",
+      "consignment": "Consignment"
+    },
+    "typeBadge": {
+      "reception": "Workshop",
+      "consignment": "Consignment"
+    }
   },
   "receptionWizard": {
     "step": "Step {step} / 5",

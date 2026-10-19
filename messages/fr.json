@@ -199,7 +199,16 @@
     "retentionNotice": "Les fiches sont conservées {days} jours, puis supprimées automatiquement (photos et PDF compris).",
     "delete": "Supprimer",
     "deleteConfirm": "Supprimer définitivement cette fiche et ses photos/PDF ? Cette action est irréversible.",
-    "deleting": "Suppression…"
+    "deleting": "Suppression…",
+    "typeFilter": {
+      "all": "Tout",
+      "reception": "Atelier",
+      "consignment": "Dépôt-vente"
+    },
+    "typeBadge": {
+      "reception": "Atelier",
+      "consignment": "Dépôt-vente"
+    }
   },
   "receptionWizard": {
     "step": "Étape {step} / 5",

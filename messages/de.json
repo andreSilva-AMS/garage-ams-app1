@@ -199,7 +199,16 @@
     "retentionNotice": "Protokolle werden {days} Tage lang aufbewahrt und danach automatisch gelöscht (inklusive Fotos und PDF).",
     "delete": "Löschen",
     "deleteConfirm": "Dieses Protokoll samt Fotos/PDF endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
-    "deleting": "Wird gelöscht…"
+    "deleting": "Wird gelöscht…",
+    "typeFilter": {
+      "all": "Alle",
+      "reception": "Werkstatt",
+      "consignment": "Kommission"
+    },
+    "typeBadge": {
+      "reception": "Werkstatt",
+      "consignment": "Kommission"
+    }
   },
   "receptionWizard": {
     "step": "Schritt {step} / 5",

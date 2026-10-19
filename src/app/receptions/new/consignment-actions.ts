@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { I18N, Lang } from "@/lib/consignments/i18n";
 
@@ -74,5 +75,56 @@ export async function sendConsignmentEmail(
     .update({ email_sent_at: new Date().toISOString(), email_status: "sent" })
     .eq("id", consignmentId);
 
+  return { ok: true };
+}
+
+export async function deleteConsignment(
+  consignmentId: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Vous devez être connecté." };
+
+  const { data: consignment, error: consignmentError } = await supabase
+    .from("consignments")
+    .select(
+      "registration_front_path, registration_back_path, owner_id_front_path, owner_id_back_path, dashboard_photo_path, signature_owner_path, signature_seller_path, pdf_path",
+    )
+    .eq("id", consignmentId)
+    .single();
+  if (consignmentError || !consignment) {
+    return { ok: false, error: "Dossier introuvable." };
+  }
+
+  const { data: extraPhotos } = await supabase
+    .from("consignment_photos")
+    .select("storage_path")
+    .eq("consignment_id", consignmentId);
+
+  const paths = [
+    consignment.registration_front_path,
+    consignment.registration_back_path,
+    consignment.owner_id_front_path,
+    consignment.owner_id_back_path,
+    consignment.dashboard_photo_path,
+    consignment.signature_owner_path,
+    consignment.signature_seller_path,
+    consignment.pdf_path,
+    ...(extraPhotos ?? []).map((p) => p.storage_path),
+  ].filter((p): p is string => Boolean(p));
+
+  if (paths.length > 0) {
+    await supabase.storage.from("receptions").remove(paths);
+  }
+
+  const { error: deleteError } = await supabase.from("consignments").delete().eq("id", consignmentId);
+  if (deleteError) {
+    return { ok: false, error: deleteError.message };
+  }
+
+  revalidatePath("/receptions");
   return { ok: true };
 }

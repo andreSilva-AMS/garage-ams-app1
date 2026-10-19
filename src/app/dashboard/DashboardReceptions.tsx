@@ -5,9 +5,11 @@ import { useTranslations } from "next-intl";
 import { AlertTriangle, CheckCircle2, FileText, HelpCircle, Loader2 } from "lucide-react";
 import { EmptyState } from "@/components/EmptyState";
 import { sendReceptionEmail } from "../receptions/actions";
+import { sendConsignmentEmail } from "../receptions/new/consignment-actions";
 
 interface Reception {
   id: string;
+  type: "reception" | "consignment";
   client_name: string;
   vehicle_plate: string;
   vehicle_brand_model: string | null;
@@ -32,9 +34,9 @@ export function DashboardReceptions({ receptions }: { receptions: Reception[] })
     );
   }, [receptions, query]);
 
-  async function handleResend(id: string) {
+  async function handleResend(id: string, type: "reception" | "consignment") {
     setStatusOverrides((prev) => ({ ...prev, [id]: "sending" }));
-    const result = await sendReceptionEmail(id);
+    const result = type === "consignment" ? await sendConsignmentEmail(id) : await sendReceptionEmail(id);
     setStatusOverrides((prev) => ({ ...prev, [id]: result.ok ? "sent" : "failed" }));
   }
 
@@ -71,6 +73,11 @@ export function DashboardReceptions({ receptions }: { receptions: Reception[] })
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">
                     {r.client_name} — {r.vehicle_plate}
+                    {r.type === "consignment" && (
+                      <span className="badge ml-2 bg-accent/10 text-accent-strong">
+                        {t("typeBadge.consignment")}
+                      </span>
+                    )}
                   </p>
                   <p className="truncate text-sm text-muted">
                     {r.vehicle_brand_model || "—"} · {r.dateLabel}
@@ -100,7 +107,7 @@ export function DashboardReceptions({ receptions }: { receptions: Reception[] })
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleResend(r.id);
+                          handleResend(r.id, r.type);
                         }}
                         className="text-sm font-medium underline"
                       >

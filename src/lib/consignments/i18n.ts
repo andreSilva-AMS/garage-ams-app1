@@ -1,0 +1,271 @@
+import type { Lang } from "@/lib/receptions/i18n";
+
+export type { Lang };
+
+interface Dict {
+  docTitle: string;
+  ownerSection: string;
+  ownerName: string;
+  ownerPhone: string;
+  ownerEmail: string;
+  vehicleSection: string;
+  vehicle: string;
+  plate: string;
+  mileage: string;
+  km: string;
+  leasingLabel: string;
+  leasingFree: string;
+  leasingNotFree: string;
+  lastInspection: string;
+  keysCount: string;
+  damageNoted: string;
+  noDamage: string;
+  commercialSection: string;
+  askingPrice: string;
+  minimumPrice: string;
+  commission: string;
+  depositDuration: string;
+  days: string;
+  insuredBy: string;
+  signatureOwner: string;
+  signatureSeller: string;
+  consent: string;
+  signedOn: string;
+  none: string;
+  dossierNumberLabel: string;
+  marketingPhotosTitle: string;
+  maintenancePhotosTitle: string;
+  emailSubject: (plate: string, garageName: string) => string;
+  emailBody: (ownerName: string, brandModel: string, plate: string, garageName: string) => string;
+}
+
+export const I18N: Record<Lang, Dict> = {
+  fr: {
+    docTitle: "Contrat de dépôt-vente",
+    ownerSection: "Propriétaire du véhicule",
+    ownerName: "Nom du propriétaire",
+    ownerPhone: "Téléphone",
+    ownerEmail: "E-mail",
+    vehicleSection: "Véhicule",
+    vehicle: "Véhicule",
+    plate: "Plaque",
+    mileage: "Kilométrage",
+    km: "km",
+    leasingLabel: "Statut leasing",
+    leasingFree: "Libre de leasing",
+    leasingNotFree: "Non libre de leasing — à vérifier",
+    lastInspection: "Dernier contrôle technique",
+    keysCount: "Nombre de clés remises",
+    damageNoted: "Dommages constatés",
+    noDamage: "Aucun dommage constaté",
+    commercialSection: "Conditions commerciales",
+    askingPrice: "Prix de vente souhaité",
+    minimumPrice: "Prix minimum accepté",
+    commission: "Commission",
+    depositDuration: "Durée du dépôt",
+    days: "jours",
+    insuredBy: "Assurance pendant le dépôt",
+    signatureOwner: "Signature du propriétaire",
+    signatureSeller: "Signature du vendeur",
+    consent:
+      "Le propriétaire confie son véhicule en dépôt-vente aux conditions indiquées ci-dessus, certifie l'exactitude des informations fournies, et consent au traitement de ses données personnelles (dont les pièces d'identité jointes) pour les besoins de cette prestation.",
+    signedOn: "Signé le",
+    none: "—",
+    dossierNumberLabel: "Dossier n°",
+    marketingPhotosTitle: "Photos pour l'annonce",
+    maintenancePhotosTitle: "Carnet d'entretien",
+    emailSubject: (p, g) => `Contrat de dépôt-vente — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Bonjour ${name},\n\nVeuillez trouver ci-joint le contrat de dépôt-vente de votre véhicule (${bm || ""} — ${p}).\n\n${g}`,
+  },
+  en: {
+    docTitle: "Consignment agreement",
+    ownerSection: "Vehicle owner",
+    ownerName: "Owner name",
+    ownerPhone: "Phone",
+    ownerEmail: "E-mail",
+    vehicleSection: "Vehicle",
+    vehicle: "Vehicle",
+    plate: "Plate",
+    mileage: "Mileage",
+    km: "km",
+    leasingLabel: "Leasing status",
+    leasingFree: "Free of leasing",
+    leasingNotFree: "Not free of leasing — to verify",
+    lastInspection: "Last technical inspection",
+    keysCount: "Number of keys handed over",
+    damageNoted: "Damage noted",
+    noDamage: "No damage noted",
+    commercialSection: "Commercial terms",
+    askingPrice: "Asking price",
+    minimumPrice: "Minimum accepted price",
+    commission: "Commission",
+    depositDuration: "Deposit duration",
+    days: "days",
+    insuredBy: "Insurance during deposit",
+    signatureOwner: "Owner's signature",
+    signatureSeller: "Seller's signature",
+    consent:
+      "The owner entrusts their vehicle for consignment sale under the conditions stated above, certifies the accuracy of the information provided, and consents to the processing of their personal data (including the attached identity documents) for the purposes of this service.",
+    signedOn: "Signed on",
+    none: "—",
+    dossierNumberLabel: "File No.",
+    marketingPhotosTitle: "Listing photos",
+    maintenancePhotosTitle: "Maintenance booklet",
+    emailSubject: (p, g) => `Consignment agreement — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Hello ${name},\n\nPlease find attached the consignment agreement for your vehicle (${bm || ""} — ${p}).\n\n${g}`,
+  },
+  es: {
+    docTitle: "Contrato de depósito-venta",
+    ownerSection: "Propietario del vehículo",
+    ownerName: "Nombre del propietario",
+    ownerPhone: "Teléfono",
+    ownerEmail: "Correo electrónico",
+    vehicleSection: "Vehículo",
+    vehicle: "Vehículo",
+    plate: "Matrícula",
+    mileage: "Kilometraje",
+    km: "km",
+    leasingLabel: "Estado de leasing",
+    leasingFree: "Libre de leasing",
+    leasingNotFree: "No libre de leasing — verificar",
+    lastInspection: "Última inspección técnica",
+    keysCount: "Número de llaves entregadas",
+    damageNoted: "Daños constatados",
+    noDamage: "Ningún daño constatado",
+    commercialSection: "Condiciones comerciales",
+    askingPrice: "Precio de venta deseado",
+    minimumPrice: "Precio mínimo aceptado",
+    commission: "Comisión",
+    depositDuration: "Duración del depósito",
+    days: "días",
+    insuredBy: "Seguro durante el depósito",
+    signatureOwner: "Firma del propietario",
+    signatureSeller: "Firma del vendedor",
+    consent:
+      "El propietario confía su vehículo en depósito-venta bajo las condiciones indicadas arriba, certifica la exactitud de la información proporcionada, y consiente el tratamiento de sus datos personales (incluidos los documentos de identidad adjuntos) para los fines de este servicio.",
+    signedOn: "Firmado el",
+    none: "—",
+    dossierNumberLabel: "Expediente n.º",
+    marketingPhotosTitle: "Fotos para el anuncio",
+    maintenancePhotosTitle: "Libro de mantenimiento",
+    emailSubject: (p, g) => `Contrato de depósito-venta — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Hola ${name},\n\nAdjunto encontrará el contrato de depósito-venta de su vehículo (${bm || ""} — ${p}).\n\n${g}`,
+  },
+  pt: {
+    docTitle: "Contrato de consignação",
+    ownerSection: "Proprietário do veículo",
+    ownerName: "Nome do proprietário",
+    ownerPhone: "Telefone",
+    ownerEmail: "E-mail",
+    vehicleSection: "Veículo",
+    vehicle: "Veículo",
+    plate: "Matrícula",
+    mileage: "Quilometragem",
+    km: "km",
+    leasingLabel: "Estado de leasing",
+    leasingFree: "Livre de leasing",
+    leasingNotFree: "Não livre de leasing — a verificar",
+    lastInspection: "Última inspeção técnica",
+    keysCount: "Número de chaves entregues",
+    damageNoted: "Danos constatados",
+    noDamage: "Nenhum dano constatado",
+    commercialSection: "Condições comerciais",
+    askingPrice: "Preço de venda pretendido",
+    minimumPrice: "Preço mínimo aceite",
+    commission: "Comissão",
+    depositDuration: "Duração do depósito",
+    days: "dias",
+    insuredBy: "Seguro durante o depósito",
+    signatureOwner: "Assinatura do proprietário",
+    signatureSeller: "Assinatura do vendedor",
+    consent:
+      "O proprietário confia o seu veículo em consignação nas condições acima indicadas, certifica a exatidão das informações fornecidas, e consente o tratamento dos seus dados pessoais (incluindo os documentos de identidade anexados) para os efeitos deste serviço.",
+    signedOn: "Assinado em",
+    none: "—",
+    dossierNumberLabel: "Processo n.º",
+    marketingPhotosTitle: "Fotos para o anúncio",
+    maintenancePhotosTitle: "Livro de manutenção",
+    emailSubject: (p, g) => `Contrato de consignação — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Olá ${name},\n\nSegue em anexo o contrato de consignação do seu veículo (${bm || ""} — ${p}).\n\n${g}`,
+  },
+  de: {
+    docTitle: "Kommissionsvertrag",
+    ownerSection: "Fahrzeugeigentümer",
+    ownerName: "Name des Eigentümers",
+    ownerPhone: "Telefon",
+    ownerEmail: "E-Mail",
+    vehicleSection: "Fahrzeug",
+    vehicle: "Fahrzeug",
+    plate: "Kennzeichen",
+    mileage: "Kilometerstand",
+    km: "km",
+    leasingLabel: "Leasingstatus",
+    leasingFree: "Leasingfrei",
+    leasingNotFree: "Nicht leasingfrei — zu prüfen",
+    lastInspection: "Letzte technische Prüfung",
+    keysCount: "Anzahl übergebener Schlüssel",
+    damageNoted: "Festgestellte Schäden",
+    noDamage: "Keine Schäden festgestellt",
+    commercialSection: "Kommerzielle Bedingungen",
+    askingPrice: "Gewünschter Verkaufspreis",
+    minimumPrice: "Akzeptierter Mindestpreis",
+    commission: "Provision",
+    depositDuration: "Dauer der Kommission",
+    days: "Tage",
+    insuredBy: "Versicherung während der Kommission",
+    signatureOwner: "Unterschrift des Eigentümers",
+    signatureSeller: "Unterschrift des Verkäufers",
+    consent:
+      "Der Eigentümer übergibt sein Fahrzeug zu den oben genannten Bedingungen in Kommission, bestätigt die Richtigkeit der gemachten Angaben und stimmt der Verarbeitung seiner personenbezogenen Daten (einschließlich der beigefügten Ausweisdokumente) für die Zwecke dieser Dienstleistung zu.",
+    signedOn: "Unterzeichnet am",
+    none: "—",
+    dossierNumberLabel: "Vorgang Nr.",
+    marketingPhotosTitle: "Fotos für das Inserat",
+    maintenancePhotosTitle: "Wartungsheft",
+    emailSubject: (p, g) => `Kommissionsvertrag — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Hallo ${name},\n\nAnbei finden Sie den Kommissionsvertrag für Ihr Fahrzeug (${bm || ""} — ${p}).\n\n${g}`,
+  },
+  it: {
+    docTitle: "Contratto di conto vendita",
+    ownerSection: "Proprietario del veicolo",
+    ownerName: "Nome del proprietario",
+    ownerPhone: "Telefono",
+    ownerEmail: "E-mail",
+    vehicleSection: "Veicolo",
+    vehicle: "Veicolo",
+    plate: "Targa",
+    mileage: "Chilometraggio",
+    km: "km",
+    leasingLabel: "Stato leasing",
+    leasingFree: "Libero da leasing",
+    leasingNotFree: "Non libero da leasing — da verificare",
+    lastInspection: "Ultima revisione tecnica",
+    keysCount: "Numero di chiavi consegnate",
+    damageNoted: "Danni riscontrati",
+    noDamage: "Nessun danno riscontrato",
+    commercialSection: "Condizioni commerciali",
+    askingPrice: "Prezzo di vendita desiderato",
+    minimumPrice: "Prezzo minimo accettato",
+    commission: "Commissione",
+    depositDuration: "Durata del conto vendita",
+    days: "giorni",
+    insuredBy: "Assicurazione durante il conto vendita",
+    signatureOwner: "Firma del proprietario",
+    signatureSeller: "Firma del venditore",
+    consent:
+      "Il proprietario affida il proprio veicolo in conto vendita alle condizioni sopra indicate, certifica l'esattezza delle informazioni fornite, e acconsente al trattamento dei propri dati personali (compresi i documenti d'identità allegati) per le finalità di questo servizio.",
+    signedOn: "Firmato il",
+    none: "—",
+    dossierNumberLabel: "Pratica n.",
+    marketingPhotosTitle: "Foto per l'annuncio",
+    maintenancePhotosTitle: "Libretto di manutenzione",
+    emailSubject: (p, g) => `Contratto di conto vendita — ${p} — ${g}`,
+    emailBody: (name, bm, p, g) =>
+      `Ciao ${name},\n\nIn allegato il contratto di conto vendita del tuo veicolo (${bm || ""} — ${p}).\n\n${g}`,
+  },
+};

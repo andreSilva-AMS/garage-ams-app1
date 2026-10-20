@@ -35,7 +35,7 @@ export default async function NewReceptionPage({
   const { data: garage } = await supabase
     .from("garages")
     .select(
-      "id, name, address, phone, email, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at, has_workshop, has_sales",
+      "id, name, address, address_street, address_postal_code, address_city, phone, email, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at, has_workshop, has_sales",
     )
     .eq("id", profile.garage_id)
     .single();

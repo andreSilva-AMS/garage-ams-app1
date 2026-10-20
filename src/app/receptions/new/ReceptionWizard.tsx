@@ -18,6 +18,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
 import { getGarageTimezone } from "@/lib/timezone";
+import { formatGarageAddress } from "@/lib/garageAddress";
 import { SignaturePad } from "@/components/SignaturePad";
 import { CarOutline } from "@/components/CarOutline";
 import {
@@ -47,6 +48,9 @@ interface Garage {
   id: string;
   name: string;
   address: string | null;
+  address_street: string | null;
+  address_postal_code: string | null;
+  address_city: string | null;
   logo_url: string | null;
   phone: string | null;
   email: string | null;
@@ -480,7 +484,7 @@ export function ReceptionWizard({ garage }: { garage: Garage }) {
       const doc = buildReceptionPdf({
         receptionNumber,
         garageName: garage.name,
-        garageAddress: garage.address,
+        garageAddress: formatGarageAddress(garage),
         garagePhone: garage.phone,
         garageEmail: garage.email,
         garageLogoDataUrl,

@@ -34,16 +34,22 @@ export async function ensureProfile(supabase: SupabaseClient, user: User) {
     const billingCountry = user.user_metadata?.billing_country as string | undefined;
     const hasWorkshop = (user.user_metadata?.has_workshop as boolean | undefined) ?? true;
     const hasSales = (user.user_metadata?.has_sales as boolean | undefined) ?? false;
+    const addressStreet = user.user_metadata?.address_street as string | undefined;
+    const addressPostalCode = user.user_metadata?.address_postal_code as string | undefined;
+    const addressCity = user.user_metadata?.address_city as string | undefined;
 
     if (!garageName) return null;
 
-    await supabase.rpc("create_garage_and_owner_v2", {
+    await supabase.rpc("create_garage_and_owner_v3", {
       garage_name: garageName,
       owner_full_name: fullName ?? null,
       garage_language: preferredLanguage ?? "fr",
       garage_billing_country: billingCountry ?? null,
       p_has_workshop: hasWorkshop,
       p_has_sales: hasSales,
+      p_address_street: addressStreet ?? null,
+      p_address_postal_code: addressPostalCode ?? null,
+      p_address_city: addressCity ?? null,
     });
   }
 

@@ -12,6 +12,9 @@ type OwnerGarage = {
   name: string;
   stripe_customer_id: string | null;
   billing_country: string | null;
+  address_street: string | null;
+  address_postal_code: string | null;
+  address_city: string | null;
 };
 
 type OwnerGarageResult =
@@ -37,7 +40,7 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
 
   const { data: garage } = await supabase
     .from("garages")
-    .select("id, name, stripe_customer_id, billing_country")
+    .select("id, name, stripe_customer_id, billing_country, address_street, address_postal_code, address_city")
     .eq("id", profile.garage_id)
     .single();
   if (!garage) return { error: "Garage introuvable." as const };
@@ -97,9 +100,20 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
 
     let customerId = garage.stripe_customer_id;
     if (!customerId) {
+      const hasAddress = garage.address_street && garage.address_postal_code && garage.address_city;
       const customer = await stripe.customers.create({
         name: garage.name,
         metadata: { garage_id: garage.id },
+        ...(hasAddress
+          ? {
+              address: {
+                line1: garage.address_street!,
+                postal_code: garage.address_postal_code!,
+                city: garage.address_city!,
+                country: resolvedCountry,
+              },
+            }
+          : {}),
       });
       customerId = customer.id;
       await supabase.from("garages").update({ stripe_customer_id: customerId }).eq("id", garage.id);

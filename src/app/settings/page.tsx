@@ -33,7 +33,7 @@ export default async function SettingsPage() {
     supabase
       .from("garages")
       .select(
-        "id, name, address, phone, email, logo_url, default_language, retention_days, payment_status, billing_country, has_workshop, has_sales",
+        "id, name, address, address_street, address_postal_code, address_city, phone, email, logo_url, default_language, retention_days, payment_status, billing_country, has_workshop, has_sales",
       )
       .eq("id", profile.garage_id)
       .single(),

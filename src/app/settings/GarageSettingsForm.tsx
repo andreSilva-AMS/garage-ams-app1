@@ -15,6 +15,9 @@ interface Garage {
   id: string;
   name: string;
   address: string | null;
+  address_street: string | null;
+  address_postal_code: string | null;
+  address_city: string | null;
   phone: string | null;
   email: string | null;
   logo_url: string | null;
@@ -57,7 +60,9 @@ export function GarageSettingsForm({
   const tCommon = useTranslations("common");
 
   const [name, setName] = useState(garage.name);
-  const [address, setAddress] = useState(garage.address ?? "");
+  const [addressStreet, setAddressStreet] = useState(garage.address_street ?? "");
+  const [addressPostalCode, setAddressPostalCode] = useState(garage.address_postal_code ?? "");
+  const [addressCity, setAddressCity] = useState(garage.address_city ?? "");
   const [phone, setPhone] = useState(garage.phone ?? "");
   const [email, setEmail] = useState(garage.email ?? "");
   const [defaultLanguage, setDefaultLanguage] = useState<Lang>(
@@ -107,7 +112,9 @@ export function GarageSettingsForm({
         .from("garages")
         .update({
           name,
-          address: address || null,
+          address_street: addressStreet || null,
+          address_postal_code: addressPostalCode || null,
+          address_city: addressCity || null,
           phone: phone || null,
           email: email || null,
           default_language: defaultLanguage,
@@ -181,13 +188,34 @@ export function GarageSettingsForm({
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">{t("address")}</label>
+          <label className="text-sm font-medium">{t("addressStreet")}</label>
           <input
             className="input"
-            value={address}
+            value={addressStreet}
             disabled={!isOwner}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setAddressStreet(e.target.value)}
           />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium">{t("addressPostalCode")}</label>
+            <input
+              className="input"
+              value={addressPostalCode}
+              disabled={!isOwner}
+              onChange={(e) => setAddressPostalCode(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium">{t("addressCity")}</label>
+            <input
+              className="input"
+              value={addressCity}
+              disabled={!isOwner}
+              onChange={(e) => setAddressCity(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">

@@ -29,6 +29,9 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [addressStreet, setAddressStreet] = useState("");
+  const [addressPostalCode, setAddressPostalCode] = useState("");
+  const [addressCity, setAddressCity] = useState("");
   const [billingCountry, setBillingCountry] = useState("");
   const [language, setLanguage] = useState<Lang>(appLocale);
   const [hasWorkshop, setHasWorkshop] = useState(true);
@@ -69,6 +72,9 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
           billing_country: billingCountry,
           has_workshop: hasWorkshop,
           has_sales: hasSales,
+          address_street: addressStreet,
+          address_postal_code: addressPostalCode,
+          address_city: addressCity,
         },
       },
     });
@@ -87,13 +93,16 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
       return;
     }
 
-    const { error: rpcError } = await supabase.rpc("create_garage_and_owner_v2", {
+    const { error: rpcError } = await supabase.rpc("create_garage_and_owner_v3", {
       garage_name: garageName,
       owner_full_name: fullName,
       garage_language: language,
       garage_billing_country: billingCountry,
       p_has_workshop: hasWorkshop,
       p_has_sales: hasSales,
+      p_address_street: addressStreet,
+      p_address_postal_code: addressPostalCode,
+      p_address_city: addressCity,
     });
 
     if (rpcError) {
@@ -182,6 +191,40 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
             className="input"
           />
         </Field>
+
+        <Field label={t("addressStreet")} htmlFor="addressStreet">
+          <input
+            id="addressStreet"
+            required
+            value={addressStreet}
+            onChange={(e) => setAddressStreet(e.target.value)}
+            className="input"
+            placeholder="Rue du Lac 12"
+          />
+        </Field>
+
+        <div className="grid grid-cols-2 gap-3">
+          <Field label={t("addressPostalCode")} htmlFor="addressPostalCode">
+            <input
+              id="addressPostalCode"
+              required
+              value={addressPostalCode}
+              onChange={(e) => setAddressPostalCode(e.target.value)}
+              className="input"
+              placeholder="1000"
+            />
+          </Field>
+          <Field label={t("addressCity")} htmlFor="addressCity">
+            <input
+              id="addressCity"
+              required
+              value={addressCity}
+              onChange={(e) => setAddressCity(e.target.value)}
+              className="input"
+              placeholder="Lausanne"
+            />
+          </Field>
+        </div>
 
         <Field label={t("billingCountry")} htmlFor="billingCountry">
           <select

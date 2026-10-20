@@ -10,12 +10,16 @@ import { getGarageTimezone } from "@/lib/timezone";
 import { SignaturePad } from "@/components/SignaturePad";
 import { LANGUAGES, Lang, DAMAGE_GROUPS, trDamageTag, trCategoryTitle } from "@/lib/receptions/i18n";
 import { buildConsignmentPdf } from "@/lib/consignments/pdf";
+import { formatGarageAddress } from "@/lib/garageAddress";
 import { sendConsignmentEmail } from "./consignment-actions";
 
 interface Garage {
   id: string;
   name: string;
   address: string | null;
+  address_street: string | null;
+  address_postal_code: string | null;
+  address_city: string | null;
   logo_url: string | null;
   phone: string | null;
   email: string | null;
@@ -366,7 +370,7 @@ export function ConsignmentWizard({ garage }: { garage: Garage }) {
         const doc = buildConsignmentPdf({
           dossierNumber,
           garageName: garage.name,
-          garageAddress: garage.address,
+          garageAddress: formatGarageAddress(garage),
           garagePhone: garage.phone,
           garageEmail: garage.email,
           garageLogoDataUrl,

@@ -116,7 +116,9 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
       line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
       billing_address_collection: "required",
       tax_id_collection: { enabled: true },
-      ...(stripeTaxEnabled ? { automatic_tax: { enabled: true } } : {}),
+      ...(stripeTaxEnabled
+        ? { automatic_tax: { enabled: true }, customer_update: { address: "auto", name: "auto" } }
+        : {}),
       metadata: { garage_id: garage.id, billing_country: resolvedCountry },
       success_url: `${baseUrl}/billing?success=true`,
       cancel_url: `${baseUrl}/billing?canceled=true`,

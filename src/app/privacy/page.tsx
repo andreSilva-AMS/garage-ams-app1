@@ -42,7 +42,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Droits des personnes",
-        p: "Toute personne concernée (client final d'un garage ou utilisateur du Service) peut exercer ses droits d'accès, de rectification, d'effacement et d'opposition auprès du garage concerné (responsable de traitement pour ses propres clients) ou auprès de l'Éditeur pour les données de compte, à l'adresse [e-mail de contact].",
+        p: "Toute personne concernée (client final d'un garage ou utilisateur du Service) peut exercer ses droits d'accès, de rectification, d'effacement et d'opposition auprès du garage concerné (responsable de traitement pour ses propres clients) ou auprès de l'Éditeur pour les données de compte, à l'adresse info@receptcar.com.",
       },
       {
         h: "8. Sécurité",
@@ -50,7 +50,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Contact",
-        p: "Pour toute question relative à cette politique ou pour exercer vos droits : [adresse e-mail de contact].",
+        p: "Pour toute question relative à cette politique ou pour exercer vos droits : info@receptcar.com.",
       },
     ],
   },
@@ -86,7 +86,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Data subject rights",
-        p: "Any data subject (a garage's end customer or a Service user) may exercise their rights of access, rectification, erasure and objection with the relevant garage (data controller for its own customers) or with the Publisher for account data, at [contact e-mail address].",
+        p: "Any data subject (a garage's end customer or a Service user) may exercise their rights of access, rectification, erasure and objection with the relevant garage (data controller for its own customers) or with the Publisher for account data, at info@receptcar.com.",
       },
       {
         h: "8. Security",
@@ -94,7 +94,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Contact",
-        p: "For any question about this policy or to exercise your rights: [contact e-mail address].",
+        p: "For any question about this policy or to exercise your rights: info@receptcar.com.",
       },
     ],
   },
@@ -130,7 +130,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Derechos de las personas",
-        p: "Toda persona interesada (cliente final de un taller o usuario del Servicio) puede ejercer sus derechos de acceso, rectificación, supresión y oposición ante el taller correspondiente (responsable del tratamiento para sus propios clientes) o ante el Editor para los datos de la cuenta, en [dirección de correo electrónico de contacto].",
+        p: "Toda persona interesada (cliente final de un taller o usuario del Servicio) puede ejercer sus derechos de acceso, rectificación, supresión y oposición ante el taller correspondiente (responsable del tratamiento para sus propios clientes) o ante el Editor para los datos de la cuenta, en info@receptcar.com.",
       },
       {
         h: "8. Seguridad",
@@ -138,7 +138,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Contacto",
-        p: "Para cualquier pregunta relativa a esta política o para ejercer sus derechos: [dirección de correo electrónico de contacto].",
+        p: "Para cualquier pregunta relativa a esta política o para ejercer sus derechos: info@receptcar.com.",
       },
     ],
   },
@@ -174,7 +174,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Direitos dos titulares",
-        p: "Qualquer titular dos dados (cliente final de uma oficina ou utilizador do Serviço) pode exercer os seus direitos de acesso, retificação, apagamento e oposição junto da oficina em causa (responsável pelo tratamento para os seus próprios clientes) ou junto do Editor para os dados da conta, em [endereço de e-mail de contacto].",
+        p: "Qualquer titular dos dados (cliente final de uma oficina ou utilizador do Serviço) pode exercer os seus direitos de acesso, retificação, apagamento e oposição junto da oficina em causa (responsável pelo tratamento para os seus próprios clientes) ou junto do Editor para os dados da conta, em info@receptcar.com.",
       },
       {
         h: "8. Segurança",
@@ -182,7 +182,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Contacto",
-        p: "Para qualquer questão relativa a esta política ou para exercer os seus direitos: [endereço de e-mail de contacto].",
+        p: "Para qualquer questão relativa a esta política ou para exercer os seus direitos: info@receptcar.com.",
       },
     ],
   },
@@ -218,7 +218,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Rechte der betroffenen Personen",
-        p: "Jede betroffene Person (Endkunde einer Werkstatt oder Nutzer des Dienstes) kann ihre Rechte auf Auskunft, Berichtigung, Löschung und Widerspruch bei der betreffenden Werkstatt (Verantwortliche für ihre eigenen Kunden) oder für Kontodaten beim Anbieter unter [Kontakt-E-Mail-Adresse] geltend machen.",
+        p: "Jede betroffene Person (Endkunde einer Werkstatt oder Nutzer des Dienstes) kann ihre Rechte auf Auskunft, Berichtigung, Löschung und Widerspruch bei der betreffenden Werkstatt (Verantwortliche für ihre eigenen Kunden) oder für Kontodaten beim Anbieter unter info@receptcar.com geltend machen.",
       },
       {
         h: "8. Sicherheit",
@@ -226,7 +226,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Kontakt",
-        p: "Für Fragen zu dieser Richtlinie oder zur Ausübung Ihrer Rechte: [Kontakt-E-Mail-Adresse].",
+        p: "Für Fragen zu dieser Richtlinie oder zur Ausübung Ihrer Rechte: info@receptcar.com.",
       },
     ],
   },
@@ -262,7 +262,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Diritti degli interessati",
-        p: "Ogni interessato (cliente finale di un'officina o utente del Servizio) può esercitare i propri diritti di accesso, rettifica, cancellazione e opposizione presso l'officina interessata (titolare del trattamento per i propri clienti) o presso l'Editore per i dati dell'account, all'indirizzo [indirizzo e-mail di contatto].",
+        p: "Ogni interessato (cliente finale di un'officina o utente del Servizio) può esercitare i propri diritti di accesso, rettifica, cancellazione e opposizione presso l'officina interessata (titolare del trattamento per i propri clienti) o presso l'Editore per i dati dell'account, all'indirizzo info@receptcar.com.",
       },
       {
         h: "8. Sicurezza",
@@ -270,7 +270,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Contatto",
-        p: "Per qualsiasi domanda relativa alla presente informativa o per esercitare i propri diritti: [indirizzo e-mail di contatto].",
+        p: "Per qualsiasi domanda relativa alla presente informativa o per esercitare i propri diritti: info@receptcar.com.",
       },
     ],
   },
@@ -306,7 +306,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Të drejtat individuale",
-        p: "Çdo subjekt i të dhënave (klienti përfundimtar i garazhit ose përdoruesi i Shërbimit) mund të ushtrojë të drejtat e tij/saj të qasjes, korrigjimit, fshirjes dhe kundërshtimit duke kontaktuar garazhin në fjalë (i cili vepron si kontrollues i të dhënave për klientët e tij) ose Botuesin për të dhënat e llogarisë, në [adresa e emailit të kontaktit].",
+        p: "Çdo subjekt i të dhënave (klienti përfundimtar i garazhit ose përdoruesi i Shërbimit) mund të ushtrojë të drejtat e tij/saj të qasjes, korrigjimit, fshirjes dhe kundërshtimit duke kontaktuar garazhin në fjalë (i cili vepron si kontrollues i të dhënave për klientët e tij) ose Botuesin për të dhënat e llogarisë, në info@receptcar.com.",
       },
       {
         h: "8. Siguria",
@@ -314,7 +314,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Kontakt",
-        p: "Nëse keni ndonjë pyetje në lidhje me këtë politikë ose dëshironi të ushtroni të drejtat tuaja, ju lutemi na kontaktoni në: [adresa e emailit të kontaktit].",
+        p: "Nëse keni ndonjë pyetje në lidhje me këtë politikë ose dëshironi të ushtroni të drejtat tuaja, ju lutemi na kontaktoni në: info@receptcar.com.",
       },
     ],
   },
@@ -350,7 +350,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Δικαιώματα των ατόμων",
-        p: "Κάθε ενδιαφερόμενο πρόσωπο (τελικός πελάτης ενός συνεργείου ή χρήστης της Υπηρεσίας) μπορεί να ασκήσει τα δικαιώματά του όσον αφορά την πρόσβαση, τη διόρθωση, τη διαγραφή και την αντίρρηση, απευθυνόμενο στο σχετικό συνεργείο (υπεύθυνο επεξεργασίας για τους δικούς του πελάτες) ή στον Εκδότη για τα δεδομένα του λογαριασμού, στη διεύθυνση [διεύθυνση ηλεκτρονικού ταχυδρομείου επικοινωνίας].",
+        p: "Κάθε ενδιαφερόμενο πρόσωπο (τελικός πελάτης ενός συνεργείου ή χρήστης της Υπηρεσίας) μπορεί να ασκήσει τα δικαιώματά του όσον αφορά την πρόσβαση, τη διόρθωση, τη διαγραφή και την αντίρρηση, απευθυνόμενο στο σχετικό συνεργείο (υπεύθυνο επεξεργασίας για τους δικούς του πελάτες) ή στον Εκδότη για τα δεδομένα του λογαριασμού, στη διεύθυνση info@receptcar.com.",
       },
       {
         h: "8. Ασφάλεια",
@@ -358,7 +358,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Επικοινωνία",
-        p: "Για οποιαδήποτε ερώτηση σχετικά με την παρούσα πολιτική ή για να ασκήσετε τα δικαιώματά σας: [διεύθυνση ηλεκτρονικού ταχυδρομείου επικοινωνίας].",
+        p: "Για οποιαδήποτε ερώτηση σχετικά με την παρούσα πολιτική ή για να ασκήσετε τα δικαιώματά σας: info@receptcar.com.",
       },
     ],
   },
@@ -394,7 +394,7 @@ const CONTENT: Record<
       },
       {
         h: "7. Права человека",
-        p: "Любое заинтересованное лицо (конечный клиент автосервиса или пользователь Сервиса) может реализовать свои права на доступ, исправление, удаление и возражение, обратившись в соответствующий автосервис (ответственный за обработку данных своих клиентов) или к Издателю в отношении данных учетной записи по адресу [контактный адрес электронной почты].",
+        p: "Любое заинтересованное лицо (конечный клиент автосервиса или пользователь Сервиса) может реализовать свои права на доступ, исправление, удаление и возражение, обратившись в соответствующий автосервис (ответственный за обработку данных своих клиентов) или к Издателю в отношении данных учетной записи по адресу info@receptcar.com.",
       },
       {
         h: "8. Безопасность",
@@ -402,7 +402,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Контакты",
-        p: "По любым вопросам, касающимся данной политики, или для реализации ваших прав: [адрес электронной почты для связи].",
+        p: "По любым вопросам, касающимся данной политики, или для реализации ваших прав: info@receptcar.com.",
       },
     ],
   },

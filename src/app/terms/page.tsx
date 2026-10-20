@@ -54,7 +54,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Contact",
-        p: "Pour toute question relative aux présentes conditions : [adresse e-mail de contact].",
+        p: "Pour toute question relative aux présentes conditions : info@receptcar.com.",
       },
     ],
   },
@@ -102,7 +102,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Contact",
-        p: "For any question regarding these terms: [contact e-mail address].",
+        p: "For any question regarding these terms: info@receptcar.com.",
       },
     ],
   },
@@ -150,7 +150,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Contacto",
-        p: "Para cualquier pregunta relativa a estas condiciones: [dirección de correo electrónico de contacto].",
+        p: "Para cualquier pregunta relativa a estas condiciones: info@receptcar.com.",
       },
     ],
   },
@@ -198,7 +198,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Contacto",
-        p: "Para qualquer questão relativa a estas condições: [endereço de e-mail de contacto].",
+        p: "Para qualquer questão relativa a estas condições: info@receptcar.com.",
       },
     ],
   },
@@ -246,7 +246,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Kontakt",
-        p: "Für Fragen zu diesen Bedingungen: [Kontakt-E-Mail-Adresse].",
+        p: "Für Fragen zu diesen Bedingungen: info@receptcar.com.",
       },
     ],
   },
@@ -294,7 +294,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Contatto",
-        p: "Per qualsiasi domanda relativa alle presenti condizioni: [indirizzo e-mail di contatto].",
+        p: "Per qualsiasi domanda relativa alle presenti condizioni: info@receptcar.com.",
       },
     ],
   },
@@ -342,7 +342,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Kontakt",
-        p: "Nëse keni ndonjë pyetje në lidhje me këto kushte dhe rregulla, ju lutemi na kontaktoni në: [adresa e emailit të kontaktit].",
+        p: "Nëse keni ndonjë pyetje në lidhje me këto kushte dhe rregulla, ju lutemi na kontaktoni në: info@receptcar.com.",
       },
     ],
   },
@@ -390,7 +390,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Επικοινωνία",
-        p: "Για οποιαδήποτε ερώτηση σχετικά με τους παρόντες όρους: [διεύθυνση ηλεκτρονικού ταχυδρομείου επικοινωνίας].",
+        p: "Για οποιαδήποτε ερώτηση σχετικά με τους παρόντες όρους: info@receptcar.com.",
       },
     ],
   },
@@ -438,7 +438,7 @@ const CONTENT: Record<
       },
       {
         h: "10. Контакты",
-        p: "По любым вопросам, касающимся настоящих условий: [адрес электронной почты для связи].",
+        p: "По любым вопросам, касающимся настоящих условий: info@receptcar.com.",
       },
     ],
   },

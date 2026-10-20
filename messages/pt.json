@@ -142,6 +142,7 @@
     "retention30": "30 dias",
     "retention365": "12 meses",
     "retention365Supplement": "com suplemento",
+    "retentionPerMonth": "mês",
     "retentionHint": "Depois desse prazo, as fichas (incluindo fotos e PDF) são eliminadas automaticamente.",
     "retentionUpsellHint": "A opção de 12 meses está reservada às garagens com uma subscrição ativa.",
     "saved": "Definições guardadas.",

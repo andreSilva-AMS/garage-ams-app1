@@ -33,7 +33,7 @@ export default async function SettingsPage() {
     supabase
       .from("garages")
       .select(
-        "id, name, address, phone, email, logo_url, default_language, retention_days, payment_status, has_workshop, has_sales",
+        "id, name, address, phone, email, logo_url, default_language, retention_days, payment_status, billing_country, has_workshop, has_sales",
       )
       .eq("id", profile.garage_id)
       .single(),
@@ -52,6 +52,14 @@ export default async function SettingsPage() {
   ]);
   if (!garage) redirect("/dashboard");
 
+  const { data: retentionPlan } = garage.billing_country
+    ? await supabase
+        .from("pricing_plans")
+        .select("retention_365_amount_ht, currency")
+        .eq("country_code", garage.billing_country)
+        .maybeSingle()
+    : { data: null };
+
   return (
     <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
       <GarageSettingsForm
@@ -59,6 +67,11 @@ export default async function SettingsPage() {
         isOwner={isOwner}
         pendingInvites={pendingInvites ?? []}
         teamMembers={teamMembers ?? []}
+        retentionPrice={
+          retentionPlan?.retention_365_amount_ht
+            ? { amount: retentionPlan.retention_365_amount_ht, currency: retentionPlan.currency }
+            : null
+        }
       />
     </AppShell>
   );

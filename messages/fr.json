@@ -142,6 +142,7 @@
     "retention30": "30 jours",
     "retention365": "12 mois",
     "retention365Supplement": "en supplément",
+    "retentionPerMonth": "mois",
     "retentionHint": "Au-delà, les fiches (photos et PDF compris) sont supprimées automatiquement.",
     "retentionUpsellHint": "L'option 12 mois est réservée aux garages avec un abonnement actif.",
     "saved": "Réglages enregistrés.",

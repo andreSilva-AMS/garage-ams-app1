@@ -142,6 +142,7 @@
     "retention30": "30 Tage",
     "retention365": "12 Monate",
     "retention365Supplement": "gegen Aufpreis",
+    "retentionPerMonth": "Monat",
     "retentionHint": "Danach werden Protokolle (inklusive Fotos und PDF) automatisch gelöscht.",
     "retentionUpsellHint": "Die 12-Monats-Option ist Werkstätten mit einem aktiven Abonnement vorbehalten.",
     "saved": "Einstellungen gespeichert.",

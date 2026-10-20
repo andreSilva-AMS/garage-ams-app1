@@ -72,7 +72,21 @@ async function syncSubscription(subscription: Stripe.Subscription) {
     .maybeSingle();
   if (!garage) return;
 
-  const item = subscription.items.data[0];
+  // La ligne "rétention 12 mois" est une ligne optionnelle parmi celles de
+  // l'abonnement, pas toujours la première (items.data[0]) : on l'identifie
+  // par son Price plutôt que par position, pour rester fiable même si
+  // Stripe réordonne les lignes.
+  const { data: retentionPlans } = await supabase
+    .from("pricing_plans")
+    .select("retention_365_stripe_price_id")
+    .not("retention_365_stripe_price_id", "is", null);
+  const retentionPriceIds = new Set(
+    (retentionPlans ?? []).map((p) => p.retention_365_stripe_price_id),
+  );
+
+  const retentionItem = subscription.items.data.find((i) => retentionPriceIds.has(i.price.id));
+  const baseItem = subscription.items.data.find((i) => i.id !== retentionItem?.id) ?? subscription.items.data[0];
+
   const status = mapStatus(subscription.status);
 
   await supabase.from("subscriptions").upsert(
@@ -80,9 +94,9 @@ async function syncSubscription(subscription: Stripe.Subscription) {
       garage_id: garage.id,
       stripe_customer_id: customerId,
       stripe_subscription_id: subscription.id,
-      stripe_price_id: item?.price.id ?? null,
+      stripe_price_id: baseItem?.price.id ?? null,
       status: subscription.status,
-      current_period_end: item ? new Date(item.current_period_end * 1000).toISOString() : null,
+      current_period_end: baseItem ? new Date(baseItem.current_period_end * 1000).toISOString() : null,
       cancel_at_period_end: subscription.cancel_at_period_end,
       updated_at: new Date().toISOString(),
     },
@@ -91,7 +105,12 @@ async function syncSubscription(subscription: Stripe.Subscription) {
 
   await supabase
     .from("garages")
-    .update({ payment_status: status, subscription_plan: "paid" })
+    .update({
+      payment_status: status,
+      subscription_plan: "paid",
+      retention_days: retentionItem ? 365 : 30,
+      retention_item_id: retentionItem?.id ?? null,
+    })
     .eq("id", garage.id);
 }
 

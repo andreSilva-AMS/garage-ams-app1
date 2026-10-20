@@ -142,6 +142,7 @@
     "retention30": "30 giorni",
     "retention365": "12 mesi",
     "retention365Supplement": "a pagamento",
+    "retentionPerMonth": "mese",
     "retentionHint": "Oltre questo termine, le schede (incluse foto e PDF) vengono eliminate automaticamente.",
     "retentionUpsellHint": "L'opzione 12 mesi è riservata alle officine con un abbonamento attivo.",
     "saved": "Impostazioni salvate.",

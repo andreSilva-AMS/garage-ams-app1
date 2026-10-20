@@ -142,6 +142,7 @@
     "retention30": "30 días",
     "retention365": "12 meses",
     "retention365Supplement": "con suplemento",
+    "retentionPerMonth": "mes",
     "retentionHint": "Pasado ese plazo, las fichas (incluidas fotos y PDF) se eliminan automáticamente.",
     "retentionUpsellHint": "La opción de 12 meses está reservada a los talleres con una suscripción activa.",
     "saved": "Configuración guardada.",

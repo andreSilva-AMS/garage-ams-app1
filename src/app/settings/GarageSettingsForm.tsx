@@ -9,6 +9,7 @@ import { cropLogoToSquare } from "@/lib/image";
 import { LANGUAGES, Lang } from "@/lib/receptions/i18n";
 import { InviteEmployeeSection } from "./InviteEmployeeSection";
 import { TeamSection } from "./TeamSection";
+import { RetentionToggle } from "./RetentionToggle";
 
 interface Garage {
   id: string;
@@ -42,11 +43,13 @@ export function GarageSettingsForm({
   isOwner,
   pendingInvites,
   teamMembers,
+  retentionPrice,
 }: {
   garage: Garage;
   isOwner: boolean;
   pendingInvites: PendingInvite[];
   teamMembers: TeamMember[];
+  retentionPrice: { amount: number; currency: string } | null;
 }) {
   const router = useRouter();
   const supabase = createClient();
@@ -57,8 +60,6 @@ export function GarageSettingsForm({
   const [address, setAddress] = useState(garage.address ?? "");
   const [phone, setPhone] = useState(garage.phone ?? "");
   const [email, setEmail] = useState(garage.email ?? "");
-  const [retentionDays, setRetentionDays] = useState(garage.retention_days);
-  const canChooseLongRetention = garage.payment_status === "active" || garage.payment_status === "free";
   const [defaultLanguage, setDefaultLanguage] = useState<Lang>(
     (garage.default_language as Lang) ?? "fr",
   );
@@ -110,7 +111,6 @@ export function GarageSettingsForm({
           phone: phone || null,
           email: email || null,
           default_language: defaultLanguage,
-          retention_days: canChooseLongRetention ? retentionDays : 30,
           logo_url: logoUrl,
         })
         .eq("id", garage.id);
@@ -231,36 +231,6 @@ export function GarageSettingsForm({
           <p className="text-xs text-neutral-500">{t("defaultLanguageHint")}</p>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">{t("retentionDays")}</label>
-          {canChooseLongRetention ? (
-            <div className="flex gap-2">
-              <button
-                type="button"
-                disabled={!isOwner}
-                onClick={() => setRetentionDays(30)}
-                className={retentionDays === 30 ? "btn-primary" : "btn-secondary"}
-              >
-                {t("retention30")}
-              </button>
-              <button
-                type="button"
-                disabled={!isOwner}
-                onClick={() => setRetentionDays(365)}
-                className={retentionDays === 365 ? "btn-primary" : "btn-secondary"}
-              >
-                {t("retention365")}
-                <span className="ml-1.5 text-xs opacity-75">({t("retention365Supplement")})</span>
-              </button>
-            </div>
-          ) : (
-            <p className="text-sm text-neutral-600">{t("retention30")}</p>
-          )}
-          <p className="text-xs text-neutral-500">
-            {canChooseLongRetention ? t("retentionHint") : t("retentionUpsellHint")}
-          </p>
-        </div>
-
         {error && <p className="text-sm text-red-600">{error}</p>}
         {saved && <p className="text-sm text-green-700">{t("saved")}</p>}
 
@@ -270,6 +240,15 @@ export function GarageSettingsForm({
           </button>
         )}
       </form>
+
+      <div className="mt-6">
+        <RetentionToggle
+          active={garage.retention_days === 365}
+          canToggle={garage.payment_status === "active"}
+          price={retentionPrice}
+          isOwner={isOwner}
+        />
+      </div>
 
       {isOwner && (
         <InviteEmployeeSection

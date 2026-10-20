@@ -1,9 +1,11 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getStripeClient } from "@/lib/stripe";
 
 type ActionResult = { ok: true; url: string } | { ok: false; error: string };
+type SimpleResult = { ok: true } | { ok: false; error: string };
 
 type OwnerGarage = {
   id: string;
@@ -141,4 +143,70 @@ export async function createPortalSession(): Promise<ActionResult> {
   });
 
   return { ok: true, url: session.url };
+}
+
+/**
+ * Active ou désactive l'option "rétention 12 mois" : une ligne ajoutée (ou
+ * retirée) sur l'abonnement Stripe existant du garage, pas un paiement
+ * séparé. Le prix dépend du pays de facturation (pricing_plans.
+ * retention_365_stripe_price_id). La proration en cours de mois suit le
+ * comportement par défaut de Stripe.
+ */
+export async function toggleRetention12Months(enable: boolean): Promise<SimpleResult> {
+  const result = await getOwnerGarage();
+  if ("error" in result) return { ok: false, error: result.error };
+  const { supabase, garage } = result;
+
+  if (!garage.billing_country) {
+    return { ok: false, error: "Pays de facturation manquant." };
+  }
+
+  const { data: subscription } = await supabase
+    .from("subscriptions")
+    .select("stripe_subscription_id")
+    .eq("garage_id", garage.id)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!subscription?.stripe_subscription_id) {
+    return { ok: false, error: "Vous devez avoir un abonnement actif pour activer cette option." };
+  }
+
+  const { data: garageRow } = await supabase
+    .from("garages")
+    .select("retention_item_id")
+    .eq("id", garage.id)
+    .single();
+
+  const stripe = getStripeClient();
+
+  if (enable) {
+    if (garageRow?.retention_item_id) return { ok: true };
+
+    const { data: plan } = await supabase
+      .from("pricing_plans")
+      .select("retention_365_stripe_price_id")
+      .eq("country_code", garage.billing_country)
+      .maybeSingle();
+    if (!plan?.retention_365_stripe_price_id) {
+      return { ok: false, error: "Cette option n'est pas encore configurée pour votre pays. Contactez le support." };
+    }
+
+    const item = await stripe.subscriptionItems.create({
+      subscription: subscription.stripe_subscription_id,
+      price: plan.retention_365_stripe_price_id,
+    });
+    await supabase
+      .from("garages")
+      .update({ retention_days: 365, retention_item_id: item.id })
+      .eq("id", garage.id);
+  } else {
+    if (garageRow?.retention_item_id) {
+      await stripe.subscriptionItems.del(garageRow.retention_item_id);
+    }
+    await supabase.from("garages").update({ retention_days: 30, retention_item_id: null }).eq("id", garage.id);
+  }
+
+  revalidatePath("/settings");
+  return { ok: true };
 }

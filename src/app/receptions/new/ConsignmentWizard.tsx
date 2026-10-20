@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Loader2, X } from "lucide-react";
+import { ArrowLeft, ChevronDown, Loader2, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { fileToResizedImage, shrinkDataUrl } from "@/lib/image";
@@ -189,6 +189,7 @@ function PhotoGrid({
 export function ConsignmentWizard({ garage }: { garage: Garage }) {
   const supabase = createClient();
   const t = useTranslations("consignmentWizard");
+  const tNav = useTranslations("nav");
   const appLocale = useLocale() as Lang;
 
   const [ownerName, setOwnerName] = useState("");
@@ -491,6 +492,9 @@ export function ConsignmentWizard({ garage }: { garage: Garage }) {
           <Link href="/receptions/new" className="btn-primary">
             {t("newOne")}
           </Link>
+          <Link href="/dashboard" className="text-sm underline">
+            {tNav("backToDashboard")}
+          </Link>
         </div>
       </main>
     );
@@ -498,6 +502,13 @@ export function ConsignmentWizard({ garage }: { garage: Garage }) {
 
   return (
     <main className="mx-auto max-w-lg px-4 py-6 sm:py-10">
+      <Link
+        href="/dashboard"
+        className="mb-4 inline-flex items-center gap-1 text-sm underline text-neutral-500"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        {tNav("backToDashboard")}
+      </Link>
       <h1 className="mb-6 text-xl font-semibold">{t("title")}</h1>
 
       <form

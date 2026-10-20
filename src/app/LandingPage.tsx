@@ -18,6 +18,8 @@ const CONTENT: Record<
     ctaSecondary: string;
     demoTitle: string;
     demoSubtitle: string;
+    demo2Title: string;
+    demo2Subtitle: string;
     features: { icon: "camera" | "pdf" | "repeat" | "globe"; title: string; body: string }[];
     installTitle: string;
     installSubtitle: string;
@@ -46,6 +48,8 @@ const CONTENT: Record<
     ctaSecondary: "Se connecter",
     demoTitle: "Voir ReceptCar en vidéo",
     demoSubtitle: "Un aperçu rapide de l'application, en conditions réelles.",
+    demo2Title: "Et aussi, pour le dépôt-vente",
+    demo2Subtitle: "Découvrez le parcours complet d'un dossier de dépôt-vente, de la prise en charge du véhicule jusqu'au contrat signé.",
     features: [
       {
         icon: "camera",
@@ -94,6 +98,8 @@ const CONTENT: Record<
     ctaSecondary: "Log in",
     demoTitle: "Watch the ReceptCar video",
     demoSubtitle: "A quick look at the app in real-world conditions.",
+    demo2Title: "And also, for consignment sales",
+    demo2Subtitle: "Find out about the full process for a consignment sale, from when the vehicle is collected right through to the signed contract.",
     features: [
       {
         icon: "camera",
@@ -142,6 +148,8 @@ const CONTENT: Record<
     ctaSecondary: "Iniciar sesión",
     demoTitle: "Ver el vídeo de ReceptCar",
     demoSubtitle: "Una breve visión general de la aplicación, en condiciones reales.",
+    demo2Title: "Y además, para la venta en consignación",
+    demo2Subtitle: "Descubre todo el proceso de un expediente de venta en consignación, desde la recogida del vehículo hasta la firma del contrato.",
     features: [
       {
         icon: "camera",
@@ -190,6 +198,8 @@ const CONTENT: Record<
     ctaSecondary: "Iniciar sessão",
     demoTitle: "Veja o vídeo do ReceptCar",
     demoSubtitle: "Uma visão geral rápida da aplicação, em condições reais.",
+    demo2Title: "E também, para a venda em consignação",
+    demo2Subtitle: "Descubra todo o processo de um pedido de venda em consignação, desde a receção do veículo até à assinatura do contrato.",
     features: [
       {
         icon: "camera",
@@ -238,6 +248,8 @@ const CONTENT: Record<
     ctaSecondary: "Anmelden",
     demoTitle: "Sehen Sie sich das Video zu ReceptCar an",
     demoSubtitle: "Ein kurzer Einblick in die Anwendung unter realen Bedingungen.",
+    demo2Title: "Und außerdem für den Kommissionsverkauf",
+    demo2Subtitle: "Erfahren Sie alles über den gesamten Ablauf eines Kommissionsverkaufs, von der Übernahme des Fahrzeugs bis zum unterzeichneten Vertrag.",
     features: [
       {
         icon: "camera",
@@ -286,6 +298,8 @@ const CONTENT: Record<
     ctaSecondary: "Accedi",
     demoTitle: "Guarda il video su ReceptCar",
     demoSubtitle: "Una rapida panoramica dell'applicazione, in condizioni reali.",
+    demo2Title: "E inoltre, per la vendita in conto deposito",
+    demo2Subtitle: "Scoprite l'intero iter di una pratica di vendita in conto deposito, dal ritiro del veicolo fino alla firma del contratto.",
     features: [
       {
         icon: "camera",
@@ -334,6 +348,8 @@ const CONTENT: Record<
     ctaSecondary: "Hyni",
     demoTitle: "Shiko videon e ReceptCar",
     demoSubtitle: "Një vështrim i shpejtë i aplikacionit në kushte reale.",
+    demo2Title: "Dhe gjithashtu, për shitjet me komision",
+    demo2Subtitle: "Mësoni për procesin e plotë të shitjes me komision, nga momenti kur mjeti merret deri te kontrata e nënshkruar.",
     features: [
       {
         icon: "camera",
@@ -382,6 +398,8 @@ const CONTENT: Record<
     ctaSecondary: "Σύνδεση",
     demoTitle: "Δείτε το ReceptCar σε βίντεο",
     demoSubtitle: "Μια γρήγορη επισκόπηση της εφαρμογής, σε πραγματικές συνθήκες.",
+    demo2Title: "Και επίσης, για την πώληση με προμήθεια",
+    demo2Subtitle: "Ανακαλύψτε την πλήρη διαδικασία ενός φακέλου πώλησης με προμήθεια, από την παραλαβή του οχήματος μέχρι την υπογραφή της σύμβασης.",
     features: [
       {
         icon: "camera",
@@ -430,6 +448,8 @@ const CONTENT: Record<
     ctaSecondary: "Войти",
     demoTitle: "Посмотреть видео о ReceptCar",
     demoSubtitle: "Краткий обзор приложения в реальных условиях.",
+    demo2Title: "А также для комиссионной продажи",
+    demo2Subtitle: "Ознакомьтесь с полным циклом оформления заявки на продажу в комиссию — от приёма автомобиля до подписания договора.",
     features: [
       {
         icon: "camera",
@@ -509,6 +529,19 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
           className="mt-2 w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm"
           src="/demo.mp4"
           poster="/demo-poster.jpg"
+          controls
+          playsInline
+          preload="metadata"
+        />
+      </section>
+
+      <section className="mt-16 flex flex-col items-center gap-3 text-center">
+        <h2 className="text-lg font-semibold">{c.demo2Title}</h2>
+        <p className="max-w-sm text-sm text-neutral-600">{c.demo2Subtitle}</p>
+        <video
+          className="mt-2 w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm"
+          src="/demo2.mp4"
+          poster="/demo2-poster.jpg"
           controls
           playsInline
           preload="metadata"

@@ -90,39 +90,45 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
   const stripe = getStripeClient();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
-  if (!garage.billing_country) {
-    await supabase.from("garages").update({ billing_country: resolvedCountry }).eq("id", garage.id);
-  }
+  try {
+    if (!garage.billing_country) {
+      await supabase.from("garages").update({ billing_country: resolvedCountry }).eq("id", garage.id);
+    }
 
-  let customerId = garage.stripe_customer_id;
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      name: garage.name,
-      metadata: { garage_id: garage.id },
+    let customerId = garage.stripe_customer_id;
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        name: garage.name,
+        metadata: { garage_id: garage.id },
+      });
+      customerId = customer.id;
+      await supabase.from("garages").update({ stripe_customer_id: customerId }).eq("id", garage.id);
+    }
+
+    // Stripe Tax (calcul automatique de la TVA) : préparé mais désactivé tant
+    // que la configuration fiscale n'est pas validée dans le Dashboard Stripe.
+    // À activer en réglant STRIPE_TAX_ENABLED=true (variable d'environnement).
+    const stripeTaxEnabled = process.env.STRIPE_TAX_ENABLED === "true";
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      customer: customerId,
+      line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
+      billing_address_collection: "required",
+      tax_id_collection: { enabled: true },
+      ...(stripeTaxEnabled ? { automatic_tax: { enabled: true } } : {}),
+      metadata: { garage_id: garage.id, billing_country: resolvedCountry },
+      success_url: `${baseUrl}/billing?success=true`,
+      cancel_url: `${baseUrl}/billing?canceled=true`,
     });
-    customerId = customer.id;
-    await supabase.from("garages").update({ stripe_customer_id: customerId }).eq("id", garage.id);
+
+    if (!session.url) return { ok: false, error: "Impossible de créer la session de paiement." };
+    return { ok: true, url: session.url };
+  } catch (err) {
+    console.error("createCheckoutSession failed", err);
+    const message = err instanceof Error ? err.message : "Erreur inconnue lors de la création du paiement.";
+    return { ok: false, error: message };
   }
-
-  // Stripe Tax (calcul automatique de la TVA) : préparé mais désactivé tant
-  // que la configuration fiscale n'est pas validée dans le Dashboard Stripe.
-  // À activer en réglant STRIPE_TAX_ENABLED=true (variable d'environnement).
-  const stripeTaxEnabled = process.env.STRIPE_TAX_ENABLED === "true";
-
-  const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    customer: customerId,
-    line_items: [{ price: plan.stripe_price_id, quantity: 1 }],
-    billing_address_collection: "required",
-    tax_id_collection: { enabled: true },
-    ...(stripeTaxEnabled ? { automatic_tax: { enabled: true } } : {}),
-    metadata: { garage_id: garage.id, billing_country: resolvedCountry },
-    success_url: `${baseUrl}/billing?success=true`,
-    cancel_url: `${baseUrl}/billing?canceled=true`,
-  });
-
-  if (!session.url) return { ok: false, error: "Impossible de créer la session de paiement." };
-  return { ok: true, url: session.url };
 }
 
 export async function createPortalSession(): Promise<ActionResult> {
@@ -137,12 +143,18 @@ export async function createPortalSession(): Promise<ActionResult> {
   const stripe = getStripeClient();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL!;
 
-  const session = await stripe.billingPortal.sessions.create({
-    customer: garage.stripe_customer_id,
-    return_url: `${baseUrl}/billing`,
-  });
+  try {
+    const session = await stripe.billingPortal.sessions.create({
+      customer: garage.stripe_customer_id,
+      return_url: `${baseUrl}/billing`,
+    });
 
-  return { ok: true, url: session.url };
+    return { ok: true, url: session.url };
+  } catch (err) {
+    console.error("createPortalSession failed", err);
+    const message = err instanceof Error ? err.message : "Erreur inconnue.";
+    return { ok: false, error: message };
+  }
 }
 
 /**

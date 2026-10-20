@@ -46,11 +46,16 @@ export function SubscribeFlow({
     if (!country) return;
     setLoading(true);
     setError(null);
-    const result = await createCheckoutSession(country);
-    if (result.ok) {
-      window.location.href = result.url;
-    } else {
-      setError(result.error);
+    try {
+      const result = await createCheckoutSession(country);
+      if (result.ok) {
+        window.location.href = result.url;
+      } else {
+        setError(result.error);
+        setLoading(false);
+      }
+    } catch {
+      setError("Une erreur inattendue est survenue. Réessayez.");
       setLoading(false);
     }
   }
@@ -157,11 +162,16 @@ export function ManageSubscriptionButton() {
   async function handleClick() {
     setLoading(true);
     setError(null);
-    const result = await createPortalSession();
-    if (result.ok) {
-      window.location.href = result.url;
-    } else {
-      setError(result.error);
+    try {
+      const result = await createPortalSession();
+      if (result.ok) {
+        window.location.href = result.url;
+      } else {
+        setError(result.error);
+        setLoading(false);
+      }
+    } catch {
+      setError("Une erreur inattendue est survenue. Réessayez.");
       setLoading(false);
     }
   }

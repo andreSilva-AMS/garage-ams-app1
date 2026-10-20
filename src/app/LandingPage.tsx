@@ -16,6 +16,8 @@ const CONTENT: Record<
     heroSubtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    demoTitle: string;
+    demoSubtitle: string;
     features: { icon: "camera" | "pdf" | "repeat" | "globe"; title: string; body: string }[];
     installTitle: string;
     installSubtitle: string;
@@ -42,6 +44,8 @@ const CONTENT: Record<
       "Fiches de réception et dépôt-vente en quelques minutes : photos, dommages, signature client et PDF automatique. Essai gratuit de 30 jours, sans engagement.",
     ctaPrimary: "Essayer gratuitement",
     ctaSecondary: "Se connecter",
+    demoTitle: "Voir ReceptCar en vidéo",
+    demoSubtitle: "Un aperçu rapide de l'application, en conditions réelles.",
     features: [
       {
         icon: "camera",
@@ -88,6 +92,8 @@ const CONTENT: Record<
       "Create handover and consignment forms in just a few minutes: photos, damage details, customer signature and an automatic PDF. 30-day free trial, with no obligation.",
     ctaPrimary: "Try it for free",
     ctaSecondary: "Log in",
+    demoTitle: "Watch the ReceptCar video",
+    demoSubtitle: "A quick look at the app in real-world conditions.",
     features: [
       {
         icon: "camera",
@@ -134,6 +140,8 @@ const CONTENT: Record<
       "Fichas de recepción y venta en consignación en unos minutos: fotos, daños, firma del cliente y PDF automático. Prueba gratuita de 30 días, sin compromiso.",
     ctaPrimary: "Probarlo gratis",
     ctaSecondary: "Iniciar sesión",
+    demoTitle: "Ver el vídeo de ReceptCar",
+    demoSubtitle: "Una breve visión general de la aplicación, en condiciones reales.",
     features: [
       {
         icon: "camera",
@@ -180,6 +188,8 @@ const CONTENT: Record<
       "Fichas de receção e consignação em poucos minutos: fotografias, danos, assinatura do cliente e PDF automático. Teste gratuito de 30 dias, sem compromisso.",
     ctaPrimary: "Experimentar gratuitamente",
     ctaSecondary: "Iniciar sessão",
+    demoTitle: "Veja o vídeo do ReceptCar",
+    demoSubtitle: "Uma visão geral rápida da aplicação, em condições reais.",
     features: [
       {
         icon: "camera",
@@ -226,6 +236,8 @@ const CONTENT: Record<
       "Annahme- und Kommissionsformulare in wenigen Minuten: Fotos, Schäden, Unterschrift des Kunden und automatische PDF-Erstellung. 30 Tage kostenlos und unverbindlich testen.",
     ctaPrimary: "Kostenlos testen",
     ctaSecondary: "Anmelden",
+    demoTitle: "Sehen Sie sich das Video zu ReceptCar an",
+    demoSubtitle: "Ein kurzer Einblick in die Anwendung unter realen Bedingungen.",
     features: [
       {
         icon: "camera",
@@ -272,6 +284,8 @@ const CONTENT: Record<
       "Schede di presa in consegna e vendita in conto deposito in pochi minuti: foto, danni, firma del cliente e PDF generato automaticamente. Prova gratuita di 30 giorni, senza impegno.",
     ctaPrimary: "Prova gratis",
     ctaSecondary: "Accedi",
+    demoTitle: "Guarda il video su ReceptCar",
+    demoSubtitle: "Una rapida panoramica dell'applicazione, in condizioni reali.",
     features: [
       {
         icon: "camera",
@@ -318,6 +332,8 @@ const CONTENT: Record<
       "Krijoni formularë për dorëzim dhe dërgesë në vetëm disa minuta: foto, detaje të dëmtimit, nënshkrimi i klientit dhe një PDF automatik. Provë falas 30-ditore, pa asnjë detyrim.",
     ctaPrimary: "Provoje falas",
     ctaSecondary: "Hyni",
+    demoTitle: "Shiko videon e ReceptCar",
+    demoSubtitle: "Një vështrim i shpejtë i aplikacionit në kushte reale.",
     features: [
       {
         icon: "camera",
@@ -364,6 +380,8 @@ const CONTENT: Record<
       "Φόρμες παραλαβής και πώλησης σε λίγα λεπτά: φωτογραφίες, ζημιές, υπογραφή πελάτη και αυτόματη δημιουργία αρχείου PDF. Δωρεάν δοκιμή 30 ημερών, χωρίς δέσμευση.",
     ctaPrimary: "Δοκιμάστε το δωρεάν",
     ctaSecondary: "Σύνδεση",
+    demoTitle: "Δείτε το ReceptCar σε βίντεο",
+    demoSubtitle: "Μια γρήγορη επισκόπηση της εφαρμογής, σε πραγματικές συνθήκες.",
     features: [
       {
         icon: "camera",
@@ -410,6 +428,8 @@ const CONTENT: Record<
       "Оформление приёма и комиссионной продажи за считанные минуты: фотографии, описание повреждений, подпись клиента и автоматическое создание PDF-файла. Бесплатная 30-дневная пробная версия без каких-либо обязательств.",
     ctaPrimary: "Попробовать бесплатно",
     ctaSecondary: "Войти",
+    demoTitle: "Посмотреть видео о ReceptCar",
+    demoSubtitle: "Краткий обзор приложения в реальных условиях.",
     features: [
       {
         icon: "camera",
@@ -480,6 +500,19 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
             {c.ctaSecondary}
           </Link>
         </div>
+      </section>
+
+      <section className="mt-16 flex flex-col items-center gap-3 text-center">
+        <h2 className="text-lg font-semibold">{c.demoTitle}</h2>
+        <p className="max-w-sm text-sm text-neutral-600">{c.demoSubtitle}</p>
+        <video
+          className="mt-2 w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm"
+          src="/demo.mp4"
+          poster="/demo-poster.jpg"
+          controls
+          playsInline
+          preload="metadata"
+        />
       </section>
 
       <section className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">

@@ -11,6 +11,9 @@ const TITLES: Record<Lang, string> = {
   pt: "Política de privacidade",
   de: "Datenschutzrichtlinie",
   it: "Informativa sulla privacy",
+  sq: "Politika e Privatësisë",
+  el: "Πολιτική απορρήτου",
+  ru: "Политика конфиденциальности",
 };
 
 export async function generateMetadata(): Promise<Metadata> {

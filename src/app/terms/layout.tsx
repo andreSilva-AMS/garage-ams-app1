@@ -11,6 +11,9 @@ const TITLES: Record<Lang, string> = {
   pt: "Termos de utilização",
   de: "Nutzungsbedingungen",
   it: "Termini di utilizzo",
+  sq: "Kushtet e Përdorimit",
+  el: "Όροι χρήσης",
+  ru: "Условия использования",
 };
 
 export async function generateMetadata(): Promise<Metadata> {

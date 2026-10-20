@@ -1,4 +1,4 @@
-export type Lang = "fr" | "en" | "es" | "pt" | "de" | "it";
+export type Lang = "fr" | "en" | "es" | "pt" | "de" | "it" | "sq" | "el" | "ru";
 
 export const LANGUAGES: { value: Lang; label: string }[] = [
   { value: "fr", label: "🇫🇷 Français" },
@@ -7,6 +7,9 @@ export const LANGUAGES: { value: Lang; label: string }[] = [
   { value: "pt", label: "🇵🇹 Português" },
   { value: "de", label: "🇩🇪 Deutsch" },
   { value: "it", label: "🇮🇹 Italiano" },
+  { value: "sq", label: "🇦🇱 Shqip" },
+  { value: "el", label: "🇬🇷 Ελληνικά" },
+  { value: "ru", label: "🇷🇺 Русский" },
 ];
 
 interface Dict {
@@ -225,6 +228,96 @@ export const I18N: Record<Lang, Dict> = {
     emailBody: (name, bm, p, g, addr) =>
       `Gentile ${name},\n\nIn allegato trova la scheda di accettazione del suo veicolo (${bm || ""} — ${p}), con le foto scattate all'arrivo e gli interventi concordati.\n\n${g}\n${addr}`,
   },
+  sq: {
+    docTitle: "Formular i dorëzimit të automjetit",
+    clientVehicle: "Klienti & automjeti",
+    name: "Emri i klientit",
+    phone: "Telefon",
+    email: "Email",
+    vehicle: "Automjet",
+    plate: "Targa",
+    mileage: "Distanca e përshkuar",
+    km: "kilometër",
+    workRequested: "Puna e kërkuar",
+    vehicleState: "Gjendja e mjetit në mbërritje",
+    damageNoted: "Është vërejtur dëmtim gjatë dorëzimit",
+    cardGrey: "Certifikata e regjistrimit të mjetit",
+    signature: "Nënshkrimi i klientit",
+    consent:
+      "Klienti vërteton se informacioni i mësipërm është i saktë, pranon gjendjen e mjetit ashtu siç është vërejtur dhe dokumentuar me fotografi në kohën e dorëzimit, dhe pajtohet me përpunimin e të dhënave të tij personale (përfshirë një fotografi të dokumentit të regjistrimit) për qëllimet e këtij shërbimi.",
+    signedOn: "U lidha",
+    none: "—",
+    extraPhotosTitle: "Foto shtesë",
+    photoLabels: { front: "Përpara", back: "Prapa", left: "Ana e majtë", right: "Ana e djathtë" },
+    receptionNumberLabel: "Fletë Nr.",
+    noDamage: "Nuk u gjet asnjë dëmtim",
+    fuelLevelLabel: "Niveli i karburantit",
+    fuelLevels: { empty: "Bosh", quarter: "një e katërta", half: "një e gjysmë", three_quarter: "tre e katërta", full: "E plotë" },
+    dashboardPhotoLabel: "Paneli i instrumenteve",
+    emailSubject: (p, g) => `Formulari i pranimit — ${p} — ${g}`,
+    emailBody: (name, bm, p, g, addr) =>
+      `Përshëndetje ${name},\n\nJu bashkëngjit raporti i dorëzimit të automjetit tuaj (${bm || ""} — ${p}), duke përfshirë fotografitë e bëra gjatë ardhjes dhe punën e dakorduar.\n\n${g}\n${addr}`,
+  },
+  el: {
+    docTitle: "Δελτίο παραλαβής οχήματος",
+    clientVehicle: "Πελάτης & όχημα",
+    name: "Όνομα πελάτη",
+    phone: "Τηλέφωνο",
+    email: "Email",
+    vehicle: "Όχημα",
+    plate: "Πινακίδα",
+    mileage: "Χιλιόμετρα",
+    km: "χλμ.",
+    workRequested: "Ζητούμενες εργασίες",
+    vehicleState: "Κατάσταση του οχήματος κατά την άφιξη",
+    damageNoted: "Ζημιές που διαπιστώθηκαν κατά την παραλαβή",
+    cardGrey: "Άδεια κυκλοφορίας",
+    signature: "Υπογραφή του πελάτη",
+    consent:
+      "Ο πελάτης βεβαιώνει την ακρίβεια των ανωτέρω πληροφοριών, αποδέχεται την κατάσταση του οχήματος όπως διαπιστώθηκε και τεκμηριώθηκε με φωτογραφίες κατά την παραλαβή, και συναινεί στην επεξεργασία των προσωπικών του δεδομένων (συμπεριλαμβανομένης της φωτογραφίας του πιστοποιητικού κυκλοφορίας) για τις ανάγκες της παρούσας υπηρεσίας.",
+    signedOn: "Υπογράφηκε στις",
+    none: "—",
+    extraPhotosTitle: "Πρόσθετες φωτογραφίες",
+    photoLabels: { front: "Μπροστά", back: "Πίσω", left: "Αριστερή πλευρά", right: "Δεξιά πλευρά" },
+    receptionNumberLabel: "Φύλλο αριθ.",
+    noDamage: "Δεν διαπιστώθηκαν ζημιές",
+    fuelLevelLabel: "Επίπεδο καυσίμου",
+    fuelLevels: { empty: "Κενό", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Πλήρης" },
+    dashboardPhotoLabel: "Πίνακας ελέγχου",
+    emailSubject: (p, g) => `Δελτίο παραλαβής — ${p} — ${g}`,
+    emailBody: (name, bm, p, g, addr) =>
+      `Γεια σας ${name},\n\nΣας αποστέλλουμε συνημμένα το δελτίο παραλαβής του οχήματός σας (${bm || ""} — ${p}), μαζί με τις φωτογραφίες που τραβήχτηκαν κατά την άφιξη και τις εργασίες που συμφωνήθηκαν.\n\n${g}\n${addr}`,
+  },
+  ru: {
+    docTitle: "Акт приемки транспортного средства",
+    clientVehicle: "Клиент и автомобиль",
+    name: "Имя клиента",
+    phone: "Телефон",
+    email: "Электронная почта",
+    vehicle: "Автомобиль",
+    plate: "Номерной знак",
+    mileage: "Пробег",
+    km: "км",
+    workRequested: "Требуемые работы",
+    vehicleState: "Состояние автомобиля по прибытии",
+    damageNoted: "Повреждения, выявленные при приемке",
+    cardGrey: "Техпаспорт",
+    signature: "Подпись клиента",
+    consent:
+      "Клиент подтверждает достоверность приведенной выше информации, принимает состояние транспортного средства в том виде, в каком оно было зафиксировано и задокументировано с помощью фотографий при приеме, а также дает согласие на обработку своих персональных данных (включая фотографию регистрационного документа) для целей оказания данной услуги.",
+    signedOn: "Подписано",
+    none: "—",
+    extraPhotosTitle: "Дополнительные фотографии",
+    photoLabels: { front: "Спереди", back: "Сзади", left: "Левая сторона", right: "Правая сторона" },
+    receptionNumberLabel: "Форма №",
+    noDamage: "Повреждений не обнаружено",
+    fuelLevelLabel: "Уровень топлива",
+    fuelLevels: { empty: "Пустота", quarter: "1/4", half: "1/2", three_quarter: "3/4", full: "Полный" },
+    dashboardPhotoLabel: "Панель управления",
+    emailSubject: (p, g) => `Акт приемки — ${p} — ${g}`,
+    emailBody: (name, bm, p, g, addr) =>
+      `Здравствуйте, ${name},\n\nВ приложении вы найдёте акт приёма-передачи вашего автомобиля (${bm || ""} — ${p}) с фотографиями, сделанными при поступлении, и перечнем согласованных работ.\n\n${g}\n${addr}`,
+  },
 };
 
 interface Tag {
@@ -234,6 +327,9 @@ interface Tag {
   pt: string;
   de: string;
   it: string;
+  sq: string;
+  el: string;
+  ru: string;
 }
 
 function tr(tag: string, map: Record<string, Tag>, lang: Lang): string {
@@ -241,9 +337,9 @@ function tr(tag: string, map: Record<string, Tag>, lang: Lang): string {
 }
 
 export const WORK_TAG_TR: Record<string, Tag> = {
-  Vidange: { fr: "Vidange", en: "Oil change", es: "Cambio de aceite", pt: "Mudança de óleo", de: "Ölwechsel", it: "Cambio olio" },
-  Freins: { fr: "Freins", en: "Brakes", es: "Frenos", pt: "Travões", de: "Bremsen", it: "Freni" },
-  Pneus: { fr: "Pneus", en: "Tires", es: "Neumáticos", pt: "Pneus", de: "Reifen", it: "Pneumatici" },
+  Vidange: { fr: "Vidange", en: "Oil change", es: "Cambio de aceite", pt: "Mudança de óleo", de: "Ölwechsel", it: "Cambio olio", sq: "Ndryshimi i vajit", el: "Αποστράγγιση", ru: "Слив" },
+  Freins: { fr: "Freins", en: "Brakes", es: "Frenos", pt: "Travões", de: "Bremsen", it: "Freni", sq: "Frenat", el: "Φρένα", ru: "Тормоза" },
+  Pneus: { fr: "Pneus", en: "Tires", es: "Neumáticos", pt: "Pneus", de: "Reifen", it: "Pneumatici", sq: "Gomat", el: "Ελαστικά", ru: "Шины" },
   "Contrôle technique": {
     fr: "Contrôle technique",
     en: "Technical inspection",
@@ -251,8 +347,11 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     pt: "Inspeção técnica",
     de: "Fahrzeugprüfung",
     it: "Revisione tecnica",
+    sq: "Testi MOT",
+    el: "Τεχνικός έλεγχος",
+    ru: "Технический осмотр",
   },
-  Climatisation: { fr: "Climatisation", en: "Air conditioning", es: "Aire acondicionado", pt: "Ar condicionado", de: "Klimaanlage", it: "Climatizzazione" },
+  Climatisation: { fr: "Climatisation", en: "Air conditioning", es: "Aire acondicionado", pt: "Ar condicionado", de: "Klimaanlage", it: "Climatizzazione", sq: "Kondicionimi i ajrit", el: "Κλιματισμός", ru: "Кондиционирование воздуха" },
   "Diagnostic panne": {
     fr: "Diagnostic panne",
     en: "Fault diagnosis",
@@ -260,8 +359,11 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     pt: "Diagnóstico de avaria",
     de: "Fehlerdiagnose",
     it: "Diagnosi guasto",
+    sq: "Diagnostika e defekteve",
+    el: "Διάγνωση βλάβης",
+    ru: "Диагностика неисправностей",
   },
-  Révision: { fr: "Révision", en: "Service", es: "Revisión", pt: "Revisão", de: "Wartung", it: "Tagliando" },
+  Révision: { fr: "Révision", en: "Service", es: "Revisión", pt: "Revisão", de: "Wartung", it: "Tagliando", sq: "Rishikim", el: "Αναθεώρηση", ru: "Пересмотр" },
   "Courroie de distribution": {
     fr: "Courroie de distribution",
     en: "Timing belt",
@@ -269,10 +371,13 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     pt: "Correia de distribuição",
     de: "Zahnriemen",
     it: "Cinghia di distribuzione",
+    sq: "Kordon kohor",
+    el: "Ιμάντας χρονισμού",
+    ru: "Ремень ГРМ",
   },
-  Embrayage: { fr: "Embrayage", en: "Clutch", es: "Embrague", pt: "Embraiagem", de: "Kupplung", it: "Frizione" },
-  Alternateur: { fr: "Alternateur", en: "Alternator", es: "Alternador", pt: "Alternador", de: "Lichtmaschine", it: "Alternatore" },
-  Démarreur: { fr: "Démarreur", en: "Starter motor", es: "Motor de arranque", pt: "Motor de arranque", de: "Anlasser", it: "Motorino d'avviamento" },
+  Embrayage: { fr: "Embrayage", en: "Clutch", es: "Embrague", pt: "Embraiagem", de: "Kupplung", it: "Frizione", sq: "Kllapa", el: "Συμπλέκτης", ru: "Сцепление" },
+  Alternateur: { fr: "Alternateur", en: "Alternator", es: "Alternador", pt: "Alternador", de: "Lichtmaschine", it: "Alternatore", sq: "Alternator", el: "Εναλλάκτης", ru: "Генератор переменного тока" },
+  Démarreur: { fr: "Démarreur", en: "Starter motor", es: "Motor de arranque", pt: "Motor de arranque", de: "Anlasser", it: "Motorino d'avviamento", sq: "Motori i ndezjes", el: "Μίζα", ru: "Стартер" },
   "Balai d'essuie-glace": {
     fr: "Balai d'essuie-glace",
     en: "Wiper blade",
@@ -280,6 +385,9 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     pt: "Palheta do limpa-vidros",
     de: "Scheibenwischer",
     it: "Spazzola tergicristallo",
+    sq: "Fletë e fshirësit të xhamit të përparmë",
+    el: "Σκούπα υαλοκαθαριστήρα",
+    ru: "Щетка стеклоочистителя",
   },
   "Pare-brise à remplacer": {
     fr: "Pare-brise à remplacer",
@@ -288,6 +396,9 @@ export const WORK_TAG_TR: Record<string, Tag> = {
     pt: "Substituição do para-brisas",
     de: "Windschutzscheibe ersetzen",
     it: "Sostituzione parabrezza",
+    sq: "Xhami i përparmë do të zëvendësohet",
+    el: "Αντικατάσταση παρμπρίζ",
+    ru: "Необходимо заменить лобовое стекло",
   },
 };
 
@@ -298,12 +409,12 @@ export function trWorkTag(tag: string, lang: Lang): string {
 }
 
 const POSITIONS: Tag[] = [
-  { fr: "avant droite", en: "front right", es: "delantera derecha", pt: "dianteira direita", de: "vorne rechts", it: "anteriore destra" },
-  { fr: "avant gauche", en: "front left", es: "delantera izquierda", pt: "dianteira esquerda", de: "vorne links", it: "anteriore sinistra" },
-  { fr: "arrière droite", en: "rear right", es: "trasera derecha", pt: "traseira direita", de: "hinten rechts", it: "posteriore destra" },
-  { fr: "arrière gauche", en: "rear left", es: "trasera izquierda", pt: "traseira esquerda", de: "hinten links", it: "posteriore sinistra" },
-  { fr: "latéral droite", en: "right side", es: "lateral derecho", pt: "lateral direito", de: "rechte Seite", it: "lato destro" },
-  { fr: "latéral gauche", en: "left side", es: "lateral izquierdo", pt: "lateral esquerdo", de: "linke Seite", it: "lato sinistro" },
+  { fr: "avant droite", en: "front right", es: "delantera derecha", pt: "dianteira direita", de: "vorne rechts", it: "anteriore destra", sq: "para djathtas", el: "μπροστά δεξιά", ru: "правый передний" },
+  { fr: "avant gauche", en: "front left", es: "delantera izquierda", pt: "dianteira esquerda", de: "vorne links", it: "anteriore sinistra", sq: "para majtas", el: "μπροστά αριστερά", ru: "переднее левое" },
+  { fr: "arrière droite", en: "rear right", es: "trasera derecha", pt: "traseira direita", de: "hinten rechts", it: "posteriore destra", sq: "pas djathtas", el: "πίσω δεξιά", ru: "сзади справа" },
+  { fr: "arrière gauche", en: "rear left", es: "trasera izquierda", pt: "traseira esquerda", de: "hinten links", it: "posteriore sinistra", sq: "pas majtas", el: "πίσω αριστερά", ru: "левый задний" },
+  { fr: "latéral droite", en: "right side", es: "lateral derecho", pt: "lateral direito", de: "rechte Seite", it: "lato destro", sq: "anash djathtas", el: "δεξιά πλευρά", ru: "правая сторона" },
+  { fr: "latéral gauche", en: "left side", es: "lateral izquierdo", pt: "lateral esquerdo", de: "linke Seite", it: "lato sinistro", sq: "anash majtas", el: "αριστερή πλευρά", ru: "левая сторона" },
 ];
 
 const RIM_POSITIONS = POSITIONS.slice(0, 4);
@@ -316,12 +427,15 @@ interface DamageCategory {
   pt: string;
   de: string;
   it: string;
+  sq: string;
+  el: string;
+  ru: string;
   positions: Tag[];
 }
 
 const DAMAGE_CATEGORIES: DamageCategory[] = [
-  { title: "Accidenté", fr: "Accidenté", en: "Collision damage", es: "Accidentado", pt: "Acidentado", de: "Unfallschaden", it: "Incidentato", positions: POSITIONS },
-  { title: "Rayures", fr: "Rayé", en: "Scratched", es: "Rayado", pt: "Riscado", de: "Verkratzt", it: "Graffiato", positions: POSITIONS },
+  { title: "Accidenté", fr: "Accidenté", en: "Collision damage", es: "Accidentado", pt: "Acidentado", de: "Unfallschaden", it: "Incidentato", sq: "I lënduar", el: "Τραυματισμένος", ru: "Пострадавший", positions: POSITIONS },
+  { title: "Rayures", fr: "Rayé", en: "Scratched", es: "Rayado", pt: "Riscado", de: "Verkratzt", it: "Graffiato", sq: "Me vija", el: "Ριγέ", ru: "В полоску", positions: POSITIONS },
   {
     title: "Peinture",
     fr: "Peinture défectueuse",
@@ -330,13 +444,16 @@ const DAMAGE_CATEGORIES: DamageCategory[] = [
     pt: "Pintura defeituosa",
     de: "Lackschaden",
     it: "Vernice danneggiata",
+    sq: "Punim boje i defektshëm",
+    el: "Ελαττωματική βαφή",
+    ru: "Некачественная покраска",
     positions: POSITIONS,
   },
-  { title: "Jantes", fr: "Jante rayée", en: "Scratched rim", es: "Llanta rayada", pt: "Jante riscada", de: "Verkratzte Felge", it: "Cerchio graffiato", positions: RIM_POSITIONS },
+  { title: "Jantes", fr: "Jante rayée", en: "Scratched rim", es: "Llanta rayada", pt: "Jante riscada", de: "Verkratzte Felge", it: "Cerchio graffiato", sq: "Fare e gërvishtur", el: "Γρατσουνισμένη ζάντα", ru: "Поцарапанный диск", positions: RIM_POSITIONS },
 ];
 
 const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
-  { title: "Autres", fr: "Rétroviseur cassé", en: "Broken mirror", es: "Retrovisor roto", pt: "Espelho retrovisor partido", de: "Spiegel gebrochen", it: "Specchietto rotto" },
+  { title: "Autres", fr: "Rétroviseur cassé", en: "Broken mirror", es: "Retrovisor roto", pt: "Espelho retrovisor partido", de: "Spiegel gebrochen", it: "Specchietto rotto", sq: "Pasqyrë anësore e thyer", el: "Σπασμένος καθρέφτης", ru: "Сломанное зеркало заднего вида" },
   {
     title: "Autres",
     fr: "Pare-choc(s) abîmé(s)",
@@ -345,8 +462,11 @@ const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
     pt: "Para-choques danificado(s)",
     de: "Stoßstange(n) beschädigt",
     it: "Paraurti danneggiato/i",
+    sq: "Parakolpi/ët e dëmtuar",
+    el: "Κατεστραμμένος προφυλακτήρας (ή προφυλακτήρες)",
+    ru: "Повреждённый(ые) бампер(ы)",
   },
-  { title: "Autres", fr: "Pneus défectueux", en: "Defective tires", es: "Neumáticos defectuosos", pt: "Pneus com defeito", de: "Reifen defekt", it: "Pneumatici difettosi" },
+  { title: "Autres", fr: "Pneus défectueux", en: "Defective tires", es: "Neumáticos defectuosos", pt: "Pneus com defeito", de: "Reifen defekt", it: "Pneumatici difettosi", sq: "Gomat e defektshme", el: "Ελαττωματικά ελαστικά", ru: "Неисправные шины" },
   {
     title: "Autres",
     fr: "Ampoule(s) défectueuse(s)",
@@ -355,10 +475,13 @@ const DAMAGE_EXTRA: Omit<DamageCategory, "positions">[] = [
     pt: "Lâmpada(s) com defeito",
     de: "Lampe(n) defekt",
     it: "Lampadina/e difettosa/e",
+    sq: "Lampë/a e prishur",
+    el: "Ελαττωματική(ές) λάμπα(ες)",
+    ru: "Неисправная(ые) лампочка(и)",
   },
-  { title: "Autres", fr: "Pare-brise cassé", en: "Cracked windshield", es: "Parabrisas roto", pt: "Para-brisas rachado", de: "Windschutzscheibe gesprungen", it: "Parabrezza incrinato" },
-  { title: "Intérieur", fr: "Intérieur propre", en: "Interior clean", es: "Interior limpio", pt: "Interior limpo", de: "Innenraum sauber", it: "Interni puliti" },
-  { title: "Intérieur", fr: "Intérieur sale", en: "Interior dirty", es: "Interior sucio", pt: "Interior sujo", de: "Innenraum schmutzig", it: "Interni sporchi" },
+  { title: "Autres", fr: "Pare-brise cassé", en: "Cracked windshield", es: "Parabrisas roto", pt: "Para-brisas rachado", de: "Windschutzscheibe gesprungen", it: "Parabrezza incrinato", sq: "Xham i thyer", el: "Σπασμένο παρμπρίζ", ru: "Разбитое лобовое стекло" },
+  { title: "Intérieur", fr: "Intérieur propre", en: "Interior clean", es: "Interior limpio", pt: "Interior limpo", de: "Innenraum sauber", it: "Interni puliti", sq: "Brendshëm i pastër", el: "Καθαρό εσωτερικό", ru: "Чистый салон" },
+  { title: "Intérieur", fr: "Intérieur sale", en: "Interior dirty", es: "Interior sucio", pt: "Interior sujo", de: "Innenraum schmutzig", it: "Interni sporchi", sq: "Brendshëm i ndotur", el: "Βρώμικο εσωτερικό", ru: "Грязный салон" },
 ];
 
 export const DAMAGE_TAG_TR: Record<string, Tag> = {};
@@ -378,6 +501,9 @@ DAMAGE_CATEGORIES.forEach((cat) => {
       pt: `${cat.pt} (${p.pt})`,
       de: `${cat.de} (${p.de})`,
       it: `${cat.it} (${p.it})`,
+      sq: `${cat.sq} (${p.sq})`,
+      el: `${cat.el} (${p.el})`,
+      ru: `${cat.ru} (${p.ru})`,
     });
   });
 });
@@ -390,12 +516,12 @@ export function trDamageTag(tag: string, lang: Lang): string {
 
 /** Titres des catégories de dommages (utilisés comme intitulés de section dans le formulaire). */
 export const CATEGORY_TITLE_TR: Record<string, Tag> = {
-  Accidenté: { fr: "Accidenté", en: "Collision", es: "Accidentes", pt: "Acidentes", de: "Unfallschäden", it: "Incidenti" },
-  Rayures: { fr: "Rayures", en: "Scratches", es: "Rayones", pt: "Riscos", de: "Kratzer", it: "Graffi" },
-  Peinture: { fr: "Peinture", en: "Paint", es: "Pintura", pt: "Pintura", de: "Lack", it: "Vernice" },
-  Jantes: { fr: "Jantes", en: "Rims", es: "Llantas", pt: "Jantes", de: "Felgen", it: "Cerchi" },
-  Autres: { fr: "Autres", en: "Other", es: "Otros", pt: "Outros", de: "Sonstiges", it: "Altro" },
-  Intérieur: { fr: "Intérieur", en: "Interior", es: "Interior", pt: "Interior", de: "Innenraum", it: "Interni" },
+  Accidenté: { fr: "Accidenté", en: "Collision", es: "Accidentes", pt: "Acidentes", de: "Unfallschäden", it: "Incidenti", sq: "I lënduar", el: "Τραυματισμένος", ru: "Пострадавший" },
+  Rayures: { fr: "Rayures", en: "Scratches", es: "Rayones", pt: "Riscos", de: "Kratzer", it: "Graffi", sq: "Vija", el: "Ρίγες", ru: "Полоски" },
+  Peinture: { fr: "Peinture", en: "Paint", es: "Pintura", pt: "Pintura", de: "Lack", it: "Vernice", sq: "Pikturë", el: "Ζωγραφική", ru: "Живопись" },
+  Jantes: { fr: "Jantes", en: "Rims", es: "Llantas", pt: "Jantes", de: "Felgen", it: "Cerchi", sq: "Rrotat", el: "Ζάντες", ru: "Диски" },
+  Autres: { fr: "Autres", en: "Other", es: "Otros", pt: "Outros", de: "Sonstiges", it: "Altro", sq: "Të tjera", el: "Άλλα", ru: "Прочее" },
+  Intérieur: { fr: "Intérieur", en: "Interior", es: "Interior", pt: "Interior", de: "Innenraum", it: "Interni", sq: "E brendshme", el: "Εσωτερικό", ru: "Интерьер" },
 };
 
 export function trCategoryTitle(title: string, lang: Lang): string {

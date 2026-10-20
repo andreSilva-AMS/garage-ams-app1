@@ -152,6 +152,9 @@ const DEEPL_TARGET_LANG: Record<Lang, string> = {
   pt: "PT-PT",
   de: "DE",
   it: "IT",
+  sq: "SQ",
+  el: "EL",
+  ru: "RU",
 };
 
 /**

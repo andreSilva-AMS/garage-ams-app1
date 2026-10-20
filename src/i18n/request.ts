@@ -2,7 +2,7 @@ import { getRequestConfig } from "next-intl/server";
 import { cookies, headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 
-export const SUPPORTED_LOCALES = ["fr", "en", "es", "pt", "de", "it"] as const;
+export const SUPPORTED_LOCALES = ["fr", "en", "es", "pt", "de", "it", "sq", "el", "ru"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 // Repli final si le navigateur n'indique aucune des langues prises en
 // charge (ex. Accept-Language absent, ou une langue tierce comme le

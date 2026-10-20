@@ -13,6 +13,9 @@ const ROLE_LABEL: Record<Lang, Record<InviteRole, string>> = {
   pt: { mechanic: "Mecânico", reception: "Receção", seller: "Vendedor" },
   de: { mechanic: "Mechaniker", reception: "Empfang", seller: "Verkäufer" },
   it: { mechanic: "Meccanico", reception: "Reception", seller: "Venditore" },
+  sq: { mechanic: "Mekanik", reception: "Pranim", seller: "Shitës" },
+  el: { mechanic: "Μηχανικός", reception: "Υποδοχή", seller: "Πωλητής" },
+  ru: { mechanic: "Механик", reception: "Приёмка", seller: "Продавец" },
 };
 
 const INVITE_EMAIL: Record<
@@ -48,6 +51,21 @@ const INVITE_EMAIL: Record<
     subject: (g) => `Invito a unirti a ${g} su ReceptCar`,
     body: (g, role, url) =>
       `Sei stato invitato a unirti al team di "${g}" su ReceptCar, come ${role}.\n\nPer creare il tuo account, clicca su questo link:\n${url}\n\nQuesto link scade tra 7 giorni.`,
+  },
+  sq: {
+    subject: (g) => `Ftesë për t'u bashkuar me ${g} në ReceptCar`,
+    body: (g, role, url) =>
+      `Jeni ftuar të bashkoheni me ekipin "${g}" në ReceptCar si ${role}.\n\nPër të krijuar llogarinë tuaj, klikoni në këtë lidhje:\n${url}\n\nKjo lidhje do të skadojë pas 7 ditësh.`,
+  },
+  el: {
+    subject: (g) => `Πρόσκληση για συμμετοχή στο ${g} μέσω του ReceptCar`,
+    body: (g, role, url) =>
+      `Έχετε προσκληθεί να γίνετε μέλος της ομάδας «${g}» στο ReceptCar, με την ιδιότητα του ${role}.\n\nΓια να δημιουργήσετε τον λογαριασμό σας, κάντε κλικ στον παρακάτω σύνδεσμο:\n${url}\n\nΟ σύνδεσμος αυτός λήγει σε 7 ημέρες.`,
+  },
+  ru: {
+    subject: (g) => `Приглашение присоединиться к ${g} на ReceptCar`,
+    body: (g, role, url) =>
+      `Вас пригласили присоединиться к команде «${g}» на ReceptCar в качестве ${role}.\n\nЧтобы создать учетную запись, перейдите по этой ссылке:\n${url}\n\nСрок действия этой ссылки истекает через 7 дней.`,
   },
 };
 

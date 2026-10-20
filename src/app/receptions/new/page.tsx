@@ -25,20 +25,20 @@ export default async function NewReceptionPage({
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  // Profil + garage en une seule requête (jointure PostgREST) plutôt que deux
+  // allers-retours séquentiels : la clé étrangère profiles.garage_id est sans
+  // ambiguïté, donc "garages(...)" est résolu automatiquement.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, roles")
+    .select(
+      "garage_id, roles, garages(id, name, address, address_street, address_postal_code, address_city, phone, email, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at, has_workshop, has_sales)",
+    )
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/dashboard");
-
-  const { data: garage } = await supabase
-    .from("garages")
-    .select(
-      "id, name, address, address_street, address_postal_code, address_city, phone, email, logo_url, default_language, billing_country, subscription_plan, payment_status, trial_ends_at, has_workshop, has_sales",
-    )
-    .eq("id", profile.garage_id)
-    .single();
+  // PostgREST peut renvoyer l'objet joint directement ou dans un tableau à un
+  // élément selon la version du driver : on gère les deux par prudence.
+  const garage = Array.isArray(profile.garages) ? profile.garages[0] : profile.garages;
   if (!garage) redirect("/dashboard");
   if (!hasActiveAccess(garage)) redirect("/billing");
 

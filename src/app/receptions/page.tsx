@@ -22,20 +22,15 @@ export default async function ReceptionsPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("garage_id")
-    .eq("id", user.id)
-    .single();
-
-  const [{ data: garage }, { data: receptions }, { data: consignments }] = await Promise.all([
-    profile
-      ? supabase
-          .from("garages")
-          .select("name, logo_url, billing_country, default_language, retention_days")
-          .eq("id", profile.garage_id)
-          .single()
-      : Promise.resolve({ data: null }),
+  // Profil + garage en une seule requête (jointure PostgREST) plutôt que deux
+  // allers-retours séquentiels : la clé étrangère profiles.garage_id est sans
+  // ambiguïté, donc "garages(...)" est résolu automatiquement.
+  const [{ data: profile }, { data: receptions }, { data: consignments }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("garage_id, garages(name, logo_url, billing_country, default_language, retention_days)")
+      .eq("id", user.id)
+      .single(),
     supabase
       .from("receptions")
       .select("id, client_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
@@ -45,6 +40,9 @@ export default async function ReceptionsPage() {
       .select("id, owner_name, vehicle_plate, vehicle_brand_model, created_at, pdf_path")
       .order("created_at", { ascending: false }),
   ]);
+  // PostgREST peut renvoyer l'objet joint directement ou dans un tableau à un
+  // élément selon la version du driver : on gère les deux par prudence.
+  const garage = profile ? (Array.isArray(profile.garages) ? profile.garages[0] : profile.garages) : null;
   const timezone = getGarageTimezone(garage ?? {});
 
   async function withSignedUrl<

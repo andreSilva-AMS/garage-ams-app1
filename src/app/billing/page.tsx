@@ -40,54 +40,51 @@ export default async function BillingPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  // Profil + garage en une seule requête (jointure PostgREST) plutôt que deux
+  // allers-retours séquentiels : la clé étrangère profiles.garage_id est sans
+  // ambiguïté, donc "garages(...)" est résolu automatiquement.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, roles")
+    .select(
+      "garage_id, roles, garages(id, name, logo_url, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country, checkout_billing_address_country, checkout_country_mismatch)",
+    )
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/dashboard");
-
-  const { data: garage } = await supabase
-    .from("garages")
-    .select(
-      "id, name, logo_url, subscription_plan, payment_status, trial_ends_at, stripe_customer_id, billing_country, checkout_billing_address_country, checkout_country_mismatch",
-    )
-    .eq("id", profile.garage_id)
-    .single();
+  // PostgREST peut renvoyer l'objet joint directement ou dans un tableau à un
+  // élément selon la version du driver : on gère les deux par prudence.
+  const garage = Array.isArray(profile.garages) ? profile.garages[0] : profile.garages;
   if (!garage) redirect("/dashboard");
 
-  const { data: dedicatedPlan } = garage.billing_country
-    ? await supabase
-        .from("pricing_plans")
-        .select("country_label, currency, amount_ht")
-        .eq("country_code", garage.billing_country)
-        .maybeSingle()
-    : { data: null };
+  // Indépendantes les unes des autres une fois `garage` connu : lancées en
+  // parallèle plutôt qu'en série.
+  const [{ data: pricingPlans }, { data: fallbackPlan }, { data: subscription }] = await Promise.all([
+    supabase
+      .from("pricing_plans")
+      .select("country_code, country_label, currency, amount_ht, stripe_price_id")
+      .eq("active", true)
+      .eq("is_fallback", false)
+      .order("country_code"),
+    garage.billing_country
+      ? supabase
+          .from("pricing_plans")
+          .select("country_label, currency, amount_ht")
+          .eq("country_code", FALLBACK_PRICING_CODE)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
+    supabase
+      .from("subscriptions")
+      .select("cancel_at_period_end, current_period_end")
+      .eq("garage_id", garage.id)
+      .order("updated_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
 
-  const { data: fallbackPlan } = garage.billing_country && !dedicatedPlan
-    ? await supabase
-        .from("pricing_plans")
-        .select("country_label, currency, amount_ht")
-        .eq("country_code", FALLBACK_PRICING_CODE)
-        .maybeSingle()
-    : { data: null };
-
+  const dedicatedPlan = garage.billing_country
+    ? (pricingPlans ?? []).find((p) => p.country_code === garage.billing_country)
+    : null;
   const plan = dedicatedPlan ?? fallbackPlan;
-
-  const { data: pricingPlans } = await supabase
-    .from("pricing_plans")
-    .select("country_code, country_label, currency, amount_ht, stripe_price_id")
-    .eq("active", true)
-    .eq("is_fallback", false)
-    .order("country_code");
-
-  const { data: subscription } = await supabase
-    .from("subscriptions")
-    .select("cancel_at_period_end, current_period_end")
-    .eq("garage_id", garage.id)
-    .order("updated_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
 
   const isOwner = profile.roles.includes("owner");
   const active = hasActiveAccess(garage);

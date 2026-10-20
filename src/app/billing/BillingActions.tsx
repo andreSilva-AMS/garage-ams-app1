@@ -1,11 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { formatPriceHt, guessCountryFromLocale, type PricingPlan } from "@/lib/pricing";
 import { createCheckoutSession, createPortalSession } from "./actions";
 
 type FixedPlan = { country_label: string; currency: string; amount_ht: number } | null;
+
+function translateActionError(
+  t: (key: string, values?: Record<string, string>) => string,
+  result: { error: string; detail?: string },
+): string {
+  if (result.error === "stripeError") {
+    return t(`errors.stripeError`, { detail: result.detail ?? "" });
+  }
+  return t(`errors.${result.error}`);
+}
 
 export function SubscribeFlow({
   pricingPlans,
@@ -16,6 +27,7 @@ export function SubscribeFlow({
   fixedCountry?: string | null;
   fixedPlan?: FixedPlan;
 }) {
+  const t = useTranslations("billing");
   const supabase = createClient();
   // Départ neutre côté serveur (navigator n'existe pas en SSR) : la vraie
   // détection se fait après montage, dans l'effet ci-dessous.
@@ -51,11 +63,11 @@ export function SubscribeFlow({
       if (result.ok) {
         window.location.href = result.url;
       } else {
-        setError(result.error);
+        setError(translateActionError(t, result));
         setLoading(false);
       }
     } catch {
-      setError("Une erreur inattendue est survenue. Réessayez.");
+      setError(t("errors.unexpectedError"));
       setLoading(false);
     }
   }
@@ -74,25 +86,25 @@ export function SubscribeFlow({
     <div className="flex flex-col gap-3">
       {fixedCountry && selectedPlan ? (
         <p className="text-sm text-neutral-600">
-          Pays de facturation : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
+          {t("billingCountryLabel")} : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
           {formatPriceHt(selectedPlan)}
         </p>
       ) : !editingCountry && selectedPlan ? (
         <p className="text-sm text-neutral-600">
-          Pays de facturation : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
+          {t("billingCountryLabel")} : <span className="font-medium">{selectedPlan.country_label}</span> —{" "}
           {formatPriceHt(selectedPlan)}{" "}
           <button
             type="button"
             onClick={() => setEditingCountry(true)}
             className="underline"
           >
-            Modifier
+            {t("editCountry")}
           </button>
         </p>
       ) : (
         <div className="flex flex-col gap-1">
           <label htmlFor="billingCountry" className="text-sm font-medium">
-            Pays de facturation
+            {t("billingCountryLabel")}
           </label>
           <select
             id="billingCountry"
@@ -104,7 +116,7 @@ export function SubscribeFlow({
             }}
           >
             <option value="" disabled>
-              Choisir un pays…
+              {t("choosePlaceholder")}
             </option>
             {pricingPlans.map((p) => (
               <option key={p.country_code} value={p.country_code}>
@@ -118,25 +130,20 @@ export function SubscribeFlow({
       {country ? (
         <>
           <button type="button" onClick={handleSubscribe} disabled={loading} className="btn-primary">
-            {loading ? "Redirection…" : "S'abonner maintenant"}
+            {loading ? t("redirecting") : t("subscribeNow")}
           </button>
           {error && <p className="text-sm text-red-600">{error}</p>}
         </>
       ) : waitlisted ? (
-        <p className="text-sm text-neutral-600">
-          Merci ! Nous vous préviendrons dès que ReceptCar sera disponible dans votre pays.
-        </p>
+        <p className="text-sm text-neutral-600">{t("waitlistThanks")}</p>
       ) : (
         <div className="rounded-2xl border border-neutral-200 p-3">
-          <p className="mb-2 text-sm text-neutral-600">
-            Aucun tarif n&apos;est encore disponible pour votre pays. Laissez votre e-mail, nous
-            vous préviendrons.
-          </p>
+          <p className="mb-2 text-sm text-neutral-600">{t("noPlanYet")}</p>
           <div className="flex gap-2">
             <input
               type="email"
               className="input"
-              placeholder="votre@email.ch"
+              placeholder={t("emailPlaceholder")}
               value={waitlistEmail}
               onChange={(e) => setWaitlistEmail(e.target.value)}
             />
@@ -146,7 +153,7 @@ export function SubscribeFlow({
               disabled={waitlistLoading}
               className="btn-secondary"
             >
-              {waitlistLoading ? "Envoi…" : "Liste d'attente"}
+              {waitlistLoading ? t("sendingWaitlist") : t("joinWaitlist")}
             </button>
           </div>
         </div>
@@ -156,6 +163,7 @@ export function SubscribeFlow({
 }
 
 export function ManageSubscriptionButton() {
+  const t = useTranslations("billing");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -167,11 +175,11 @@ export function ManageSubscriptionButton() {
       if (result.ok) {
         window.location.href = result.url;
       } else {
-        setError(result.error);
+        setError(translateActionError(t, result));
         setLoading(false);
       }
     } catch {
-      setError("Une erreur inattendue est survenue. Réessayez.");
+      setError(t("errors.unexpectedError"));
       setLoading(false);
     }
   }
@@ -184,7 +192,7 @@ export function ManageSubscriptionButton() {
         disabled={loading}
         className="btn-secondary"
       >
-        {loading ? "Redirection…" : "Gérer mon abonnement"}
+        {loading ? t("redirecting") : t("manageSubscription")}
       </button>
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>

@@ -18,6 +18,7 @@ export function RetentionToggle({
 }) {
   const router = useRouter();
   const t = useTranslations("settings");
+  const tBilling = useTranslations("billing");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +27,11 @@ export function RetentionToggle({
     setError(null);
     const result = await toggleRetention12Months(enable);
     if (!result.ok) {
-      setError(result.error);
+      setError(
+        result.error === "stripeError"
+          ? tBilling("errors.stripeError", { detail: result.detail ?? "" })
+          : tBilling(`errors.${result.error}`),
+      );
       setSaving(false);
       return;
     }

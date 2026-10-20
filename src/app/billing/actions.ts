@@ -4,8 +4,10 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getStripeClient } from "@/lib/stripe";
 
-type ActionResult = { ok: true; url: string } | { ok: false; error: string };
-type SimpleResult = { ok: true } | { ok: false; error: string };
+// Codes stables (traduits côté client dans billing.errors.*), pas de texte en
+// dur : cette action est appelée quelle que soit la langue de l'interface.
+type ActionResult = { ok: true; url: string } | { ok: false; error: string; detail?: string };
+type SimpleResult = { ok: true } | { ok: false; error: string; detail?: string };
 
 type OwnerGarage = {
   id: string;
@@ -26,16 +28,16 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { error: "Vous devez être connecté." as const };
+  if (!user) return { error: "notLoggedIn" as const };
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("garage_id, roles")
     .eq("id", user.id)
     .single();
-  if (!profile) return { error: "Profil introuvable." as const };
+  if (!profile) return { error: "profileNotFound" as const };
   if (!profile.roles.includes("owner")) {
-    return { error: "Seul le propriétaire du garage peut gérer la facturation." as const };
+    return { error: "notOwner" as const };
   }
 
   const { data: garage } = await supabase
@@ -43,7 +45,7 @@ async function getOwnerGarage(): Promise<OwnerGarageResult> {
     .select("id, name, stripe_customer_id, billing_country, address_street, address_postal_code, address_city")
     .eq("id", profile.garage_id)
     .single();
-  if (!garage) return { error: "Garage introuvable." as const };
+  if (!garage) return { error: "garageNotFound" as const };
 
   return { supabase, garage };
 }
@@ -59,7 +61,7 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
   // fonctionnalité, qui n'en ont pas encore — premier choix, une seule fois.
   const resolvedCountry = garage.billing_country ?? countryCode;
   if (!resolvedCountry) {
-    return { ok: false, error: "Pays de facturation manquant." };
+    return { ok: false, error: "missingCountry" };
   }
 
   const { data: dedicatedPlan } = await supabase
@@ -81,13 +83,10 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
     ).data;
 
   if (!plan) {
-    return { ok: false, error: "Pays de facturation non pris en charge." };
+    return { ok: false, error: "countryNotSupported" };
   }
   if (!plan.stripe_price_id) {
-    return {
-      ok: false,
-      error: "Le tarif pour ce pays n'est pas encore configuré. Contactez le support.",
-    };
+    return { ok: false, error: "priceNotConfigured" };
   }
 
   const stripe = getStripeClient();
@@ -138,12 +137,13 @@ export async function createCheckoutSession(countryCode?: string): Promise<Actio
       cancel_url: `${baseUrl}/billing?canceled=true`,
     });
 
-    if (!session.url) return { ok: false, error: "Impossible de créer la session de paiement." };
+    if (!session.url) return { ok: false, error: "checkoutFailed" };
     return { ok: true, url: session.url };
   } catch (err) {
     console.error("createCheckoutSession failed", err);
-    const message = err instanceof Error ? err.message : "Erreur inconnue lors de la création du paiement.";
-    return { ok: false, error: message };
+    return err instanceof Error
+      ? { ok: false, error: "stripeError", detail: err.message }
+      : { ok: false, error: "checkoutFailed" };
   }
 }
 
@@ -153,7 +153,7 @@ export async function createPortalSession(): Promise<ActionResult> {
   const { garage } = result;
 
   if (!garage.stripe_customer_id) {
-    return { ok: false, error: "Aucun abonnement à gérer pour l'instant." };
+    return { ok: false, error: "noSubscription" };
   }
 
   const stripe = getStripeClient();
@@ -168,8 +168,9 @@ export async function createPortalSession(): Promise<ActionResult> {
     return { ok: true, url: session.url };
   } catch (err) {
     console.error("createPortalSession failed", err);
-    const message = err instanceof Error ? err.message : "Erreur inconnue.";
-    return { ok: false, error: message };
+    return err instanceof Error
+      ? { ok: false, error: "stripeError", detail: err.message }
+      : { ok: false, error: "noSubscription" };
   }
 }
 
@@ -186,7 +187,7 @@ export async function toggleRetention12Months(enable: boolean): Promise<SimpleRe
   const { supabase, garage } = result;
 
   if (!garage.billing_country) {
-    return { ok: false, error: "Pays de facturation manquant." };
+    return { ok: false, error: "missingCountry" };
   }
 
   const { data: subscription } = await supabase
@@ -197,7 +198,7 @@ export async function toggleRetention12Months(enable: boolean): Promise<SimpleRe
     .limit(1)
     .maybeSingle();
   if (!subscription?.stripe_subscription_id) {
-    return { ok: false, error: "Vous devez avoir un abonnement actif pour activer cette option." };
+    return { ok: false, error: "noActiveSubscription" };
   }
 
   const { data: garageRow } = await supabase
@@ -217,7 +218,7 @@ export async function toggleRetention12Months(enable: boolean): Promise<SimpleRe
       .eq("country_code", garage.billing_country)
       .maybeSingle();
     if (!plan?.retention_365_stripe_price_id) {
-      return { ok: false, error: "Cette option n'est pas encore configurée pour votre pays. Contactez le support." };
+      return { ok: false, error: "retentionNotConfigured" };
     }
 
     const item = await stripe.subscriptionItems.create({

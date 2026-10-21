@@ -16,6 +16,9 @@ const CONTENT: Record<
     heroSubtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    navFeatures: string;
+    navDemo: string;
+    navContact: string;
     demoTitle: string;
     demoSubtitle: string;
     demo2Title: string;
@@ -46,6 +49,9 @@ const CONTENT: Record<
       "Fiches de réception et dépôt-vente en quelques minutes : photos, dommages, signature client et PDF automatique. Essai gratuit de 30 jours, sans engagement.",
     ctaPrimary: "Essayer gratuitement",
     ctaSecondary: "Se connecter",
+    navFeatures: "Fonctionnalités",
+    navDemo: "Démo",
+    navContact: "Contact",
     demoTitle: "Voir ReceptCar en vidéo",
     demoSubtitle: "Un aperçu rapide de l'application, en conditions réelles.",
     demo2Title: "Et aussi, pour le dépôt-vente",
@@ -96,6 +102,9 @@ const CONTENT: Record<
       "Create handover and consignment forms in just a few minutes: photos, damage details, customer signature and an automatic PDF. 30-day free trial, with no obligation.",
     ctaPrimary: "Try it for free",
     ctaSecondary: "Log in",
+    navFeatures: "Features",
+    navDemo: "Demo",
+    navContact: "Contact",
     demoTitle: "Watch the ReceptCar video",
     demoSubtitle: "A quick look at the app in real-world conditions.",
     demo2Title: "And also, for consignment sales",
@@ -146,6 +155,9 @@ const CONTENT: Record<
       "Fichas de recepción y venta en consignación en unos minutos: fotos, daños, firma del cliente y PDF automático. Prueba gratuita de 30 días, sin compromiso.",
     ctaPrimary: "Probarlo gratis",
     ctaSecondary: "Iniciar sesión",
+    navFeatures: "Funciones",
+    navDemo: "Demo",
+    navContact: "Contacto",
     demoTitle: "Ver el vídeo de ReceptCar",
     demoSubtitle: "Una breve visión general de la aplicación, en condiciones reales.",
     demo2Title: "Y además, para la venta en consignación",
@@ -196,6 +208,9 @@ const CONTENT: Record<
       "Fichas de receção e consignação em poucos minutos: fotografias, danos, assinatura do cliente e PDF automático. Teste gratuito de 30 dias, sem compromisso.",
     ctaPrimary: "Experimentar gratuitamente",
     ctaSecondary: "Iniciar sessão",
+    navFeatures: "Funcionalidades",
+    navDemo: "Demo",
+    navContact: "Contacto",
     demoTitle: "Veja o vídeo do ReceptCar",
     demoSubtitle: "Uma visão geral rápida da aplicação, em condições reais.",
     demo2Title: "E também, para a venda em consignação",
@@ -246,6 +261,9 @@ const CONTENT: Record<
       "Annahme- und Kommissionsformulare in wenigen Minuten: Fotos, Schäden, Unterschrift des Kunden und automatische PDF-Erstellung. 30 Tage kostenlos und unverbindlich testen.",
     ctaPrimary: "Kostenlos testen",
     ctaSecondary: "Anmelden",
+    navFeatures: "Funktionen",
+    navDemo: "Demo",
+    navContact: "Kontakt",
     demoTitle: "Sehen Sie sich das Video zu ReceptCar an",
     demoSubtitle: "Ein kurzer Einblick in die Anwendung unter realen Bedingungen.",
     demo2Title: "Und außerdem für den Kommissionsverkauf",
@@ -296,6 +314,9 @@ const CONTENT: Record<
       "Schede di presa in consegna e vendita in conto deposito in pochi minuti: foto, danni, firma del cliente e PDF generato automaticamente. Prova gratuita di 30 giorni, senza impegno.",
     ctaPrimary: "Prova gratis",
     ctaSecondary: "Accedi",
+    navFeatures: "Funzionalità",
+    navDemo: "Demo",
+    navContact: "Contatto",
     demoTitle: "Guarda il video su ReceptCar",
     demoSubtitle: "Una rapida panoramica dell'applicazione, in condizioni reali.",
     demo2Title: "E inoltre, per la vendita in conto deposito",
@@ -346,6 +367,9 @@ const CONTENT: Record<
       "Krijoni formularë për dorëzim dhe dërgesë në vetëm disa minuta: foto, detaje të dëmtimit, nënshkrimi i klientit dhe një PDF automatik. Provë falas 30-ditore, pa asnjë detyrim.",
     ctaPrimary: "Provoje falas",
     ctaSecondary: "Hyni",
+    navFeatures: "Veçoritë",
+    navDemo: "Demo",
+    navContact: "Kontakt",
     demoTitle: "Shiko videon e ReceptCar",
     demoSubtitle: "Një vështrim i shpejtë i aplikacionit në kushte reale.",
     demo2Title: "Dhe gjithashtu, për shitjet me komision",
@@ -396,6 +420,9 @@ const CONTENT: Record<
       "Φόρμες παραλαβής και πώλησης σε λίγα λεπτά: φωτογραφίες, ζημιές, υπογραφή πελάτη και αυτόματη δημιουργία αρχείου PDF. Δωρεάν δοκιμή 30 ημερών, χωρίς δέσμευση.",
     ctaPrimary: "Δοκιμάστε το δωρεάν",
     ctaSecondary: "Σύνδεση",
+    navFeatures: "Λειτουργίες",
+    navDemo: "Demo",
+    navContact: "Επικοινωνία",
     demoTitle: "Δείτε το ReceptCar σε βίντεο",
     demoSubtitle: "Μια γρήγορη επισκόπηση της εφαρμογής, σε πραγματικές συνθήκες.",
     demo2Title: "Και επίσης, για την πώληση με προμήθεια",
@@ -446,6 +473,9 @@ const CONTENT: Record<
       "Оформление приёма и комиссионной продажи за считанные минуты: фотографии, описание повреждений, подпись клиента и автоматическое создание PDF-файла. Бесплатная 30-дневная пробная версия без каких-либо обязательств.",
     ctaPrimary: "Попробовать бесплатно",
     ctaSecondary: "Войти",
+    navFeatures: "Возможности",
+    navDemo: "Демо",
+    navContact: "Контакты",
     demoTitle: "Посмотреть видео о ReceptCar",
     demoSubtitle: "Краткий обзор приложения в реальных условиях.",
     demo2Title: "А также для комиссионной продажи",
@@ -499,56 +529,79 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
   const c = CONTENT[lang];
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-10">
-      <div className="mb-10 flex items-center justify-between">
+    <main className="mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-6 sm:px-6">
+      <header className="flex items-center justify-between gap-4">
         <Image src="/logo.png" alt="ReceptCar" width={36} height={36} className="rounded-lg" />
-        <LanguageSwitcher value={lang} onChange={setLang} />
-      </div>
-
-      <section className="text-center">
-        <h1 className="mx-auto max-w-xl text-2xl font-semibold text-balance sm:text-3xl">
-          {c.heroTitle}
-        </h1>
-        <p className="mx-auto mt-4 max-w-lg text-sm text-neutral-600 sm:text-base">
-          {c.heroSubtitle}
-        </p>
-        <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link href="/signup" className="btn-primary w-full sm:w-auto">
+        <nav className="hidden items-center gap-6 text-sm font-medium text-neutral-600 md:flex">
+          <a href="#demo" className="hover:text-neutral-900">
+            {c.navDemo}
+          </a>
+          <a href="#features" className="hover:text-neutral-900">
+            {c.navFeatures}
+          </a>
+          <a href="#contact" className="hover:text-neutral-900">
+            {c.navContact}
+          </a>
+        </nav>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher value={lang} onChange={setLang} />
+          <Link href="/signup" className="btn-primary hidden sm:inline-flex">
             {c.ctaPrimary}
           </Link>
-          <Link href="/login" className="btn-secondary w-full sm:w-auto">
-            {c.ctaSecondary}
-          </Link>
+        </div>
+      </header>
+
+      <section id="demo" className="mt-10 grid grid-cols-1 items-center gap-10 sm:mt-16 lg:grid-cols-2 lg:gap-16">
+        <div className="text-center lg:text-left">
+          <h1 className="mx-auto max-w-xl text-2xl font-semibold text-balance sm:text-3xl lg:mx-0">
+            {c.heroTitle}
+          </h1>
+          <p className="mx-auto mt-4 max-w-lg text-sm text-neutral-600 sm:text-base lg:mx-0">
+            {c.heroSubtitle}
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
+            <Link href="/signup" className="btn-primary w-full sm:w-auto">
+              {c.ctaPrimary}
+            </Link>
+            <Link href="/login" className="btn-secondary w-full sm:w-auto">
+              {c.ctaSecondary}
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-3 text-center">
+          <video
+            className="w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm sm:max-w-sm"
+            src="/demo.mp4"
+            poster="/demo-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+          />
+          <div>
+            <h2 className="text-sm font-semibold">{c.demoTitle}</h2>
+            <p className="mt-1 max-w-xs text-xs text-neutral-500">{c.demoSubtitle}</p>
+          </div>
         </div>
       </section>
 
-      <section className="mt-16 flex flex-col items-center gap-3 text-center">
-        <h2 className="text-lg font-semibold">{c.demoTitle}</h2>
-        <p className="max-w-sm text-sm text-neutral-600">{c.demoSubtitle}</p>
-        <video
-          className="mt-2 w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm"
-          src="/demo.mp4"
-          poster="/demo-poster.jpg"
-          controls
-          playsInline
-          preload="metadata"
-        />
+      <section className="mt-16 grid grid-cols-1 items-center gap-10 rounded-3xl bg-neutral-50 px-4 py-10 sm:px-8 lg:grid-cols-2 lg:gap-16">
+        <div className="order-2 flex flex-col items-center gap-3 text-center lg:order-1">
+          <video
+            className="w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm sm:max-w-sm"
+            src="/demo2.mp4"
+            poster="/demo2-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+          />
+        </div>
+        <div className="order-1 text-center lg:order-2 lg:text-left">
+          <h2 className="text-xl font-semibold">{c.demo2Title}</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm text-neutral-600 lg:mx-0">{c.demo2Subtitle}</p>
+        </div>
       </section>
 
-      <section className="mt-16 flex flex-col items-center gap-3 text-center">
-        <h2 className="text-lg font-semibold">{c.demo2Title}</h2>
-        <p className="max-w-sm text-sm text-neutral-600">{c.demo2Subtitle}</p>
-        <video
-          className="mt-2 w-full max-w-xs rounded-2xl border border-neutral-200 shadow-sm"
-          src="/demo2.mp4"
-          poster="/demo2-poster.jpg"
-          controls
-          playsInline
-          preload="metadata"
-        />
-      </section>
-
-      <section className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <section id="features" className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">
         {c.features.map((f) => {
           const Icon = ICONS[f.icon];
           return (
@@ -575,7 +628,7 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
         </div>
       </section>
 
-      <section className="mt-16 flex flex-col items-center gap-3 text-center">
+      <section id="contact" className="mt-16 flex flex-col items-center gap-3 text-center">
         <h2 className="text-lg font-semibold">{c.contactTitle}</h2>
         <p className="max-w-sm text-sm text-neutral-600">{c.contactSubtitle}</p>
         <div className="mt-2 flex w-full justify-center">
@@ -592,13 +645,16 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
       </section>
 
       <footer className="mt-16 flex flex-col items-center gap-2 pb-4 text-xs text-neutral-400">
-        <div className="flex gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link href="/terms" className="underline">
             {c.terms}
           </Link>
           <Link href="/privacy" className="underline">
             {c.privacy}
           </Link>
+          <a href="mailto:info@receptcar.com" className="underline">
+            info@receptcar.com
+          </a>
         </div>
         <p>
           ReceptCar · {c.rights}

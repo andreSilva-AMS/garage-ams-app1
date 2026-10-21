@@ -8,17 +8,15 @@ import { Lang } from "@/lib/receptions/i18n";
 
 const CONTENT: Record<
   Lang,
-  { title: string; updated: string; draftNotice: string; sections: { h: string; p: string }[] }
+  { title: string; updated: string; sections: { h: string; p: string }[] }
 > = {
   fr: {
     title: "Politique de confidentialité",
-    updated: "Dernière mise à jour : à compléter lors de la mise en ligne",
-    draftNotice:
-      "Brouillon générique en attente de relecture juridique avant mise en ligne réelle. Les mentions entre crochets [ ] doivent être complétées avec les informations exactes de la société exploitant ReceptCar.",
+    updated: "Dernière mise à jour : 21 octobre 2026",
     sections: [
       {
         h: "1. Qui traite vos données",
-        p: "ReceptCar est édité par [raison sociale complète, adresse, contact]. Pour les données saisies par les garages clients (informations de leurs propres clients), l'Éditeur agit comme sous-traitant au sens du RGPD (Règlement UE 2016/679) et de la nLPD suisse ; le garage reste responsable de traitement vis-à-vis de ses propres clients.",
+        p: "ReceptCar est édité par André Da Silva, raison individuelle, Route du Stand 41, 1163 Étoy (Suisse), contact : info@receptcar.com. Pour les données saisies par les garages clients (informations de leurs propres clients), l'Éditeur agit comme sous-traitant au sens du RGPD (Règlement UE 2016/679) et de la nLPD suisse ; le garage reste responsable de traitement vis-à-vis de ses propres clients.",
       },
       {
         h: "2. Données collectées",
@@ -38,7 +36,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Hébergement et sous-traitants",
-        p: "Les données sont hébergées et traitées par Supabase (base de données et stockage de fichiers) et Vercel (hébergement de l'application), ainsi que par les prestataires d'envoi d'e-mail et de paiement utilisés par le Service (Resend, Stripe). [Compléter avec la liste exacte et les localisations des serveurs le cas échéant.]",
+        p: "Les données sont hébergées et traitées par Supabase (base de données et stockage de fichiers) et Vercel (hébergement de l'application), ainsi que par les prestataires d'envoi d'e-mail et de paiement utilisés par le Service (Resend, Stripe). Les serveurs de Supabase sont situés en Irlande (UE) et ceux de Vercel à Francfort (Allemagne).",
       },
       {
         h: "7. Droits des personnes",
@@ -56,13 +54,11 @@ const CONTENT: Record<
   },
   en: {
     title: "Privacy Policy",
-    updated: "Last updated: to be completed before going live",
-    draftNotice:
-      "Generic draft pending legal review before real-world use. Text in brackets [ ] must be completed with the exact details of the company operating ReceptCar.",
+    updated: "Last updated: October 21, 2026",
     sections: [
       {
         h: "1. Who processes your data",
-        p: "ReceptCar is published by [full legal name, address, contact]. For data entered by client garages (information about their own customers), the Publisher acts as a data processor under the GDPR (EU Regulation 2016/679) and the Swiss nFADP; the garage remains the data controller towards its own customers.",
+        p: "ReceptCar is published by André Da Silva, sole proprietorship, Route du Stand 41, 1163 Étoy, Switzerland, contact: info@receptcar.com. For data entered by client garages (information about their own customers), the Publisher acts as a data processor under the GDPR (EU Regulation 2016/679) and the Swiss nFADP; the garage remains the data controller towards its own customers.",
       },
       {
         h: "2. Data collected",
@@ -82,7 +78,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Hosting and subprocessors",
-        p: "Data is hosted and processed by Supabase (database and file storage) and Vercel (application hosting), as well as the e-mail and payment providers used by the Service (Resend, Stripe). [Complete with the exact list and server locations if applicable.]",
+        p: "Data is hosted and processed by Supabase (database and file storage) and Vercel (application hosting), as well as the e-mail and payment providers used by the Service (Resend, Stripe). Supabase's servers are located in Ireland (EU) and Vercel's in Frankfurt (Germany).",
       },
       {
         h: "7. Data subject rights",
@@ -100,13 +96,11 @@ const CONTENT: Record<
   },
   es: {
     title: "Política de privacidad",
-    updated: "Última actualización: a completar antes de la puesta en línea",
-    draftNotice:
-      "Borrador genérico pendiente de revisión jurídica antes de su uso real. El texto entre corchetes [ ] debe completarse con los datos exactos de la sociedad que explota ReceptCar.",
+    updated: "Última actualización: 21 de octubre de 2026",
     sections: [
       {
         h: "1. Quién trata sus datos",
-        p: "ReceptCar está editado por [razón social completa, dirección, contacto]. Para los datos introducidos por los talleres clientes (información de sus propios clientes), el Editor actúa como encargado del tratamiento en el sentido del RGPD (Reglamento UE 2016/679); el taller sigue siendo responsable del tratamiento frente a sus propios clientes.",
+        p: "ReceptCar está editado por André Da Silva, empresa individual, Route du Stand 41, 1163 Étoy (Suiza), contacto: info@receptcar.com. Para los datos introducidos por los talleres clientes (información de sus propios clientes), el Editor actúa como encargado del tratamiento en el sentido del RGPD (Reglamento UE 2016/679); el taller sigue siendo responsable del tratamiento frente a sus propios clientes.",
       },
       {
         h: "2. Datos recopilados",
@@ -126,7 +120,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Alojamiento y subencargados",
-        p: "Los datos se alojan y tratan mediante Supabase (base de datos y almacenamiento de archivos) y Vercel (alojamiento de la aplicación), así como los proveedores de envío de correo electrónico y de pago utilizados por el Servicio (Resend, Stripe). [Completar con la lista exacta y la ubicación de los servidores en su caso.]",
+        p: "Los datos se alojan y tratan mediante Supabase (base de datos y almacenamiento de archivos) y Vercel (alojamiento de la aplicación), así como los proveedores de envío de correo electrónico y de pago utilizados por el Servicio (Resend, Stripe). Los servidores de Supabase están ubicados en Irlanda (UE) y los de Vercel en Fráncfort (Alemania).",
       },
       {
         h: "7. Derechos de las personas",
@@ -144,13 +138,11 @@ const CONTENT: Record<
   },
   pt: {
     title: "Política de privacidade",
-    updated: "Última atualização: a completar antes da entrada em produção",
-    draftNotice:
-      "Rascunho genérico pendente de revisão jurídica antes de uma utilização real. O texto entre parênteses retos [ ] deve ser completado com os dados exatos da sociedade que explora o ReceptCar.",
+    updated: "Última atualização: 21 de outubro de 2026",
     sections: [
       {
         h: "1. Quem trata os seus dados",
-        p: "O ReceptCar é publicado por [razão social completa, endereço, contacto]. Para os dados introduzidos pelas oficinas clientes (informações dos seus próprios clientes), o Editor atua como subcontratante na aceção do RGPD; a oficina continua a ser responsável pelo tratamento perante os seus próprios clientes.",
+        p: "O ReceptCar é publicado por André Da Silva, empresa em nome individual, Route du Stand 41, 1163 Étoy (Suíça), contacto: info@receptcar.com. Para os dados introduzidos pelas oficinas clientes (informações dos seus próprios clientes), o Editor atua como subcontratante na aceção do RGPD; a oficina continua a ser responsável pelo tratamento perante os seus próprios clientes.",
       },
       {
         h: "2. Dados recolhidos",
@@ -170,7 +162,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Alojamento e subcontratantes",
-        p: "Os dados são alojados e tratados pela Supabase (base de dados e armazenamento de ficheiros) e pela Vercel (alojamento da aplicação), bem como pelos prestadores de envio de e-mail e de pagamento utilizados pelo Serviço (Resend, Stripe). [Completar com a lista exata e a localização dos servidores, se aplicável.]",
+        p: "Os dados são alojados e tratados pela Supabase (base de dados e armazenamento de ficheiros) e pela Vercel (alojamento da aplicação), bem como pelos prestadores de envio de e-mail e de pagamento utilizados pelo Serviço (Resend, Stripe). Os servidores da Supabase estão localizados na Irlanda (UE) e os da Vercel em Frankfurt (Alemanha).",
       },
       {
         h: "7. Direitos dos titulares",
@@ -188,13 +180,11 @@ const CONTENT: Record<
   },
   de: {
     title: "Datenschutzrichtlinie",
-    updated: "Letzte Aktualisierung: vor der Veröffentlichung zu ergänzen",
-    draftNotice:
-      "Generischer Entwurf, der vor der tatsächlichen Nutzung rechtlich geprüft werden muss. Die Angaben in eckigen Klammern [ ] müssen mit den genauen Angaben der Gesellschaft, die ReceptCar betreibt, ergänzt werden.",
+    updated: "Letzte Aktualisierung: 21. Oktober 2026",
     sections: [
       {
         h: "1. Wer Ihre Daten verarbeitet",
-        p: "ReceptCar wird herausgegeben von [vollständiger Firmenname, Adresse, Kontakt]. Für Daten, die von den Kunden-Werkstätten eingegeben werden (Informationen über deren eigene Kunden), handelt der Anbieter als Auftragsverarbeiter im Sinne der DSGVO (EU-Verordnung 2016/679) und des revDSG; die Werkstatt bleibt gegenüber ihren eigenen Kunden für die Verarbeitung verantwortlich.",
+        p: "ReceptCar wird herausgegeben von André Da Silva, Einzelunternehmen, Route du Stand 41, 1163 Étoy (Schweiz), Kontakt: info@receptcar.com. Für Daten, die von den Kunden-Werkstätten eingegeben werden (Informationen über deren eigene Kunden), handelt der Anbieter als Auftragsverarbeiter im Sinne der DSGVO (EU-Verordnung 2016/679) und des revDSG; die Werkstatt bleibt gegenüber ihren eigenen Kunden für die Verarbeitung verantwortlich.",
       },
       {
         h: "2. Erhobene Daten",
@@ -214,7 +204,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Hosting und Auftragsverarbeiter",
-        p: "Die Daten werden von Supabase (Datenbank und Dateispeicherung) und Vercel (Hosting der Anwendung) sowie von den vom Dienst genutzten E-Mail- und Zahlungsanbietern (Resend, Stripe) gehostet und verarbeitet. [Bei Bedarf mit der genauen Liste und den Serverstandorten ergänzen.]",
+        p: "Die Daten werden von Supabase (Datenbank und Dateispeicherung) und Vercel (Hosting der Anwendung) sowie von den vom Dienst genutzten E-Mail- und Zahlungsanbietern (Resend, Stripe) gehostet und verarbeitet. Die Server von Supabase befinden sich in Irland (EU), die von Vercel in Frankfurt (Deutschland).",
       },
       {
         h: "7. Rechte der betroffenen Personen",
@@ -232,13 +222,11 @@ const CONTENT: Record<
   },
   it: {
     title: "Informativa sulla privacy",
-    updated: "Ultimo aggiornamento: da completare prima della messa online",
-    draftNotice:
-      "Bozza generica in attesa di revisione legale prima dell'uso reale. Le indicazioni tra parentesi quadre [ ] devono essere completate con i dati esatti della società che gestisce ReceptCar.",
+    updated: "Ultimo aggiornamento: 21 ottobre 2026",
     sections: [
       {
         h: "1. Chi tratta i vostri dati",
-        p: "ReceptCar è pubblicato da [ragione sociale completa, indirizzo, contatto]. Per i dati inseriti dalle officine clienti (informazioni dei loro propri clienti), l'Editore agisce come responsabile del trattamento ai sensi del GDPR (Regolamento UE 2016/679); l'officina rimane titolare del trattamento nei confronti dei propri clienti.",
+        p: "ReceptCar è pubblicato da André Da Silva, ditta individuale, Route du Stand 41, 1163 Étoy (Svizzera), contatto: info@receptcar.com. Per i dati inseriti dalle officine clienti (informazioni dei loro propri clienti), l'Editore agisce come responsabile del trattamento ai sensi del GDPR (Regolamento UE 2016/679); l'officina rimane titolare del trattamento nei confronti dei propri clienti.",
       },
       {
         h: "2. Dati raccolti",
@@ -258,7 +246,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Hosting e subresponsabili",
-        p: "I dati sono ospitati e trattati da Supabase (database e archiviazione file) e Vercel (hosting dell'applicazione), nonché dai fornitori di invio e-mail e di pagamento utilizzati dal Servizio (Resend, Stripe). [Completare con l'elenco esatto e le sedi dei server, se applicabile.]",
+        p: "I dati sono ospitati e trattati da Supabase (database e archiviazione file) e Vercel (hosting dell'applicazione), nonché dai fornitori di invio e-mail e di pagamento utilizzati dal Servizio (Resend, Stripe). I server di Supabase si trovano in Irlanda (UE) e quelli di Vercel a Francoforte (Germania).",
       },
       {
         h: "7. Diritti degli interessati",
@@ -276,13 +264,11 @@ const CONTENT: Record<
   },
   sq: {
     title: "Politika e Privatësisë",
-    updated: "Përditësimi i fundit: do të plotësohet kur të publikohet online",
-    draftNotice:
-      "Projekt i përgjithshëm në pritje të rishikimit ligjor para se të publikohet online. Teksti në kllapa katrore [ ] duhet të plotësohet me detajet e sakta të kompanisë që operon ReceptCar.",
+    updated: "Përditësimi i fundit: 21 tetor 2026",
     sections: [
       {
         h: "1. Kush përpunon të dhënat tuaja",
-        p: "ReceptCar publikohet nga [emri i plotë i kompanisë, adresa, të dhënat e kontaktit]. Sa i përket të dhënave të futura nga garazhet e klientëve (informacion që lidhet me klientët e tyre), Botuesi vepron si përpunues i të dhënave në kuptim të GDPR (Rregullorja e BE-së 2016/679) dhe nLPD-së zvicerane; garazhi mbetet kontrollues i të dhënave në lidhje me klientët e tij.",
+        p: "ReceptCar publikohet nga André Da Silva, pronësi individuale, Route du Stand 41, 1163 Étoy (Zvicër), kontakt: info@receptcar.com. Sa i përket të dhënave të futura nga garazhet e klientëve (informacion që lidhet me klientët e tyre), Botuesi vepron si përpunues i të dhënave në kuptim të GDPR (Rregullorja e BE-së 2016/679) dhe nLPD-së zvicerane; garazhi mbetet kontrollues i të dhënave në lidhje me klientët e tij.",
       },
       {
         h: "2. Të dhënat e mbledhura",
@@ -302,7 +288,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Pritësit dhe nënkontraktorët",
-        p: "Të dhënat hostosen dhe përpunohen nga Supabase (bazë të dhënash dhe ruajtje skedarësh) dhe Vercel (hosting i aplikacionit), si dhe nga ofruesit e shërbimeve të dërgimit të postës elektronike dhe pagesave të përdorura nga Shërbimi (Resend, Stripe). [Ju lutemi jepni listën e saktë dhe vendndodhjet e serverëve, kur të jetë e zbatueshme.]",
+        p: "Të dhënat hostosen dhe përpunohen nga Supabase (bazë të dhënash dhe ruajtje skedarësh) dhe Vercel (hosting i aplikacionit), si dhe nga ofruesit e shërbimeve të dërgimit të postës elektronike dhe pagesave të përdorura nga Shërbimi (Resend, Stripe). Serverat e Supabase ndodhen në Irlandë (BE) dhe ata të Vercel në Frankfurt (Gjermani).",
       },
       {
         h: "7. Të drejtat individuale",
@@ -320,13 +306,11 @@ const CONTENT: Record<
   },
   el: {
     title: "Πολιτική απορρήτου",
-    updated: "Τελευταία ενημέρωση: θα συμπληρωθεί κατά τη δημοσίευση",
-    draftNotice:
-      "Γενικό προσχέδιο που αναμένει νομική επιμέλεια πριν από την πραγματική δημοσίευσή του στο διαδίκτυο. Οι ενδείξεις εντός αγκυλών [ ] πρέπει να συμπληρωθούν με τα ακριβή στοιχεία της εταιρείας που διαχειρίζεται το ReceptCar.",
+    updated: "Τελευταία ενημέρωση: 21 Οκτωβρίου 2026",
     sections: [
       {
         h: "1. Ποιος επεξεργάζεται τα δεδομένα σας",
-        p: "Το ReceptCar εκδίδεται από [πλήρης εταιρική επωνυμία, διεύθυνση, στοιχεία επικοινωνίας]. Όσον αφορά τα δεδομένα που καταχωρούν τα συνεργεία-πελάτες (πληροφορίες σχετικά με τους δικούς τους πελάτες), ο Εκδότης ενεργεί ως εκτελών την επεξεργασία κατά την έννοια του ΓΚΠΔ (Κανονισμός ΕΕ 2016/679) και του ελβετικού νόμου περί προστασίας δεδομένων (nLPD)· το συνεργείο παραμένει υπεύθυνο για την επεξεργασία έναντι των δικών του πελατών.",
+        p: "Το ReceptCar εκδίδεται από τον André Da Silva, ατομική επιχείρηση, Route du Stand 41, 1163 Étoy (Ελβετία), επικοινωνία: info@receptcar.com. Όσον αφορά τα δεδομένα που καταχωρούν τα συνεργεία-πελάτες (πληροφορίες σχετικά με τους δικούς τους πελάτες), ο Εκδότης ενεργεί ως εκτελών την επεξεργασία κατά την έννοια του ΓΚΠΔ (Κανονισμός ΕΕ 2016/679) και του ελβετικού νόμου περί προστασίας δεδομένων (nLPD)· το συνεργείο παραμένει υπεύθυνο για την επεξεργασία έναντι των δικών του πελατών.",
       },
       {
         h: "2. Συλλεγόμενα δεδομένα",
@@ -346,7 +330,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Φιλοξενία και εξωτερικοί συνεργάτες",
-        p: "Τα δεδομένα φιλοξενούνται και υποβάλλονται σε επεξεργασία από την Supabase (βάση δεδομένων και αποθήκευση αρχείων) και την Vercel (φιλοξενία της εφαρμογής), καθώς και από τους πάροχους υπηρεσιών αποστολής ηλεκτρονικού ταχυδρομείου και πληρωμών που χρησιμοποιεί η Υπηρεσία (Resend, Stripe). [Συμπληρώστε με τον ακριβή κατάλογο και τις τοποθεσίες των διακομιστών, εφόσον ισχύει.]",
+        p: "Τα δεδομένα φιλοξενούνται και υποβάλλονται σε επεξεργασία από την Supabase (βάση δεδομένων και αποθήκευση αρχείων) και την Vercel (φιλοξενία της εφαρμογής), καθώς και από τους πάροχους υπηρεσιών αποστολής ηλεκτρονικού ταχυδρομείου και πληρωμών που χρησιμοποιεί η Υπηρεσία (Resend, Stripe). Οι διακομιστές της Supabase βρίσκονται στην Ιρλανδία (ΕΕ) και της Vercel στη Φρανκφούρτη (Γερμανία).",
       },
       {
         h: "7. Δικαιώματα των ατόμων",
@@ -364,13 +348,11 @@ const CONTENT: Record<
   },
   ru: {
     title: "Политика конфиденциальности",
-    updated: "Последнее обновление: заполнить при публикации",
-    draftNotice:
-      "Общий черновой вариант, ожидающий юридической проверки перед фактической публикацией. Сведения в квадратных скобках [ ] должны быть заполнены точными данными компании, управляющей ReceptCar.",
+    updated: "Последнее обновление: 21 октября 2026 г.",
     sections: [
       {
         h: "1. Кто обрабатывает ваши данные",
-        p: "Издателем ReceptCar является [полное название компании, адрес, контактные данные]. В отношении данных, вводимых автосервисами-клиентами (информация об их собственных клиентах), издатель выступает в качестве обработчика данных в понимании Общего регламента по защите данных (Регламент ЕС 2016/679) и швейцарского закона о защите данных (nLPD); автосервис остается ответственным за обработку данных в отношении своих собственных клиентов.",
+        p: "Издателем ReceptCar является André Da Silva (индивидуальное предприятие), Route du Stand 41, 1163 Étoy (Швейцария), контакт: info@receptcar.com. В отношении данных, вводимых автосервисами-клиентами (информация об их собственных клиентах), издатель выступает в качестве обработчика данных в понимании Общего регламента по защите данных (Регламент ЕС 2016/679) и швейцарского закона о защите данных (nLPD); автосервис остается ответственным за обработку данных в отношении своих собственных клиентов.",
       },
       {
         h: "2. Собранные данные",
@@ -390,7 +372,7 @@ const CONTENT: Record<
       },
       {
         h: "6. Хостинг и субподрядчики",
-        p: "Данные хранятся и обрабатываются компаниями Supabase (база данных и хранилище файлов) и Vercel (хостинг приложения), а также поставщиками услуг рассылки электронной почты и обработки платежей, используемыми Сервисом (Resend, Stripe). [Дополнить точным списком и местоположением серверов, если необходимо.]",
+        p: "Данные хранятся и обрабатываются компаниями Supabase (база данных и хранилище файлов) и Vercel (хостинг приложения), а также поставщиками услуг рассылки электронной почты и обработки платежей, используемыми Сервисом (Resend, Stripe). Серверы Supabase расположены в Ирландии (ЕС), а серверы Vercel — во Франкфурте (Германия).",
       },
       {
         h: "7. Права человека",
@@ -424,8 +406,6 @@ export default function PrivacyPage() {
 
       <h1 className="mb-1 text-2xl font-semibold">{c.title}</h1>
       <p className="mb-6 text-xs text-neutral-400">{c.updated}</p>
-
-      <p className="mb-8 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">{c.draftNotice}</p>
 
       <div className="flex flex-col gap-6">
         {c.sections.map((s) => (

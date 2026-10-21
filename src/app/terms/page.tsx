@@ -8,17 +8,15 @@ import { Lang } from "@/lib/receptions/i18n";
 
 const CONTENT: Record<
   Lang,
-  { title: string; updated: string; draftNotice: string; sections: { h: string; p: string }[] }
+  { title: string; updated: string; sections: { h: string; p: string }[] }
 > = {
   fr: {
     title: "Conditions d'utilisation",
-    updated: "Dernière mise à jour : à compléter lors de la mise en ligne",
-    draftNotice:
-      "Brouillon générique en attente de relecture juridique avant mise en ligne réelle. Les mentions entre crochets [ ] doivent être complétées avec les informations exactes de la société exploitant ReceptCar.",
+    updated: "Dernière mise à jour : 21 octobre 2026",
     sections: [
       {
         h: "1. Objet",
-        p: "ReceptCar (« le Service ») est une application en ligne permettant aux garages automobiles de créer des fiches de réception de véhicule (informations client, photos, dommages constatés, signature) et de générer un document PDF associé. Le Service est édité par [raison sociale complète, forme juridique, siège social, numéro d'immatriculation], ci-après « l'Éditeur ».",
+        p: "ReceptCar (« le Service ») est une application en ligne permettant aux garages automobiles de créer des fiches de réception de véhicule (informations client, photos, dommages constatés, signature) et de générer un document PDF associé. Le Service est édité par André Da Silva, raison individuelle, Route du Stand 41, 1163 Étoy (Suisse), ci-après « l'Éditeur ».",
       },
       {
         h: "2. Acceptation",
@@ -50,7 +48,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Droit applicable",
-        p: "Les présentes conditions sont régies par le droit suisse. [À confirmer : for juridictionnel compétent.]",
+        p: "Les présentes conditions sont régies par le droit suisse. Le for juridictionnel exclusif est celui des tribunaux ordinaires du canton de Vaud (Suisse).",
       },
       {
         h: "10. Contact",
@@ -60,13 +58,11 @@ const CONTENT: Record<
   },
   en: {
     title: "Terms of Use",
-    updated: "Last updated: to be completed before going live",
-    draftNotice:
-      "Generic draft pending legal review before real-world use. Text in brackets [ ] must be completed with the exact details of the company operating ReceptCar.",
+    updated: "Last updated: October 21, 2026",
     sections: [
       {
         h: "1. Purpose",
-        p: "ReceptCar (\"the Service\") is an online application allowing car garages to create vehicle reception forms (customer information, photos, noted damage, signature) and generate an associated PDF document. The Service is published by [full legal name, legal form, registered office, registration number], hereinafter \"the Publisher\".",
+        p: "ReceptCar (\"the Service\") is an online application allowing car garages to create vehicle reception forms (customer information, photos, noted damage, signature) and generate an associated PDF document. The Service is published by André Da Silva, sole proprietorship, Route du Stand 41, 1163 Étoy, Switzerland, hereinafter \"the Publisher\".",
       },
       {
         h: "2. Acceptance",
@@ -98,7 +94,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Governing law",
-        p: "These terms are governed by Swiss law. [To confirm: competent jurisdiction.]",
+        p: "These terms are governed by Swiss law. Exclusive jurisdiction lies with the ordinary courts of the Canton of Vaud, Switzerland.",
       },
       {
         h: "10. Contact",
@@ -108,13 +104,11 @@ const CONTENT: Record<
   },
   es: {
     title: "Condiciones de uso",
-    updated: "Última actualización: a completar antes de la puesta en línea",
-    draftNotice:
-      "Borrador genérico pendiente de revisión jurídica antes de su uso real. El texto entre corchetes [ ] debe completarse con los datos exactos de la sociedad que explota ReceptCar.",
+    updated: "Última actualización: 21 de octubre de 2026",
     sections: [
       {
         h: "1. Objeto",
-        p: "ReceptCar («el Servicio») es una aplicación en línea que permite a los talleres de automóviles crear fichas de recepción de vehículos (información del cliente, fotos, daños constatados, firma) y generar un documento PDF asociado. El Servicio está editado por [razón social completa, forma jurídica, domicilio social, número de registro], en adelante «el Editor».",
+        p: "ReceptCar («el Servicio») es una aplicación en línea que permite a los talleres de automóviles crear fichas de recepción de vehículos (información del cliente, fotos, daños constatados, firma) y generar un documento PDF asociado. El Servicio está editado por André Da Silva, empresa individual, Route du Stand 41, 1163 Étoy (Suiza), en adelante «el Editor».",
       },
       {
         h: "2. Aceptación",
@@ -146,7 +140,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Ley aplicable",
-        p: "Las presentes condiciones se rigen por el derecho suizo. [Por confirmar: fuero jurisdiccional competente.]",
+        p: "Las presentes condiciones se rigen por el derecho suizo. El fuero exclusivo es el de los tribunales ordinarios del cantón de Vaud (Suiza).",
       },
       {
         h: "10. Contacto",
@@ -156,13 +150,11 @@ const CONTENT: Record<
   },
   pt: {
     title: "Termos de utilização",
-    updated: "Última atualização: a completar antes da entrada em produção",
-    draftNotice:
-      "Rascunho genérico pendente de revisão jurídica antes de uma utilização real. O texto entre parênteses retos [ ] deve ser completado com os dados exatos da sociedade que explora o ReceptCar.",
+    updated: "Última atualização: 21 de outubro de 2026",
     sections: [
       {
         h: "1. Objeto",
-        p: "O ReceptCar («o Serviço») é uma aplicação em linha que permite às oficinas automóveis criar fichas de receção de veículos (informações do cliente, fotos, danos constatados, assinatura) e gerar um documento PDF associado. O Serviço é publicado por [razão social completa, forma jurídica, sede social, número de registo], doravante «o Editor».",
+        p: "O ReceptCar («o Serviço») é uma aplicação em linha que permite às oficinas automóveis criar fichas de receção de veículos (informações do cliente, fotos, danos constatados, assinatura) e gerar um documento PDF associado. O Serviço é publicado por André Da Silva, empresa em nome individual, Route du Stand 41, 1163 Étoy (Suíça), doravante «o Editor».",
       },
       {
         h: "2. Aceitação",
@@ -194,7 +186,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Lei aplicável",
-        p: "As presentes condições regem-se pelo direito suíço. [A confirmar: foro jurisdicional competente.]",
+        p: "As presentes condições regem-se pelo direito suíço. O foro exclusivo é o dos tribunais ordinários do cantão de Vaud (Suíça).",
       },
       {
         h: "10. Contacto",
@@ -204,13 +196,11 @@ const CONTENT: Record<
   },
   de: {
     title: "Nutzungsbedingungen",
-    updated: "Letzte Aktualisierung: vor der Veröffentlichung zu ergänzen",
-    draftNotice:
-      "Generischer Entwurf, der vor der tatsächlichen Nutzung rechtlich geprüft werden muss. Die Angaben in eckigen Klammern [ ] müssen mit den genauen Angaben der Gesellschaft, die ReceptCar betreibt, ergänzt werden.",
+    updated: "Letzte Aktualisierung: 21. Oktober 2026",
     sections: [
       {
         h: "1. Gegenstand",
-        p: "ReceptCar („der Dienst\") ist eine Online-Anwendung, mit der Autowerkstätten Fahrzeug-Annahmeprotokolle (Kundendaten, Fotos, festgestellte Schäden, Unterschrift) erstellen und ein zugehöriges PDF-Dokument generieren können. Der Dienst wird herausgegeben von [vollständiger Firmenname, Rechtsform, Sitz, Registernummer], nachfolgend „der Anbieter\".",
+        p: "ReceptCar („der Dienst\") ist eine Online-Anwendung, mit der Autowerkstätten Fahrzeug-Annahmeprotokolle (Kundendaten, Fotos, festgestellte Schäden, Unterschrift) erstellen und ein zugehöriges PDF-Dokument generieren können. Der Dienst wird herausgegeben von André Da Silva, Einzelunternehmen, Route du Stand 41, 1163 Étoy (Schweiz), nachfolgend „der Anbieter\".",
       },
       {
         h: "2. Annahme",
@@ -242,7 +232,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Anwendbares Recht",
-        p: "Diese Bedingungen unterliegen schweizerischem Recht. [Zu bestätigen: zuständiger Gerichtsstand.]",
+        p: "Diese Bedingungen unterliegen schweizerischem Recht. Ausschließlicher Gerichtsstand sind die ordentlichen Gerichte des Kantons Waadt (Schweiz).",
       },
       {
         h: "10. Kontakt",
@@ -252,13 +242,11 @@ const CONTENT: Record<
   },
   it: {
     title: "Termini di utilizzo",
-    updated: "Ultimo aggiornamento: da completare prima della messa online",
-    draftNotice:
-      "Bozza generica in attesa di revisione legale prima dell'uso reale. Le indicazioni tra parentesi quadre [ ] devono essere completate con i dati esatti della società che gestisce ReceptCar.",
+    updated: "Ultimo aggiornamento: 21 ottobre 2026",
     sections: [
       {
         h: "1. Oggetto",
-        p: "ReceptCar («il Servizio») è un'applicazione online che consente alle officine di creare schede di accettazione veicolo (informazioni cliente, foto, danni riscontrati, firma) e di generare un documento PDF associato. Il Servizio è pubblicato da [ragione sociale completa, forma giuridica, sede legale, numero di registrazione], di seguito «l'Editore».",
+        p: "ReceptCar («il Servizio») è un'applicazione online che consente alle officine di creare schede di accettazione veicolo (informazioni cliente, foto, danni riscontrati, firma) e di generare un documento PDF associato. Il Servizio è pubblicato da André Da Silva, ditta individuale, Route du Stand 41, 1163 Étoy (Svizzera), di seguito «l'Editore».",
       },
       {
         h: "2. Accettazione",
@@ -290,7 +278,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Legge applicabile",
-        p: "Le presenti condizioni sono disciplinate dal diritto svizzero. [Da confermare: foro competente.]",
+        p: "Le presenti condizioni sono disciplinate dal diritto svizzero. Il foro esclusivo è quello dei tribunali ordinari del Canton Vaud (Svizzera).",
       },
       {
         h: "10. Contatto",
@@ -300,13 +288,11 @@ const CONTENT: Record<
   },
   sq: {
     title: "Kushtet e Përdorimit",
-    updated: "Përditësimi i fundit: do të plotësohet kur të publikohet online",
-    draftNotice:
-      "Projekt i përgjithshëm në pritje të rishikimit ligjor para se të publikohet online. Teksti në kllapa katrore [ ] duhet të plotësohet me detajet e sakta të kompanisë që operon ReceptCar.",
+    updated: "Përditësimi i fundit: 21 tetor 2026",
     sections: [
       {
         h: "1. Qëllimi",
-        p: "ReceptCar ('Shërbimi') është një aplikacion online që u mundëson punëtorive të riparimit të automjeteve të krijojnë formularë pranimi për automjetet (të dhënat e klientit, fotografitë, dëmtimet e vërejtura, nënshkrimi) dhe të gjenerojnë një dokument PDF të lidhur. Shërbimi publikohet nga [emri i plotë i kompanisë, forma ligjore, selia e regjistruar, numri i regjistrimit], më poshtë 'Botuesi'.",
+        p: "ReceptCar ('Shërbimi') është një aplikacion online që u mundëson punëtorive të riparimit të automjeteve të krijojnë formularë pranimi për automjetet (të dhënat e klientit, fotografitë, dëmtimet e vërejtura, nënshkrimi) dhe të gjenerojnë një dokument PDF të lidhur. Shërbimi publikohet nga André Da Silva, pronësi individuale, Route du Stand 41, 1163 Étoy (Zvicër), më poshtë 'Botuesi'.",
       },
       {
         h: "2. Pranimi",
@@ -338,7 +324,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Ligji i zbatueshëm",
-        p: "Këto kushte dhe rregulla rregullohen nga ligji zvicran. [Për t'u konfirmuar: gjykata kompetente.]",
+        p: "Këto kushte dhe rregulla rregullohen nga ligji zvicëran. Gjykata kompetente ekskluzive është ajo e gjykatave të zakonshme të kantonit Vaud (Zvicër).",
       },
       {
         h: "10. Kontakt",
@@ -348,13 +334,11 @@ const CONTENT: Record<
   },
   el: {
     title: "Όροι χρήσης",
-    updated: "Τελευταία ενημέρωση: θα συμπληρωθεί κατά τη δημοσίευση",
-    draftNotice:
-      "Γενικό προσχέδιο που αναμένει νομική επιμέλεια πριν από την πραγματική δημοσίευση του στο διαδίκτυο. Οι ενδείξεις εντός αγκυλών [ ] πρέπει να συμπληρωθούν με τα ακριβή στοιχεία της εταιρείας που διαχειρίζεται το ReceptCar.",
+    updated: "Τελευταία ενημέρωση: 21 Οκτωβρίου 2026",
     sections: [
       {
         h: "1. Αντικείμενο",
-        p: "Το ReceptCar («η Υπηρεσία») είναι μια διαδικτυακή εφαρμογή που επιτρέπει στα συνεργεία αυτοκινήτων να δημιουργούν δελτία παραλαβής οχημάτων (πληροφορίες πελάτη, φωτογραφίες, διαπιστωμένες ζημιές, υπογραφή) και να εκδίδουν το αντίστοιχο έγγραφο σε μορφή PDF. Η Υπηρεσία παρέχεται από την [πλήρης εταιρική επωνυμία, νομική μορφή, έδρα, αριθμός μητρώου], εφεξής «ο Παροχέας».",
+        p: "Το ReceptCar («η Υπηρεσία») είναι μια διαδικτυακή εφαρμογή που επιτρέπει στα συνεργεία αυτοκινήτων να δημιουργούν δελτία παραλαβής οχημάτων (πληροφορίες πελάτη, φωτογραφίες, διαπιστωμένες ζημιές, υπογραφή) και να εκδίδουν το αντίστοιχο έγγραφο σε μορφή PDF. Η Υπηρεσία παρέχεται από τον André Da Silva, ατομική επιχείρηση, Route du Stand 41, 1163 Étoy (Ελβετία), εφεξής «ο Παροχέας».",
       },
       {
         h: "2. Αποδοχή",
@@ -386,7 +370,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Εφαρμοστέο δίκαιο",
-        p: "Οι παρόντες όροι διέπονται από το ελβετικό δίκαιο. [Προς επιβεβαίωση: αρμόδιο δικαστήριο.]",
+        p: "Οι παρόντες όροι διέπονται από το ελβετικό δίκαιο. Αποκλειστικά αρμόδια είναι τα τακτικά δικαστήρια του Καντονιού Vaud (Ελβετία).",
       },
       {
         h: "10. Επικοινωνία",
@@ -396,13 +380,11 @@ const CONTENT: Record<
   },
   ru: {
     title: "Условия использования",
-    updated: "Последнее обновление: заполнить при публикации",
-    draftNotice:
-      "Общий черновой вариант, ожидающий юридической проверки перед фактической публикацией. Сведения в квадратных скобках [ ] должны быть заполнены точными данными компании, управляющей ReceptCar.",
+    updated: "Последнее обновление: 21 октября 2026 г.",
     sections: [
       {
         h: "1. Предмет",
-        p: "ReceptCar («Сервис») — это онлайн-приложение, позволяющее автосервисам создавать протоколы приема автомобилей (данные о клиенте, фотографии, зафиксированные повреждения, подпись) и формировать соответствующий документ в формате PDF. Сервис предоставляется компанией [полное название, организационно-правовая форма, юридический адрес, регистрационный номер], далее именуемой «Оператор».",
+        p: "ReceptCar («Сервис») — это онлайн-приложение, позволяющее автосервисам создавать протоколы приема автомобилей (данные о клиенте, фотографии, зафиксированные повреждения, подпись) и формировать соответствующий документ в формате PDF. Сервис предоставляется André Da Silva (индивидуальное предприятие), Route du Stand 41, 1163 Étoy (Швейцария), далее именуемым «Оператор».",
       },
       {
         h: "2. Согласие",
@@ -434,7 +416,7 @@ const CONTENT: Record<
       },
       {
         h: "9. Применимое право",
-        p: "Настоящие условия регулируются законодательством Швейцарии. [Подлежит подтверждению: компетентный суд.]",
+        p: "Настоящие условия регулируются законодательством Швейцарии. Исключительной юрисдикцией обладают обычные суды кантона Во (Швейцария).",
       },
       {
         h: "10. Контакты",
@@ -460,8 +442,6 @@ export default function TermsPage() {
 
       <h1 className="mb-1 text-2xl font-semibold">{c.title}</h1>
       <p className="mb-6 text-xs text-neutral-400">{c.updated}</p>
-
-      <p className="mb-8 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">{c.draftNotice}</p>
 
       <div className="flex flex-col gap-6">
         {c.sections.map((s) => (

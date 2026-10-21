@@ -308,7 +308,12 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
             </ul>
           </ScrollReveal>
           <ScrollReveal delayMs={150}>
-            <ConsignmentMockup />
+            <DemoVideoPlayer
+              src="/video/demo-depot-vente.mp4"
+              poster="/video/demo-depot-vente-poster.jpg"
+              comingSoonLabel={c.videoComingSoon}
+              fallback={<ConsignmentMockup />}
+            />
           </ScrollReveal>
         </div>
       </section>

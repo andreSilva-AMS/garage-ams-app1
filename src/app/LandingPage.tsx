@@ -308,12 +308,23 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
             </ul>
           </ScrollReveal>
           <ScrollReveal delayMs={150}>
-            <DemoVideoPlayer
-              src="/video/demo-depot-vente.mp4"
-              poster="/video/demo-depot-vente-poster.jpg"
-              comingSoonLabel={c.videoComingSoon}
-              fallback={<ConsignmentMockup />}
-            />
+            <ConsignmentMockup />
+          </ScrollReveal>
+        </div>
+
+        <div className="mx-auto mt-16 max-w-4xl border-t border-white/10 pt-16 text-center">
+          <ScrollReveal>
+            <h3 className="font-serif text-2xl sm:text-3xl">{c.videoConsignmentTitle}</h3>
+            <p className="mt-3 text-white/70">{c.videoConsignmentSubtitle}</p>
+          </ScrollReveal>
+          <ScrollReveal delayMs={150}>
+            <div className="mt-10">
+              <DemoVideoPlayer
+                src="/video/demo-depot-vente.mp4"
+                poster="/video/demo-depot-vente-poster.jpg"
+                comingSoonLabel={c.videoComingSoon}
+              />
+            </div>
           </ScrollReveal>
         </div>
       </section>

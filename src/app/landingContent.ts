@@ -27,6 +27,8 @@ export type LandingDict = {
   consignmentTitle: string;
   consignmentBody: string;
   consignmentBullets: string[];
+  videoConsignmentTitle: string;
+  videoConsignmentSubtitle: string;
   founderQuote: string;
   founderName: string;
   founderRole: string;
@@ -99,6 +101,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Le dépôt-vente aussi, de A à Z.",
     consignmentBody: "De la prise en charge du véhicule jusqu'au contrat signé : propriétaire, véhicule, documents et contrat réunis dans un seul dossier.",
     consignmentBullets: ["Contrat généré automatiquement", "Suivi dédié de chaque véhicule", "Les bons documents demandés selon le type de dossier"],
+    videoConsignmentTitle: "Le dépôt-vente filmé en situation réelle",
+    videoConsignmentSubtitle: "De la prise en charge du véhicule à la signature du contrat.",
     founderQuote: "J'ai créé ReceptCar pour mon propre garage. Je voulais un outil simple, rapide, qui me protège quand un client conteste l'état de sa voiture. Aujourd'hui, je l'utilise pour chaque véhicule qui entre à l'atelier.",
     founderName: "André Da Silva",
     founderRole: "Garagiste, Garage AMS Automobiles, Etoy (Suisse)",
@@ -175,6 +179,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Consignment sales, too – from A to Z.",
     consignmentBody: "From the moment the vehicle is taken into our care right through to the signed contract: the owner, the vehicle, the documents and the contract are all brought together in a single file.",
     consignmentBullets: ["Automatically generated contract", "Dedicated monitoring of each vehicle", "The correct documents required depending on the type of application"],
+    videoConsignmentTitle: "Consignment sales, filmed in a real-life setting",
+    videoConsignmentSubtitle: "From picking up the vehicle to signing the contract.",
     founderQuote: "I created ReceptCar for my own garage. I wanted a simple, quick tool that would protect me if a customer disputed the condition of their car. Now, I use it for every vehicle that comes into the workshop.",
     founderName: "André Da Silva",
     founderRole: "Car mechanic, AMS Automobiles garage, Etoy (Switzerland)",
@@ -251,6 +257,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "También la venta en consignación, de la A a la Z.",
     consignmentBody: "Desde la recepción del vehículo hasta la firma del contrato: propietario, vehículo, documentación y contrato, todo ello reunido en un único expediente.",
     consignmentBullets: ["Contrato generado automáticamente", "Seguimiento específico de cada vehículo", "Los documentos que hay que presentar según el tipo de expediente"],
+    videoConsignmentTitle: "La venta en consignación, grabada en una situación real",
+    videoConsignmentSubtitle: "Desde la recogida del vehículo hasta la firma del contrato.",
     founderQuote: "Creé ReceptCar para mi propio taller. Quería una herramienta sencilla y rápida que me protegiera en caso de que un cliente cuestionara el estado de su coche. Hoy en día, la utilizo para cada vehículo que entra en el taller.",
     founderName: "André Da Silva",
     founderRole: "Mecánico, Taller AMS Automobiles, Etoy (Suiza)",
@@ -327,6 +335,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "A venda em consignação também, de A a Z.",
     consignmentBody: "Desde a receção do veículo até à assinatura do contrato: proprietário, veículo, documentos e contrato reunidos num único processo.",
     consignmentBullets: ["Contrato gerado automaticamente", "Acompanhamento específico de cada veículo", "Os documentos necessários, consoante o tipo de processo"],
+    videoConsignmentTitle: "A venda em consignação, filmada numa situação real",
+    videoConsignmentSubtitle: "Desde a recolha do veículo até à assinatura do contrato.",
     founderQuote: "Criei o ReceptCar para a minha própria oficina. Queria uma ferramenta simples e rápida que me protegesse quando um cliente contestasse o estado do seu carro. Hoje, utilizo-a para todos os veículos que entram na oficina.",
     founderName: "André Da Silva",
     founderRole: "Mecânico, Oficina AMS Automobiles, Etoy (Suíça)",
@@ -403,6 +413,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Auch der Kommissionsverkauf – von A bis Z.",
     consignmentBody: "Von der Fahrzeugannahme bis zum Vertragsabschluss: Eigentümer, Fahrzeug, Unterlagen und Vertrag – alles in einer einzigen Akte zusammengefasst.",
     consignmentBullets: ["Automatisch generierter Vertrag", "Individuelle Nachverfolgung jedes einzelnen Fahrzeugs", "Die je nach Art des Antrags erforderlichen Unterlagen"],
+    videoConsignmentTitle: "Der Kommissionsverkauf in einer realen Situation gefilmt",
+    videoConsignmentSubtitle: "Von der Fahrzeugabholung bis zur Vertragsunterzeichnung.",
     founderQuote: "Ich habe ReceptCar für meine eigene Werkstatt entwickelt. Ich wollte ein einfaches, schnelles Tool, das mich absichert, wenn ein Kunde den Zustand seines Autos beanstandet. Heute nutze ich es für jedes Fahrzeug, das in die Werkstatt kommt.",
     founderName: "André Da Silva",
     founderRole: "Kfz-Mechaniker, Autowerkstatt AMS Automobiles, Etoy (Schweiz)",
@@ -479,6 +491,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Anche il deposito-vendita, dalla A alla Z.",
     consignmentBody: "Dal ritiro del veicolo alla firma del contratto: proprietario, veicolo, documenti e contratto raccolti in un unico fascicolo.",
     consignmentBullets: ["Contratto generato automaticamente", "Monitoraggio specifico di ogni veicolo", "I documenti richiesti in base al tipo di pratica"],
+    videoConsignmentTitle: "Il deposito-vendita ripreso in una situazione reale",
+    videoConsignmentSubtitle: "Dal ritiro del veicolo alla firma del contratto.",
     founderQuote: "Ho creato ReceptCar per la mia officina. Volevo uno strumento semplice e veloce che mi tutelasse nel caso in cui un cliente contestasse le condizioni della propria auto. Oggi lo uso per ogni veicolo che entra in officina.",
     founderName: "André Da Silva",
     founderRole: "Meccanico, Officina AMS Automobiles, Etoy (Svizzera)",
@@ -555,6 +569,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Edhe shitjet me komision – nga A në Z.",
     consignmentBody: "Që nga momenti kur mjeti merret në kujdesin tonë e deri te kontrata e nënshkruar: pronari, mjeti, dokumentet dhe kontrata bashkohen të gjitha në një dosje të vetë.",
     consignmentBullets: ["Kontratë e gjeneruar automatikisht", "Monitorim i dedikuar i çdo mjeti", "Dokumentet e sakta të kërkuara në varesi të llojit të aplikimit"],
+    videoConsignmentTitle: "Shitjet me komision, të filmuara në një ambient të vërtetë",
+    videoConsignmentSubtitle: "Nga marrja e automjetit deri te nënshkrimi i kontratës.",
     founderQuote: "Kam krijuar ReceptCar për garazhin tim. Desha një mjet të thjeshtë dhe të shpejtë që të më mbrojë nëse një klient konteston gjendjen e makinës së tij. Tani e përdor për çdo automjet që vjen në punishtje.",
     founderName: "André Da Silva",
     founderRole: "Mekanik automjetesh, garazhi AMS Automobiles, Etoy (Zvicër)",
@@ -631,6 +647,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "Και η πώληση με προμήθεια, από το Α έως το Ω.",
     consignmentBody: "Από την παραλαβή του οχήματος μέχρι την υπογραφή της σύμβασης: ιδιοκτήτης, όχημα, έγγραφα και σύμβαση συγκεντρωμένα σε έναν μόνο φάκελο.",
     consignmentBullets: ["Σύμβαση που δημιουργήθηκε αυτόματα", "Εξειδικευμένη παρακολούθηση κάθε οχήματος", "Τα απαιτούμενα έγγραφα ανάλογα με το είδος της υπόθεσης"],
+    videoConsignmentTitle: "Η πώληση με προμήθεια, γυρισμένη σε πραγματικές συνθήκες",
+    videoConsignmentSubtitle: "Από την παραλαβή του οχήματος μέχρι την υπογραφή της σύμβασης.",
     founderQuote: "Δημιούργησα το ReceptCar για το δικό μου συνεργείο. Ήθελα ένα απλό και γρήγορο εργαλείο που να με προστατεύει όταν ένας πελάτης αμφισβητεί την κατάσταση του αυτοκινήτου του. Σήμερα, το χρησιμοποιώ για κάθε όχημα που μπαίνει στο συνεργείο.",
     founderName: "André Da Silva",
     founderRole: "Μηχανικός αυτοκινήτων, Συνεργείο AMS Automobiles, Etoy (Ελβετία)",
@@ -707,6 +725,8 @@ export const LANDING_CONTENT: Record<Lang, LandingDict> = {
     consignmentTitle: "А также комиссионная торговля — от А до Я.",
     consignmentBody: "От приема автомобиля до подписания договора: владелец, автомобиль, документы и договор собраны в одном деле.",
     consignmentBullets: ["Автоматически сгенерированный договор", "Индивидуальный мониторинг каждого транспортного средства", "Необходимые документы в зависимости от типа дела"],
+    videoConsignmentTitle: "Комиссионная торговля в реальных условиях",
+    videoConsignmentSubtitle: "От приёма автомобиля до подписания договора.",
     founderQuote: "Я создал ReceptCar для своей собственной автомастерской. Мне нужен был простой и быстрый инструмент, который защитил бы меня в случае, если клиент оспорит состояние своего автомобиля. Сегодня я использую его для каждого автомобиля, поступающего в мастерскую.",
     founderName: "André Da Silva",
     founderRole: "Автомеханик, автосервис AMS Automobiles, Этой (Швейцария)",

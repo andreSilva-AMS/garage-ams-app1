@@ -176,6 +176,18 @@ h2 {
   animation: fade-in-up 200ms ease-out;
 }
 
+/* Apparition douce au scroll (landing page publique uniquement). */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-primary,
   .btn-secondary,
@@ -184,5 +196,11 @@ h2 {
   .step-content {
     transition: none;
     animation: none;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

@@ -25,17 +25,22 @@ export function RetentionToggle({
   async function handleToggle(enable: boolean) {
     setSaving(true);
     setError(null);
-    const result = await toggleRetention12Months(enable);
-    if (!result.ok) {
-      setError(
-        result.error === "stripeError"
-          ? tBilling("errors.stripeError", { detail: result.detail ?? "" })
-          : tBilling(`errors.${result.error}`),
-      );
+    try {
+      const result = await toggleRetention12Months(enable);
+      if (!result.ok) {
+        setError(
+          result.error === "stripeError"
+            ? tBilling("errors.stripeError", { detail: result.detail ?? "" })
+            : tBilling(`errors.${result.error}`),
+        );
+        setSaving(false);
+        return;
+      }
+      router.refresh();
+    } catch {
+      setError(tBilling("errors.stripeError", { detail: "" }));
       setSaving(false);
-      return;
     }
-    router.refresh();
   }
 
   return (

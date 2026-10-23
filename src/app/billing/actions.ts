@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { getStripeClient } from "@/lib/stripe";
 
@@ -221,17 +222,40 @@ export async function toggleRetention12Months(enable: boolean): Promise<SimpleRe
       return { ok: false, error: "retentionNotConfigured" };
     }
 
-    const item = await stripe.subscriptionItems.create({
-      subscription: subscription.stripe_subscription_id,
-      price: plan.retention_365_stripe_price_id,
-    });
+    let item: { id: string };
+    try {
+      item = await stripe.subscriptionItems.create({
+        subscription: subscription.stripe_subscription_id,
+        price: plan.retention_365_stripe_price_id,
+      });
+    } catch (err) {
+      console.error("toggleRetention12Months enable failed", err);
+      return err instanceof Error
+        ? { ok: false, error: "stripeError", detail: err.message }
+        : { ok: false, error: "stripeError" };
+    }
     await supabase
       .from("garages")
       .update({ retention_days: 365, retention_item_id: item.id })
       .eq("id", garage.id);
   } else {
+    // Idempotent même si l'appel Stripe précédent a réussi mais que la mise à
+    // jour de la base avait échoué ensuite : un item déjà supprimé renvoie une
+    // erreur "resource_missing" que l'on traite comme un succès, plutôt que de
+    // bloquer l'utilisateur sur un abonnement qu'il ne peut plus désactiver.
     if (garageRow?.retention_item_id) {
-      await stripe.subscriptionItems.del(garageRow.retention_item_id);
+      try {
+        await stripe.subscriptionItems.del(garageRow.retention_item_id);
+      } catch (err) {
+        const alreadyGone =
+          err instanceof Stripe.errors.StripeError && err.code === "resource_missing";
+        if (!alreadyGone) {
+          console.error("toggleRetention12Months disable failed", err);
+          return err instanceof Error
+            ? { ok: false, error: "stripeError", detail: err.message }
+            : { ok: false, error: "stripeError" };
+        }
+      }
     }
     await supabase.from("garages").update({ retention_days: 30, retention_item_id: null }).eq("id", garage.id);
   }

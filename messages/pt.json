@@ -107,7 +107,9 @@
     "resendEmailPlaceholder": "O seu e-mail",
     "resendButton": "Reenviar o e-mail",
     "resendSending": "A enviar…",
-    "resendSent": "Se existir uma conta a aguardar confirmação para {email}, um novo e-mail acabou de ser enviado."
+    "resendSent": "Se existir uma conta a aguardar confirmação para {email}, um novo e-mail acabou de ser enviado.",
+    "confirmedTitle": "E-mail confirmado",
+    "confirmedBody": "A sua conta ReceptCar está ativada. Pode continuar."
   },
   "dashboard": {
     "connectedTo": "Ligado a",

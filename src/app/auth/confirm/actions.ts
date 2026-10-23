@@ -21,7 +21,7 @@ export async function confirmEmail(tokenHash: string, type: EmailOtpType) {
     return { ok: false as const, error: error.message };
   }
 
-  redirect(type === "recovery" ? "/reset-password" : "/dashboard");
+  redirect(type === "recovery" ? "/reset-password" : "/auth/confirmed");
 }
 
 /**

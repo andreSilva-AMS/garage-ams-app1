@@ -107,7 +107,9 @@
     "resendEmailPlaceholder": "Το email σας",
     "resendButton": "Προώθηση email",
     "resendSending": "Αποστολή…",
-    "resendSent": "Εάν υπάρχει λογαριασμός που εκκρεμεί επιβεβαίωση για το {email}, μόλις στάλθηκε ένα νέο email."
+    "resendSent": "Εάν υπάρχει λογαριασμός που εκκρεμεί επιβεβαίωση για το {email}, μόλις στάλθηκε ένα νέο email.",
+    "confirmedTitle": "Επιβεβαιωμένο e-mail",
+    "confirmedBody": "Ο λογαριασμός σας στο ReceptCar έχει ενεργοποιηθεί. Μπορείτε να συνεχίσετε."
   },
   "dashboard": {
     "connectedTo": "Συνδεδεμένος με",

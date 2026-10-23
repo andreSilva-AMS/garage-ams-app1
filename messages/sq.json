@@ -107,7 +107,9 @@
     "resendEmailPlaceholder": "Adresa juaj e emailit",
     "resendButton": "Dërgo emailin përpara",
     "resendSending": "Dërgim…",
-    "resendSent": "Nëse ka një llogari në pritje për konfirmim për {email}, sapo është dërguar një email i ri."
+    "resendSent": "Nëse ka një llogari në pritje për konfirmim për {email}, sapo është dërguar një email i ri.",
+    "confirmedTitle": "Adresa e emailit është konfirmuar",
+    "confirmedBody": "Llogaria juaj ReceptCar është aktivizuar. Mund të vazhdoni."
   },
   "dashboard": {
     "connectedTo": "I lidhur me",

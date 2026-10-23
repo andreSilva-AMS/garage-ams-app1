@@ -107,7 +107,9 @@
     "resendEmailPlaceholder": "Ihre E-Mail-Adresse",
     "resendButton": "E-Mail erneut senden",
     "resendSending": "Wird gesendet…",
-    "resendSent": "Falls ein noch zu bestätigendes Konto für {email} existiert, wurde soeben eine neue E-Mail gesendet."
+    "resendSent": "Falls ein noch zu bestätigendes Konto für {email} existiert, wurde soeben eine neue E-Mail gesendet.",
+    "confirmedTitle": "E-Mail-Adresse bestätigt",
+    "confirmedBody": "Ihr ReceptCar-Konto ist aktiviert. Sie können fortfahren."
   },
   "dashboard": {
     "connectedTo": "Verbunden mit",

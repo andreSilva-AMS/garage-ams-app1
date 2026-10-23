@@ -81,7 +81,9 @@
     "loginLink": "Se connecter",
     "pendingTitle": "Vérifiez votre boîte e-mail",
     "pendingBody": "Un lien de confirmation a été envoyé à {email}. Cliquez dessus, puis revenez vous connecter : votre garage « {garageName} » sera créé automatiquement.",
-    "goToLogin": "Aller à la page de connexion"
+    "goToLogin": "Aller à la page de connexion",
+    "pendingResendLink": "Vous n'avez rien reçu ? Renvoyer l'e-mail",
+    "pendingSpamHint": "Pensez à vérifier vos spams."
   },
   "join": {
     "title": "Rejoindre {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "Voir / télécharger le PDF",
     "resend": "Renvoyer",
     "newOne": "Nouveau dossier"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Votre adresse e-mail est confirmée.",
+      "body": "Bienvenue sur ReceptCar. Votre essai gratuit de 30 jours commence maintenant.",
+      "cta": "Accéder à mon espace",
+      "redirecting": "Redirection automatique dans {s} secondes…",
+      "gettingStartedTitle": "Pour bien démarrer",
+      "step1": "Ajoutez le logo de votre garage",
+      "step2": "Créez votre première fiche de réception",
+      "step3": "Installez l'app sur votre tablette"
+    },
+    "expired": {
+      "title": "Ce lien a expiré.",
+      "body": "Pour votre sécurité, les liens de confirmation sont valables pour une durée limitée."
+    },
+    "invalid": {
+      "title": "Ce lien n'est plus valable.",
+      "body": "Il a peut-être déjà été utilisé. Si votre adresse est déjà confirmée, connectez-vous simplement.",
+      "loginButton": "Se connecter"
+    },
+    "error": {
+      "title": "Un problème est survenu.",
+      "body": "Réessayez dans quelques instants. Si le problème continue, écrivez-nous à <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "Votre e-mail",
+      "button": "Recevoir un nouveau lien",
+      "sending": "Envoi…",
+      "sent": "Nouveau lien envoyé, vérifiez votre boîte de réception et vos spams.",
+      "cooldown": "Réessayer dans {s}s"
+    },
+    "footerTerms": "Conditions d'utilisation",
+    "footerPrivacy": "Politique de confidentialité"
   }
 }

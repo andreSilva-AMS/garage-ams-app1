@@ -81,7 +81,9 @@
     "loginLink": "Iniciar sessão",
     "pendingTitle": "Verifique o seu e-mail",
     "pendingBody": "Foi enviado um link de confirmação para {email}. Clique nele e depois volte para iniciar sessão: a sua garagem «{garageName}» será criada automaticamente.",
-    "goToLogin": "Ir para a página de início de sessão"
+    "goToLogin": "Ir para a página de início de sessão",
+    "pendingResendLink": "Não recebeu nada? Reenviar o e-mail",
+    "pendingSpamHint": "Não se esqueça de verificar a sua pasta de spam."
   },
   "join": {
     "title": "Juntar-se a {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "Ver / descarregar o PDF",
     "resend": "Reenviar",
     "newOne": "Novo processo"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "O seu endereço de e-mail foi confirmado.",
+      "body": "Bem-vindo ao ReceptCar. O seu período de teste gratuito de 30 dias começa agora.",
+      "cta": "Aceder à minha área pessoal",
+      "redirecting": "Redirecionamento automático em {s} segundos…",
+      "gettingStartedTitle": "Para começar bem",
+      "step1": "Adicione o logótipo da sua oficina",
+      "step2": "Crie a sua primeira ficha de receção",
+      "step3": "Instale a aplicação no seu tablet"
+    },
+    "expired": {
+      "title": "Este link expirou.",
+      "body": "Para sua segurança, os links de confirmação têm uma validade limitada."
+    },
+    "invalid": {
+      "title": "Este link já não é válido.",
+      "body": "Talvez já tenha sido utilizada. Se a sua morada já estiver confirmada, basta iniciar sessão.",
+      "loginButton": "Iniciar sessão"
+    },
+    "error": {
+      "title": "Ocorreu um problema.",
+      "body": "Tente novamente daqui a alguns instantes. Se o problema persistir, escreva-nos para <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "O seu e-mail",
+      "button": "Receber um novo link",
+      "sending": "A enviar…",
+      "sent": "Enviámos um novo link; verifique a sua caixa de entrada e a pasta de spam.",
+      "cooldown": "Tentar novamente daqui a {s}s"
+    },
+    "footerTerms": "Condições de utilização",
+    "footerPrivacy": "Política de Privacidade"
   }
 }

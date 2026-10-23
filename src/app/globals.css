@@ -176,6 +176,36 @@ h2 {
   animation: fade-in-up 200ms ease-out;
 }
 
+/* Icône de succès de la page de confirmation d'e-mail : le cercle se trace,
+   puis la coche, dans la foulée. stroke-dasharray = la longueur exacte de
+   chaque tracé (mesurée dans le SVG), animée de "tout caché" à "tout visible". */
+@keyframes draw-circle {
+  from {
+    stroke-dashoffset: 126;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes draw-check {
+  from {
+    stroke-dashoffset: 34;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.confirm-icon-circle {
+  stroke-dasharray: 126;
+  stroke-dashoffset: 126;
+  animation: draw-circle 600ms ease-out forwards;
+}
+.confirm-icon-check {
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  animation: draw-check 300ms ease-out 500ms forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-primary,
   .btn-secondary,
@@ -184,5 +214,10 @@ h2 {
   .step-content {
     transition: none;
     animation: none;
+  }
+  .confirm-icon-circle,
+  .confirm-icon-check {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }

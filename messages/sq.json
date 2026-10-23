@@ -81,7 +81,9 @@
     "loginLink": "Hyni",
     "pendingTitle": "Kontrolloni kutinë e postës elektronike.",
     "pendingBody": "Një lidhje konfirmimi është dërguar në {email}. Klikoni mbi të, pastaj kthehuni dhe hyni: garazhi juaj '{garageName}' do të krijohet automatikisht.",
-    "goToLogin": "Shko te faqja e hyrjes"
+    "goToLogin": "Shko te faqja e hyrjes",
+    "pendingResendLink": "A nuk ke marrë asgjë? Dërgo përsëri emailin.",
+    "pendingSpamHint": "Ju lutem mos harroni të kontrolloni dosjen tuaj të postës së padëshiruar."
   },
   "join": {
     "title": "Bashkohuni me {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "Shiko / shkarko PDF-in",
     "resend": "Dërgo përsëri",
     "newOne": "Skedar i ri"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Adresa juaj e emailit është konfirmuar.",
+      "body": "Mirë se vini në ReceptCar. Prova juaj falas 30-ditore fillon tani.",
+      "cta": "Hyni në llogarinë time",
+      "redirecting": "Riaadresimi automatik në {s} sekonda…",
+      "gettingStartedTitle": "Nisje e mirë",
+      "step1": "Shto logon e garazhit tënd",
+      "step2": "Krijoni fletën tuaj të parë të pranimit",
+      "step3": "Instaloni aplikacionin në tabletin tuaj"
+    },
+    "expired": {
+      "title": "Ky lidhje ka skaduar.",
+      "body": "Për sigurinë tuaj, lidhjet e konfirmimit janë të vlefshme për një periudhë të kufizuar."
+    },
+    "invalid": {
+      "title": "Ky lidhje nuk është më i vlefshëm.",
+      "body": "Mund të ketë qenë tashmë i përdorur. Nëse adresa juaj tashmë është verifikuar, thjesht hyni.",
+      "loginButton": "Hyni"
+    },
+    "error": {
+      "title": "Ka ndodhur një problem.",
+      "body": "Ju lutemi provoni përsëri pas disa çastesh. Nëse problemi vazhdon, ju lutemi na dërgoni një email në <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "Adresa juaj e emailit",
+      "button": "Merr një lidhje të re",
+      "sending": "Dërgim…",
+      "sent": "Është dërguar një lidhje e re; ju lutem kontrolloni kutinë tuaj të postës elektronike dhe dosjen e postës së padëshiruar.",
+      "cooldown": "Provo përsëri në {s}s"
+    },
+    "footerTerms": "Kushtet e Përdorimit",
+    "footerPrivacy": "Politika e Privatësisë"
   }
 }

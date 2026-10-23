@@ -81,7 +81,9 @@
     "loginLink": "Iniciar sesión",
     "pendingTitle": "Revise su correo",
     "pendingBody": "Se ha enviado un enlace de confirmación a {email}. Haga clic en él y luego vuelva a iniciar sesión: su taller «{garageName}» se creará automáticamente.",
-    "goToLogin": "Ir a la página de inicio de sesión"
+    "goToLogin": "Ir a la página de inicio de sesión",
+    "pendingResendLink": "¿No has recibido nada? Vuelve a enviar el correo electrónico",
+    "pendingSpamHint": "No olvides revisar tu bandeja de correo no deseado."
   },
   "join": {
     "title": "Unirse a {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "Ver / descargar el PDF",
     "resend": "Reenviar",
     "newOne": "Nuevo expediente"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Tu dirección de correo electrónico ha sido confirmada.",
+      "body": "Bienvenido a ReceptCar. Tu periodo de prueba gratuito de 30 días comienza ahora.",
+      "cta": "Acceder a mi área de usuario",
+      "redirecting": "Redirección automática en {s} segundos…",
+      "gettingStartedTitle": "Para empezar con buen pie",
+      "step1": "Añade el logotipo de tu taller",
+      "step2": "Crea tu primera ficha de recepción",
+      "step3": "Instala la aplicación en tu tableta"
+    },
+    "expired": {
+      "title": "Este enlace ha caducado.",
+      "body": "Por tu seguridad, los enlaces de confirmación tienen una validez limitada."
+    },
+    "invalid": {
+      "title": "Este enlace ya no es válido.",
+      "body": "Quizá ya se haya utilizado. Si tu dirección ya está confirmada, solo tienes que iniciar sesión.",
+      "loginButton": "Iniciar sesión"
+    },
+    "error": {
+      "title": "Ha surgido un problema.",
+      "body": "Vuelve a intentarlo dentro de unos instantes. Si el problema persiste, escríbenos a <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "Tu correo electrónico",
+      "button": "Recibir un nuevo enlace",
+      "sending": "Enviando…",
+      "sent": "Te hemos enviado un nuevo enlace; comprueba tu bandeja de entrada y la carpeta de correo no deseado.",
+      "cooldown": "Vuelve a intentarlo en {s}s"
+    },
+    "footerTerms": "Condiciones de uso",
+    "footerPrivacy": "Política de privacidad"
   }
 }

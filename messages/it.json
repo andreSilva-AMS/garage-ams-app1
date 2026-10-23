@@ -81,7 +81,9 @@
     "loginLink": "Accedi",
     "pendingTitle": "Controlla la tua casella e-mail",
     "pendingBody": "Un link di conferma è stato inviato a {email}. Cliccalo, poi torna ad accedere: la tua officina «{garageName}» sarà creata automaticamente.",
-    "goToLogin": "Vai alla pagina di accesso"
+    "goToLogin": "Vai alla pagina di accesso",
+    "pendingResendLink": "Non avete ricevuto nulla? Inviate nuovamente l'e-mail",
+    "pendingSpamHint": "Ricordatevi di controllare la cartella dello spam."
   },
   "join": {
     "title": "Unisciti a {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "Visualizza / scarica il PDF",
     "resend": "Invia di nuovo",
     "newOne": "Nuova pratica"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Il tuo indirizzo e-mail è stato confermato.",
+      "body": "Benvenuto su ReceptCar. La tua prova gratuita di 30 giorni inizia ora.",
+      "cta": "Accedi alla mia area personale",
+      "redirecting": "Reindirizzamento automatico tra {s} secondi…",
+      "gettingStartedTitle": "Per partire con il piede giusto",
+      "step1": "Aggiungi il logo della tua officina",
+      "step2": "Crea la tua prima scheda di ricevimento",
+      "step3": "Installa l'app sul tuo tablet"
+    },
+    "expired": {
+      "title": "Questo link è scaduto.",
+      "body": "Per la vostra sicurezza, i link di conferma hanno una validità limitata."
+    },
+    "invalid": {
+      "title": "Questo link non è più valido.",
+      "body": "Potrebbe essere già stato utilizzato. Se il tuo indirizzo è già stato confermato, effettua semplicemente l'accesso.",
+      "loginButton": "Accedi"
+    },
+    "error": {
+      "title": "Si è verificato un problema.",
+      "body": "Riprova tra qualche istante. Se il problema persiste, scrivici all'indirizzo <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "La tua e-mail",
+      "button": "Ricevi un nuovo link",
+      "sending": "Invio…",
+      "sent": "Ti abbiamo inviato un nuovo link; controlla la tua casella di posta in arrivo e la cartella dello spam.",
+      "cooldown": "Riprova tra {s}s"
+    },
+    "footerTerms": "Condizioni d'uso",
+    "footerPrivacy": "Informativa sulla privacy"
   }
 }

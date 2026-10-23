@@ -81,7 +81,9 @@
     "loginLink": "Anmelden",
     "pendingTitle": "Prüfen Sie Ihr E-Mail-Postfach",
     "pendingBody": "Ein Bestätigungslink wurde an {email} gesendet. Klicken Sie darauf und melden Sie sich anschließend an: Ihre Werkstatt „{garageName}“ wird automatisch erstellt.",
-    "goToLogin": "Zur Anmeldeseite"
+    "goToLogin": "Zur Anmeldeseite",
+    "pendingResendLink": "Haben Sie nichts erhalten? E-Mail erneut senden",
+    "pendingSpamHint": "Denken Sie daran, Ihren Spam-Ordner zu überprüfen."
   },
   "join": {
     "title": "{garageName} beitreten",
@@ -409,5 +411,39 @@
     "viewPdf": "PDF ansehen / herunterladen",
     "resend": "Erneut senden",
     "newOne": "Neuer Vorgang"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Ihre E-Mail-Adresse wurde bestätigt.",
+      "body": "Willkommen bei ReceptCar. Ihre kostenlose 30-Tage-Testphase beginnt jetzt.",
+      "cta": "Zu meinem Bereich wechseln",
+      "redirecting": "Automatische Weiterleitung in {s} Sekunden…",
+      "gettingStartedTitle": "Für einen guten Start",
+      "step1": "Fügen Sie das Logo Ihrer Werkstatt hinzu",
+      "step2": "Erstellen Sie Ihre erste Anlieferung",
+      "step3": "Installieren Sie die App auf Ihrem Tablet"
+    },
+    "expired": {
+      "title": "Dieser Link ist abgelaufen.",
+      "body": "Zu Ihrer Sicherheit sind die Bestätigungslinks nur für einen begrenzten Zeitraum gültig."
+    },
+    "invalid": {
+      "title": "Dieser Link ist nicht mehr gültig.",
+      "body": "Möglicherweise wurde er bereits verwendet. Wenn Ihre Adresse bereits bestätigt ist, melden Sie sich einfach an.",
+      "loginButton": "Anmelden"
+    },
+    "error": {
+      "title": "Es ist ein Problem aufgetreten.",
+      "body": "Versuchen Sie es in wenigen Augenblicken erneut. Sollte das Problem weiterhin bestehen, schreiben Sie uns bitte an <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "Ihre E-Mail-Adresse",
+      "button": "Einen neuen Link erhalten",
+      "sending": "Senden…",
+      "sent": "Ein neuer Link wurde gesendet. Bitte überprüfen Sie Ihren Posteingang und Ihren Spam-Ordner.",
+      "cooldown": "In {s}s erneut versuchen"
+    },
+    "footerTerms": "Nutzungsbedingungen",
+    "footerPrivacy": "Datenschutzerklärung"
   }
 }

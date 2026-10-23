@@ -81,7 +81,9 @@
     "loginLink": "Sign in",
     "pendingTitle": "Check your inbox",
     "pendingBody": "A confirmation link was sent to {email}. Click it, then come back and sign in: your garage “{garageName}” will be created automatically.",
-    "goToLogin": "Go to the sign-in page"
+    "goToLogin": "Go to the sign-in page",
+    "pendingResendLink": "Didn't receive anything? Resend the email",
+    "pendingSpamHint": "Be sure to check your spam folder."
   },
   "join": {
     "title": "Join {garageName}",
@@ -409,5 +411,39 @@
     "viewPdf": "View / download the PDF",
     "resend": "Resend",
     "newOne": "New file"
+  },
+  "emailConfirme": {
+    "success": {
+      "title": "Your email address has been confirmed.",
+      "body": "Welcome to ReceptCar. Your 30-day free trial starts now.",
+      "cta": "Go to my dashboard",
+      "redirecting": "Automatic redirection in {s} seconds…",
+      "gettingStartedTitle": "Getting started",
+      "step1": "Add your garage's logo",
+      "step2": "Create your first reception record",
+      "step3": "Install the app on your tablet"
+    },
+    "expired": {
+      "title": "This link has expired.",
+      "body": "For your security, confirmation links are valid for a limited time."
+    },
+    "invalid": {
+      "title": "This link is no longer valid.",
+      "body": "It may have already been used. If your address has already been confirmed, just log in.",
+      "loginButton": "Log in"
+    },
+    "error": {
+      "title": "A problem has occurred.",
+      "body": "Please try again in a few moments. If the problem persists, please email us at <contact>info@receptcar.com</contact>."
+    },
+    "resend": {
+      "emailPlaceholder": "Your email address",
+      "button": "Get a new link",
+      "sending": "Sending…",
+      "sent": "A new link has been sent; please check your inbox and spam folder.",
+      "cooldown": "Try again in {s}s"
+    },
+    "footerTerms": "Terms of Use",
+    "footerPrivacy": "Privacy Policy"
   }
 }

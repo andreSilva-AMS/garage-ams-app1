@@ -3,11 +3,13 @@
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { Lang } from "@/lib/receptions/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ResendEmailForm } from "@/components/auth/ResendEmailForm";
 import {
   PRIORITY_BILLING_COUNTRIES,
   countryLabel,
@@ -121,9 +123,18 @@ export function SignupForm({ activeCountryCodes }: { activeCountryCodes: string[
 
   if (pendingConfirmation) {
     return (
-      <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 px-4">
-        <h1 className="text-xl">{t("pendingTitle")}</h1>
+      <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-5 px-4 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#8c6329]/10">
+          <Mail className="h-6 w-6 text-[#8c6329]" aria-hidden="true" />
+        </div>
+        <h1 className="font-serif text-2xl text-neutral-900">{t("pendingTitle")}</h1>
         <p className="text-sm text-neutral-600">{t("pendingBody", { email, garageName })}</p>
+
+        <div className="w-full">
+          <ResendEmailForm type="signup" email={email} label={t("pendingResendLink")} />
+        </div>
+        <p className="text-xs text-neutral-400">{t("pendingSpamHint")}</p>
+
         <Link href="/login" className="text-sm underline">
           {t("goToLogin")}
         </Link>

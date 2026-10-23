@@ -204,7 +204,17 @@
     "inviteSend": "Einladung senden",
     "inviteSending": "Wird gesendet…",
     "inviteSent": "Einladung gesendet.",
-    "invitePending": "ausstehend"
+    "invitePending": "ausstehend",
+    "cancelInviteButton": "Einladung stornieren",
+    "cancelInviteConfirm": "Diese Einladung stornieren? Der bereits versendete Link funktioniert dann nicht mehr.",
+    "cancelInviteSending": "Wird storniert…",
+    "teamJoinedOn": "Seit dem {date} dabei",
+    "teamRemoveButton": "Zugriff entziehen",
+    "teamRemoveConfirm": "{name} aus {garageName} entfernen? Diese Person hat dann keinen Zugriff mehr auf ReceptCar und ihre E-Mail-Adresse wird aus Ihrem Team gelöscht. Die von ihr erstellten Datensätze bleiben in Ihrer Werkstatt erhalten.",
+    "teamRemoveCancel": "Abbrechen",
+    "teamRemoveConfirmButton": "Endgültig entfernen",
+    "teamRemoving": "Wird entfernt…",
+    "teamRemoveSuccess": "{name} wurde aus Ihrem Team entfernt."
   },
   "onboarding": {
     "pageTitle": "Werkstatt einrichten",

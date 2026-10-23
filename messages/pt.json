@@ -204,7 +204,17 @@
     "inviteSend": "Enviar convite",
     "inviteSending": "A enviar…",
     "inviteSent": "Convite enviado.",
-    "invitePending": "pendente"
+    "invitePending": "pendente",
+    "cancelInviteButton": "Cancelar convite",
+    "cancelInviteConfirm": "Quer cancelar este convite? O link já enviado deixará de funcionar.",
+    "cancelInviteSending": "A cancelar…",
+    "teamJoinedOn": "Registou-se em {date}",
+    "teamRemoveButton": "Retirar o acesso",
+    "teamRemoveConfirm": "Deseja remover {name} da {garageName}? Esta pessoa deixará de ter acesso ao ReceptCar e o seu endereço de e-mail será eliminado da sua equipa. Os registos que criou permanecerão na sua garagem.",
+    "teamRemoveCancel": "Cancelar",
+    "teamRemoveConfirmButton": "Eliminar definitivamente",
+    "teamRemoving": "A remover…",
+    "teamRemoveSuccess": "{name} foi removido da sua equipa."
   },
   "onboarding": {
     "pageTitle": "Configuração da garagem",

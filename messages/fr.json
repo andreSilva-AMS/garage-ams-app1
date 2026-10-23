@@ -204,7 +204,17 @@
     "inviteSend": "Envoyer l'invitation",
     "inviteSending": "Envoi…",
     "inviteSent": "Invitation envoyée.",
-    "invitePending": "en attente"
+    "invitePending": "en attente",
+    "cancelInviteButton": "Annuler l'invitation",
+    "cancelInviteConfirm": "Annuler cette invitation ? Le lien déjà envoyé ne fonctionnera plus.",
+    "cancelInviteSending": "Annulation…",
+    "teamJoinedOn": "Arrivé(e) le {date}",
+    "teamRemoveButton": "Retirer l'accès",
+    "teamRemoveConfirm": "Retirer {name} de {garageName} ? Cette personne n'aura plus accès à ReceptCar et son adresse e-mail sera effacée de votre équipe. Les fiches qu'elle a créées restent dans votre garage.",
+    "teamRemoveCancel": "Annuler",
+    "teamRemoveConfirmButton": "Retirer définitivement",
+    "teamRemoving": "Retrait…",
+    "teamRemoveSuccess": "{name} a été retiré de votre équipe."
   },
   "onboarding": {
     "pageTitle": "Configuration du garage",

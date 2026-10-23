@@ -109,10 +109,12 @@ export default async function DashboardPage() {
     return null;
   })();
 
+  const isOwner = profile.roles.includes("owner");
+
   return (
-    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null}>
+    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null} isOwner={isOwner}>
       <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
-        {billingBanner && (
+        {billingBanner && isOwner && (
           <Link
             href="/billing"
             className="mb-6 block rounded-2xl bg-amber-50 p-3 text-sm text-amber-800 underline"

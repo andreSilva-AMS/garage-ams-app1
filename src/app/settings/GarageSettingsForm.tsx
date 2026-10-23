@@ -38,18 +38,22 @@ interface PendingInvite {
 interface TeamMember {
   id: string;
   full_name: string | null;
+  email: string;
   roles: string[];
+  created_at: string;
 }
 
 export function GarageSettingsForm({
   garage,
   isOwner,
+  currentUserId,
   pendingInvites,
   teamMembers,
   retentionPrice,
 }: {
   garage: Garage;
   isOwner: boolean;
+  currentUserId: string;
   pendingInvites: PendingInvite[];
   teamMembers: TeamMember[];
   retentionPrice: { amount: number; currency: string } | null;
@@ -286,7 +290,13 @@ export function GarageSettingsForm({
         />
       )}
 
-      <TeamSection teamMembers={teamMembers} />
+      {isOwner && (
+        <TeamSection
+          garageName={garage.name}
+          teamMembers={teamMembers}
+          currentUserId={currentUserId}
+        />
+      )}
     </main>
   );
 }

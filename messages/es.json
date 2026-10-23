@@ -204,7 +204,17 @@
     "inviteSend": "Enviar invitación",
     "inviteSending": "Enviando…",
     "inviteSent": "Invitación enviada.",
-    "invitePending": "pendiente"
+    "invitePending": "pendiente",
+    "cancelInviteButton": "Cancelar invitación",
+    "cancelInviteConfirm": "¿Quieres cancelar esta invitación? El enlace que ya se ha enviado dejará de funcionar.",
+    "cancelInviteSending": "Cancelando…",
+    "teamJoinedOn": "Se unió el {date}",
+    "teamRemoveButton": "Retirar el acceso",
+    "teamRemoveConfirm": "¿Quieres eliminar a {name} de {garageName}? Esta persona dejará de tener acceso a ReceptCar y su dirección de correo electrónico se eliminará de tu equipo. Los registros que haya creado permanecerán en tu taller.",
+    "teamRemoveCancel": "Cancelar",
+    "teamRemoveConfirmButton": "Eliminar definitivamente",
+    "teamRemoving": "Eliminando…",
+    "teamRemoveSuccess": "{name} ha sido eliminado de tu equipo."
   },
   "onboarding": {
     "pageTitle": "Configuración del taller",

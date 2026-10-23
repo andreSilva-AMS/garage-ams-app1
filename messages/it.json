@@ -204,7 +204,17 @@
     "inviteSend": "Invia invito",
     "inviteSending": "Invio…",
     "inviteSent": "Invito inviato.",
-    "invitePending": "in attesa"
+    "invitePending": "in attesa",
+    "cancelInviteButton": "Annulla invito",
+    "cancelInviteConfirm": "Vuoi annullare questo invito? Il link già inviato non funzionerà più.",
+    "cancelInviteSending": "Annullamento…",
+    "teamJoinedOn": "Iscritto il {date}",
+    "teamRemoveButton": "Rimuovi l'accesso",
+    "teamRemoveConfirm": "Rimuovere {name} da {garageName}? Questa persona non avrà più accesso a ReceptCar e il suo indirizzo e-mail verrà cancellato dal tuo team. I dati da lei creati rimarranno nel tuo garage.",
+    "teamRemoveCancel": "Annulla",
+    "teamRemoveConfirmButton": "Elimina definitivamente",
+    "teamRemoving": "Rimozione in corso…",
+    "teamRemoveSuccess": "{name} è stato rimosso dalla tua squadra."
   },
   "onboarding": {
     "pageTitle": "Configurazione dell'officina",

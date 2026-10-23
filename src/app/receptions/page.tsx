@@ -28,7 +28,7 @@ export default async function ReceptionsPage() {
   const [{ data: profile }, { data: receptions }, { data: consignments }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("garage_id, garages(name, logo_url, billing_country, default_language, retention_days)")
+      .select("garage_id, roles, garages(name, logo_url, billing_country, default_language, retention_days)")
       .eq("id", user.id)
       .single(),
     supabase
@@ -76,8 +76,10 @@ export default async function ReceptionsPage() {
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
+  const isOwner = profile?.roles.includes("owner") ?? false;
+
   return (
-    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null}>
+    <AppShell garageName={garage?.name ?? ""} logoUrl={garage?.logo_url ?? null} isOwner={isOwner}>
       <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold">{t("title")}</h1>

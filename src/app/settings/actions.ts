@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import type { Lang } from "@/lib/receptions/i18n";
 
 type InviteRole = "mechanic" | "reception" | "seller";
@@ -137,6 +138,127 @@ export async function inviteEmployee(
   });
   if (sendError) {
     return { ok: false, error: sendError.message };
+  }
+
+  return { ok: true };
+}
+
+/**
+ * Annule une invitation en attente. S'appuie sur la policy RLS "owner-only"
+ * de garage_invites (voir migration 0030) plutôt que sur un client
+ * service-role : pas de privilège à élever pour cette opération.
+ * Supprimer la ligne invalide le lien déjà envoyé (la page /join cherche
+ * l'invitation par token ; absente, elle affiche "invitation invalide").
+ */
+export async function cancelInvite(inviteId: string): Promise<{ ok: true } | { ok: false; error: string }> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Vous devez être connecté." };
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("garage_id, roles")
+    .eq("id", user.id)
+    .single();
+  if (!profile || !profile.roles.includes("owner")) {
+    return { ok: false, error: "Seul le propriétaire peut annuler une invitation." };
+  }
+
+  const { error } = await supabase
+    .from("garage_invites")
+    .delete()
+    .eq("id", inviteId)
+    .eq("garage_id", profile.garage_id);
+  if (error) {
+    return { ok: false, error: error.message };
+  }
+
+  return { ok: true };
+}
+
+/**
+ * Retire l'accès d'un employé : coupe l'accès immédiatement (suppression du
+ * profil, donc plus aucune policy RLS basée sur current_garage_id() ne le
+ * reconnaît), efface son adresse e-mail et supprime son compte d'authentif-
+ * ication. Dans ce modèle de données, un profil = un seul garage (pas de
+ * table d'appartenance multi-garage), donc "n'appartient à aucun autre
+ * garage" est toujours vrai ici — on supprime systématiquement le compte via
+ * l'API Admin plutôt que de le laisser orphelin (ce qui créerait un risque :
+ * ensureProfile() recréerait un garage ou une invitation au prochain login).
+ * Les fiches déjà créées par cette personne restent (created_by passe à NULL
+ * via la contrainte existante, voir 0002/0026) ; leur nom est figé dans
+ * creator_name_snapshot avant la suppression du profil.
+ *
+ * Utilise le client service-role car aucune policy RLS n'autorise la
+ * suppression d'un profil ou l'appel à l'API Admin : l'autorisation réelle
+ * (le vérificateur "est owner du même garage, pas soi-même, garage garde
+ * ≥1 owner") est faite ici, en code, avant d'utiliser ce client.
+ */
+export async function removeMember(memberId: string): Promise<{ ok: true } | { ok: false; error: string }> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Vous devez être connecté." };
+
+  if (memberId === user.id) {
+    return { ok: false, error: "Vous ne pouvez pas vous retirer vous-même." };
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("garage_id, roles")
+    .eq("id", user.id)
+    .single();
+  if (!profile || !profile.roles.includes("owner")) {
+    return { ok: false, error: "Seul le propriétaire peut retirer un employé." };
+  }
+
+  const { data: target } = await supabase
+    .from("profiles")
+    .select("garage_id, full_name, roles")
+    .eq("id", memberId)
+    .single();
+  if (!target || target.garage_id !== profile.garage_id) {
+    return { ok: false, error: "Employé introuvable." };
+  }
+
+  if (target.roles.includes("owner")) {
+    const { count } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("garage_id", profile.garage_id)
+      .contains("roles", ["owner"]);
+    if ((count ?? 0) <= 1) {
+      return { ok: false, error: "Un garage doit toujours garder au moins un propriétaire." };
+    }
+  }
+
+  const service = createServiceClient();
+
+  await service
+    .from("receptions")
+    .update({ creator_name_snapshot: target.full_name })
+    .eq("garage_id", profile.garage_id)
+    .eq("created_by", memberId);
+  await service
+    .from("consignments")
+    .update({ creator_name_snapshot: target.full_name })
+    .eq("garage_id", profile.garage_id)
+    .eq("created_by", memberId);
+
+  const { error: deleteProfileError } = await service.from("profiles").delete().eq("id", memberId);
+  if (deleteProfileError) {
+    return { ok: false, error: deleteProfileError.message };
+  }
+
+  const { error: deleteUserError } = await service.auth.admin.deleteUser(memberId);
+  if (deleteUserError) {
+    return { ok: false, error: deleteUserError.message };
   }
 
   return { ok: true };

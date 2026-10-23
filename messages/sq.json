@@ -204,7 +204,17 @@
     "inviteSend": "Dërgo ftesën",
     "inviteSending": "Dërgim…",
     "inviteSent": "Ftesa u dërgua.",
-    "invitePending": "në pritje"
+    "invitePending": "në pritje",
+    "cancelInviteButton": "Anulo ftesën",
+    "cancelInviteConfirm": "Të anulohet kjo ftesë? Lidhja që tashmë është dërguar nuk do të funksionojë më.",
+    "cancelInviteSending": "Shfuqizim…",
+    "teamJoinedOn": "U bashkuar më {date}",
+    "teamRemoveButton": "Hiqni qasjen",
+    "teamRemoveConfirm": "Hiqni {name} nga {garageName}? Ky person nuk do të ketë më qasje në ReceptCar dhe adresa e tij e emailit do të fshihet nga ekipi juaj. Regjistrimet që ai krijoi mbeten në garazhin tuaj.",
+    "teamRemoveCancel": "Anulo",
+    "teamRemoveConfirmButton": "Hiqni përgjithmonë",
+    "teamRemoving": "Po hiqet…",
+    "teamRemoveSuccess": "{name} është hequr nga ekipi juaj."
   },
   "onboarding": {
     "pageTitle": "Planimetria e garazhit",

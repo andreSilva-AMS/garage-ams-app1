@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { inviteEmployee } from "./actions";
+import { inviteEmployee, cancelInvite } from "./actions";
 
 type InviteRole = "mechanic" | "reception" | "seller";
 
@@ -37,6 +37,20 @@ export function InviteEmployeeSection({
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+
+  async function handleCancelInvite(inviteId: string) {
+    if (!window.confirm(t("cancelInviteConfirm"))) return;
+    setCancellingId(inviteId);
+    setError(null);
+    const result = await cancelInvite(inviteId);
+    setCancellingId(null);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    router.refresh();
+  }
 
   function toggleRole(r: InviteRole) {
     setRoles((prev) => (prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]));
@@ -107,11 +121,21 @@ export function InviteEmployeeSection({
       {pendingInvites.length > 0 && (
         <ul className="mt-4 flex flex-col gap-1 border-t border-neutral-100 pt-4">
           {pendingInvites.map((invite) => (
-            <li key={invite.id} className="flex items-center justify-between text-sm">
-              <span>{invite.email}</span>
-              <span className="text-neutral-500">
-                {invite.roles.map((r) => tDashboard(`role.${r}`)).join(", ")} · {t("invitePending")}
-              </span>
+            <li key={invite.id} className="flex items-center justify-between gap-3 text-sm">
+              <div className="min-w-0">
+                <p className="truncate">{invite.email}</p>
+                <p className="text-neutral-500">
+                  {invite.roles.map((r) => tDashboard(`role.${r}`)).join(", ")} · {t("invitePending")}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleCancelInvite(invite.id)}
+                disabled={cancellingId === invite.id}
+                className="btn-secondary shrink-0 text-xs"
+              >
+                {cancellingId === invite.id ? t("cancelInviteSending") : t("cancelInviteButton")}
+              </button>
             </li>
           ))}
         </ul>

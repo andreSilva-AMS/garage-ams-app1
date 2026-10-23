@@ -204,7 +204,17 @@
     "inviteSend": "Αποστολή πρόσκλησης",
     "inviteSending": "Αποστολή…",
     "inviteSent": "Η πρόσκληση έχει σταλεί.",
-    "invitePending": "σε αναμονή"
+    "invitePending": "σε αναμονή",
+    "cancelInviteButton": "Ακύρωση πρόσκλησης",
+    "cancelInviteConfirm": "Να ακυρώσετε αυτή την πρόσκληση; Ο σύνδεσμος που έχει ήδη σταλεί δεν θα λειτουργεί πλέον.",
+    "cancelInviteSending": "Ακύρωση…",
+    "teamJoinedOn": "Εγγράφηκε στις {date}",
+    "teamRemoveButton": "Αφαίρεση πρόσβασης",
+    "teamRemoveConfirm": "Θέλετε να διαγράψετε το {name} από το {garageName}; Αυτό το άτομο δεν θα έχει πλέον πρόσβαση στο ReceptCar και η διεύθυνση ηλεκτρονικού ταχυδρομείου του θα διαγραφεί από την ομάδα σας. Τα αρχεία που δημιούργησε θα παραμείνουν στο συνεργείο σας.",
+    "teamRemoveCancel": "Ακύρωση",
+    "teamRemoveConfirmButton": "Μόνιμη διαγραφή",
+    "teamRemoving": "Αφαίρεση…",
+    "teamRemoveSuccess": "Ο/Η {name} έχει διαγραφεί από την ομάδα σας."
   },
   "onboarding": {
     "pageTitle": "Διαμόρφωση του γκαράζ",

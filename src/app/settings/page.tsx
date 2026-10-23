@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { AppShell } from "@/components/AppShell";
 import { GarageSettingsForm } from "./GarageSettingsForm";
 
@@ -35,20 +36,21 @@ export default async function SettingsPage() {
   if (!garage) redirect("/dashboard");
 
   const isOwner = profile.roles.includes("owner");
+  // Masquer les menus ne suffit pas : un employé qui tape l'URL directement
+  // doit être renvoyé, pas seulement voir des champs désactivés.
+  if (!isOwner) redirect("/dashboard");
 
   // Ne dépendent que du profil et de la garage déjà chargés, pas les unes des
   // autres : lancées en parallèle plutôt qu'en série.
-  const [{ data: pendingInvites }, { data: teamMembers }, { data: retentionPlan }] = await Promise.all([
-    isOwner
-      ? supabase
-          .from("garage_invites")
-          .select("id, email, roles, created_at")
-          .is("accepted_at", null)
-          .order("created_at", { ascending: false })
-      : Promise.resolve({ data: null }),
+  const [{ data: pendingInvites }, { data: teamProfiles }, { data: retentionPlan }] = await Promise.all([
+    supabase
+      .from("garage_invites")
+      .select("id, email, roles, created_at")
+      .is("accepted_at", null)
+      .order("created_at", { ascending: false }),
     supabase
       .from("profiles")
-      .select("id, full_name, roles")
+      .select("id, full_name, roles, created_at")
       .eq("garage_id", profile.garage_id)
       .order("created_at", { ascending: true }),
     garage.billing_country
@@ -60,13 +62,24 @@ export default async function SettingsPage() {
       : Promise.resolve({ data: null }),
   ]);
 
+  // profiles ne stocke pas l'e-mail (il vit dans auth.users, non exposé via
+  // PostgREST) : on le récupère via l'API Admin, côté serveur uniquement.
+  const service = createServiceClient();
+  const teamMembers = await Promise.all(
+    (teamProfiles ?? []).map(async (member) => {
+      const { data } = await service.auth.admin.getUserById(member.id);
+      return { ...member, email: data.user?.email ?? "" };
+    }),
+  );
+
   return (
-    <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
+    <AppShell garageName={garage.name} logoUrl={garage.logo_url} isOwner={isOwner}>
       <GarageSettingsForm
         garage={garage}
         isOwner={isOwner}
+        currentUserId={user.id}
         pendingInvites={pendingInvites ?? []}
-        teamMembers={teamMembers ?? []}
+        teamMembers={teamMembers}
         retentionPrice={
           retentionPlan?.retention_365_amount_ht
             ? { amount: retentionPlan.retention_365_amount_ht, currency: retentionPlan.currency }

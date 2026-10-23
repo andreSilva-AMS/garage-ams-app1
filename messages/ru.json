@@ -204,7 +204,17 @@
     "inviteSend": "Отправить приглашение",
     "inviteSending": "Отправка…",
     "inviteSent": "Приглашение отправлено.",
-    "invitePending": "в ожидании"
+    "invitePending": "в ожидании",
+    "cancelInviteButton": "Отменить приглашение",
+    "cancelInviteConfirm": "Отменить это приглашение? Уже отправленная ссылка перестанет работать.",
+    "cancelInviteSending": "Отмена…",
+    "teamJoinedOn": "Зарегистрировался {date}",
+    "teamRemoveButton": "Отменить доступ",
+    "teamRemoveConfirm": "Удалить {name} из {garageName}? У этого пользователя больше не будет доступа к ReceptCar, а его адрес электронной почты будет удален из вашей команды. Созданные им записи останутся в вашем гараже.",
+    "teamRemoveCancel": "Отменить",
+    "teamRemoveConfirmButton": "Удалить навсегда",
+    "teamRemoving": "Удаление…",
+    "teamRemoveSuccess": "{name} был удалён из вашей команды."
   },
   "onboarding": {
     "pageTitle": "Планировка гаража",

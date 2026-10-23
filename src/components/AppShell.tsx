@@ -23,14 +23,15 @@ interface NavItem {
   href: string;
   icon: LucideIcon;
   labelKey: "dashboard" | "newReception" | "history" | "billing" | "settings" | "help";
+  ownerOnly?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", icon: LayoutDashboard, labelKey: "dashboard" },
   { href: "/receptions/new", icon: PlusCircle, labelKey: "newReception" },
   { href: "/receptions", icon: History, labelKey: "history" },
-  { href: "/billing", icon: CreditCard, labelKey: "billing" },
-  { href: "/settings", icon: Settings, labelKey: "settings" },
+  { href: "/billing", icon: CreditCard, labelKey: "billing", ownerOnly: true },
+  { href: "/settings", icon: Settings, labelKey: "settings", ownerOnly: true },
   { href: "/help", icon: HelpCircle, labelKey: "help" },
 ];
 
@@ -50,13 +51,14 @@ function GarageBadge({ garageName, logoUrl }: { garageName: string; logoUrl: str
   );
 }
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({ isOwner, onNavigate }: { isOwner: boolean; onNavigate?: () => void }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const items = NAV_ITEMS.filter((item) => !item.ownerOnly || isOwner);
 
   return (
     <>
-      {NAV_ITEMS.map(({ href, icon: Icon, labelKey }) => {
+      {items.map(({ href, icon: Icon, labelKey }) => {
         const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
         return (
           <Link
@@ -102,10 +104,12 @@ function SignOutButton({ onNavigate }: { onNavigate?: () => void }) {
 export function AppShell({
   garageName,
   logoUrl,
+  isOwner,
   children,
 }: {
   garageName: string;
   logoUrl: string | null;
+  isOwner: boolean;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -169,7 +173,7 @@ export function AppShell({
           <div className="min-h-0 overflow-hidden">
             <nav aria-label={t("menu")} className="border-t border-border-color px-3 py-3">
               <div className="flex flex-col gap-1">
-                <NavLinks onNavigate={() => setOpen(false)} />
+                <NavLinks isOwner={isOwner} onNavigate={() => setOpen(false)} />
                 <SignOutButton onNavigate={() => setOpen(false)} />
               </div>
             </nav>
@@ -183,7 +187,7 @@ export function AppShell({
           <GarageBadge garageName={garageName} logoUrl={logoUrl} />
         </Link>
         <nav aria-label={t("menu")} className="flex flex-1 flex-col gap-1">
-          <NavLinks />
+          <NavLinks isOwner={isOwner} />
         </nav>
         <SignOutButton />
       </aside>

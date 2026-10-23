@@ -24,7 +24,7 @@ export default async function HelpPage() {
   // ambiguïté, donc "garages(...)" est résolu automatiquement.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("garage_id, garages(name, logo_url)")
+    .select("garage_id, roles, garages(name, logo_url)")
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/dashboard");
@@ -32,6 +32,7 @@ export default async function HelpPage() {
   // élément selon la version du driver : on gère les deux par prudence.
   const garage = Array.isArray(profile.garages) ? profile.garages[0] : profile.garages;
   if (!garage) redirect("/dashboard");
+  const isOwner = profile.roles.includes("owner");
 
   const steps = [
     { icon: PlusCircle, title: t("step1Title"), body: t("step1Body") },
@@ -41,7 +42,7 @@ export default async function HelpPage() {
   ];
 
   return (
-    <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
+    <AppShell garageName={garage.name} logoUrl={garage.logo_url} isOwner={isOwner}>
       <main className="mx-auto max-w-lg px-4 py-8">
         <h1 className="mb-2 text-xl font-semibold">{t("title")}</h1>
         <p className="mb-6 text-sm text-muted">{t("intro")}</p>

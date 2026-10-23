@@ -56,6 +56,12 @@ export default async function BillingPage() {
   const garage = Array.isArray(profile.garages) ? profile.garages[0] : profile.garages;
   if (!garage) redirect("/dashboard");
 
+  // Masquer les menus ne suffit pas : un employé qui tape l'URL directement
+  // doit être renvoyé, pas seulement voir des champs désactivés. On vérifie
+  // avant de lancer les requêtes suivantes (pricing/subscription), inutiles
+  // pour un employé qui va être redirigé.
+  if (!profile.roles.includes("owner")) redirect("/dashboard");
+
   // Indépendantes les unes des autres une fois `garage` connu : lancées en
   // parallèle plutôt qu'en série.
   const [{ data: pricingPlans }, { data: fallbackPlan }, { data: subscription }] = await Promise.all([
@@ -86,7 +92,6 @@ export default async function BillingPage() {
     : null;
   const plan = dedicatedPlan ?? fallbackPlan;
 
-  const isOwner = profile.roles.includes("owner");
   const active = hasActiveAccess(garage);
 
   let statusLabel: string;
@@ -115,7 +120,8 @@ export default async function BillingPage() {
   }
 
   return (
-    <AppShell garageName={garage.name} logoUrl={garage.logo_url}>
+    <AppShell garageName={garage.name} logoUrl={garage.logo_url} isOwner>
+
       <main className="mx-auto max-w-xl px-4 py-6 sm:py-10">
         <h1 className="mb-6 text-xl font-semibold">{t("title")}</h1>
 
@@ -135,24 +141,16 @@ export default async function BillingPage() {
           )}
         </div>
 
-        {!active && !isOwner && (
-          <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">{t("nonOwnerBlocked")}</p>
-        )}
-
-        {isOwner && (
-          <>
-            {garage.payment_status === "free" ? (
-              <p className="text-sm text-neutral-500">{t("freeAccessPermanent")}</p>
-            ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
-              <ManageSubscriptionButton />
-            ) : (
-              <SubscribeFlow
-                pricingPlans={(pricingPlans ?? []) as PricingPlan[]}
-                fixedCountry={garage.billing_country}
-                fixedPlan={plan}
-              />
-            )}
-          </>
+        {garage.payment_status === "free" ? (
+          <p className="text-sm text-neutral-500">{t("freeAccessPermanent")}</p>
+        ) : garage.stripe_customer_id && garage.payment_status !== "trialing" ? (
+          <ManageSubscriptionButton />
+        ) : (
+          <SubscribeFlow
+            pricingPlans={(pricingPlans ?? []) as PricingPlan[]}
+            fixedCountry={garage.billing_country}
+            fixedPlan={plan}
+          />
         )}
       </main>
     </AppShell>

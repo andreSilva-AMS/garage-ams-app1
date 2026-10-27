@@ -451,6 +451,35 @@ export default function TermsPage() {
           </section>
         ))}
       </div>
+
+      <div className="mt-10 flex gap-4 border-t border-neutral-200 pt-4 text-xs text-neutral-500">
+        <Link href="/privacy" className="underline">
+          {{
+            fr: "Politique de confidentialité",
+            en: "Privacy Policy",
+            es: "Política de privacidad",
+            pt: "Política de privacidade",
+            de: "Datenschutzrichtlinie",
+            it: "Informativa sulla privacy",
+            sq: "Politika e Privatësisë",
+            el: "Πολιτική απορρήτου",
+            ru: "Политика конфиденциальности",
+          }[lang]}
+        </Link>
+        <Link href="/cookies" className="underline">
+          {{
+            fr: "Cookies",
+            en: "Cookies",
+            es: "Cookies",
+            pt: "Cookies",
+            de: "Cookies",
+            it: "Cookie",
+            sq: "Cookies",
+            el: "Cookies",
+            ru: "Файлы cookie",
+          }[lang]}
+        </Link>
+      </div>
     </main>
   );
 }

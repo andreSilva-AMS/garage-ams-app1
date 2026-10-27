@@ -40,6 +40,7 @@ const CONTENT: Record<
     genericError: string;
     terms: string;
     privacy: string;
+    cookies: string;
     rights: string;
   }
 > = {
@@ -94,6 +95,7 @@ const CONTENT: Record<
     genericError: "Une erreur est survenue, réessayez.",
     terms: "Conditions d'utilisation",
     privacy: "Politique de confidentialité",
+    cookies: "Cookies",
     rights: "Tous droits réservés.",
   },
   en: {
@@ -147,6 +149,7 @@ const CONTENT: Record<
     genericError: "An error has occurred. Please try again.",
     terms: "Terms of Use",
     privacy: "Privacy Policy",
+    cookies: "Cookies",
     rights: "All rights reserved.",
   },
   es: {
@@ -200,6 +203,7 @@ const CONTENT: Record<
     genericError: "Se ha producido un error. Inténtalo de nuevo.",
     terms: "Condiciones de uso",
     privacy: "Política de privacidad",
+    cookies: "Cookies",
     rights: "Todos los derechos reservados.",
   },
   pt: {
@@ -253,6 +257,7 @@ const CONTENT: Record<
     genericError: "Ocorreu um erro. Por favor, tente novamente.",
     terms: "Condições de utilização",
     privacy: "Política de Privacidade",
+    cookies: "Cookies",
     rights: "Todos os direitos reservados.",
   },
   de: {
@@ -306,6 +311,7 @@ const CONTENT: Record<
     genericError: "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     terms: "Nutzungsbedingungen",
     privacy: "Datenschutzerklärung",
+    cookies: "Cookies",
     rights: "Alle Rechte vorbehalten.",
   },
   it: {
@@ -359,6 +365,7 @@ const CONTENT: Record<
     genericError: "Si è verificato un errore, riprovare.",
     terms: "Condizioni d'uso",
     privacy: "Informativa sulla privacy",
+    cookies: "Cookie",
     rights: "Tutti i diritti riservati.",
   },
   sq: {
@@ -412,6 +419,7 @@ const CONTENT: Record<
     genericError: "Ka ndodhur një gabim. Ju lutemi provoni përsëri.",
     terms: "Kushtet e Përdorimit",
     privacy: "Politika e Privatësisë",
+    cookies: "Cookies",
     rights: "Të gjitha të drejtat e rezervuara.",
   },
   el: {
@@ -465,6 +473,7 @@ const CONTENT: Record<
     genericError: "Παρουσιάστηκε σφάλμα. Δοκιμάστε ξανά.",
     terms: "Όροι χρήσης",
     privacy: "Πολιτική απορρήτου",
+    cookies: "Cookies",
     rights: "Όλα τα δικαιώματα διατηρούνται.",
   },
   ru: {
@@ -518,6 +527,7 @@ const CONTENT: Record<
     genericError: "Произошла ошибка. Попробуйте ещё раз.",
     terms: "Условия использования",
     privacy: "Политика конфиденциальности",
+    cookies: "Файлы cookie",
     rights: "Все права защищены.",
   },
 };
@@ -651,6 +661,9 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
           </Link>
           <Link href="/privacy" className="underline">
             {c.privacy}
+          </Link>
+          <Link href="/cookies" className="underline">
+            {c.cookies}
           </Link>
           <a href="mailto:info@receptcar.com" className="underline">
             info@receptcar.com

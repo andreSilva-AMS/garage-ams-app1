@@ -7,7 +7,7 @@ import type { Lang } from "@/lib/receptions/i18n";
 
 const TITLE = "ReceptCar — Réception véhicule digitale pour garages";
 const DESCRIPTION =
-  "Photos, checklist des dommages, signature du client et PDF envoyé automatiquement. La réception véhicule digitale pour garages et dépôts-ventes. Essai gratuit 30 jours.";
+  "Photos, checklist des dommages, signature du client et PDF envoyé automatiquement. La réception véhicule digitale pour garages, carrosseries et dépôts-ventes. Essai gratuit 30 jours.";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

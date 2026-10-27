@@ -12,27 +12,24 @@ import {
   LayoutGrid,
   Smartphone,
   ShieldCheck,
+  Wrench,
+  Car,
+  Repeat,
 } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { InstallAppButton } from "@/components/InstallAppButton";
 import { ContactForm } from "@/components/ContactForm";
 import { ScrollReveal } from "@/components/landing/ScrollReveal";
-import { DemoVideoPlayer } from "@/components/landing/DemoVideoPlayer";
-import { ReceptionMockup } from "@/components/landing/ReceptionMockup";
-import { ConsignmentMockup } from "@/components/landing/ConsignmentMockup";
+import { PhoneStage } from "@/components/landing/PhoneStage";
+import { RECEPTION_SCREENS } from "@/components/landing/receptionScreens";
+import { CONSIGNMENT_SCREENS } from "@/components/landing/consignmentScreens";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { LANDING_CONTENT, LANG_CODES } from "./landingContent";
 import type { Lang } from "@/lib/receptions/i18n";
 
-const FEATURE_ICONS = [
-  ShieldCheck,
-  Check,
-  FileCheck2,
-  Globe2,
-  LayoutGrid,
-  ShieldCheck,
-  Smartphone,
-] as const;
+const INCLUDED_ICONS = [ShieldCheck, Check, FileCheck2, Globe2, LayoutGrid, Smartphone] as const;
+const WHO_FOR_ICONS = [Wrench, Car, Repeat] as const;
 
 function NavLink({ href, children, onClick }: { href: string; children: string; onClick?: () => void }) {
   return (
@@ -162,7 +159,7 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
                   {c.heroCtaPrimary}
                 </Link>
                 <a
-                  href="#video"
+                  href="#contact"
                   className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white/90 transition-colors hover:bg-white/5"
                 >
                   {c.heroCtaSecondary}
@@ -173,26 +170,19 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
           </div>
 
           <ScrollReveal delayMs={200}>
-            <ReceptionMockup />
+            <PhoneStage screens={RECEPTION_SCREENS} />
           </ScrollReveal>
         </div>
       </section>
 
-      {/* ===== Le problème → la solution ===== */}
+      {/* ===== Le problème ===== */}
       <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
         <ScrollReveal>
           <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">{c.problemTitle}</h2>
         </ScrollReveal>
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          {c.problemItems.map((item, i) => (
-            <ScrollReveal key={item.q} delayMs={i * 100}>
-              <div className="h-full rounded-2xl border border-black/5 bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-                <p className="font-serif text-lg">{item.q}</p>
-                <p className="mt-3 text-sm text-neutral-600">{item.a}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+        <ScrollReveal delayMs={100}>
+          <p className="mt-6 max-w-2xl text-base text-neutral-600 sm:text-lg">{c.problemBody}</p>
+        </ScrollReveal>
       </section>
 
       {/* ===== Comment ça marche ===== */}
@@ -201,94 +191,68 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
           <ScrollReveal>
             <h2 className="font-serif text-3xl sm:text-4xl">{c.howTitle}</h2>
           </ScrollReveal>
-          <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8">
-            {c.howSteps.map((step, i) => (
-              <ScrollReveal key={step.title} delayMs={i * 120}>
-                <div className="flex flex-col gap-3 sm:items-start">
-                  <span className="font-serif text-4xl text-[#A87B3F]">0{i + 1}</span>
-                  <h3 className="text-lg font-semibold">{step.title}</h3>
-                  <p className="text-sm text-neutral-600">{step.body}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal delayMs={100}>
+            <div className="mt-14">
+              <HowItWorksSection steps={c.howSteps} />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* ===== Vidéo de démonstration ===== */}
-      <section id="video" className="mx-auto max-w-4xl px-5 py-20 text-center sm:px-8 sm:py-28">
+      {/* ===== Pour qui ===== */}
+      <section id="pour-qui" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
         <ScrollReveal>
-          <h2 className="font-serif text-3xl sm:text-4xl">{c.videoTitle}</h2>
-          <p className="mt-4 text-neutral-600">{c.videoSubtitle}</p>
+          <h2 className="font-serif text-3xl sm:text-4xl">{c.whoForTitle}</h2>
         </ScrollReveal>
-        <ScrollReveal delayMs={150}>
-          <div className="mt-10">
-            <DemoVideoPlayer
-              src="/video/demo-atelier.mp4"
-              poster="/video/demo-atelier-poster.jpg"
-              comingSoonLabel={c.videoComingSoon}
-            />
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ===== Fonctionnalités (bento) ===== */}
-      <section id="fonctionnalites" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <ScrollReveal>
-          <h2 className="font-serif text-3xl sm:text-4xl">{c.featuresTitle}</h2>
-        </ScrollReveal>
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {c.features.map((feature, i) => {
-            const Icon = FEATURE_ICONS[i] ?? Check;
-            const isLarge = i === 0;
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          {c.whoFor.map((item, i) => {
+            const Icon = WHO_FOR_ICONS[i] ?? Wrench;
             return (
-              <ScrollReveal
-                key={feature.title}
-                delayMs={(i % 3) * 100}
-                className={isLarge ? "sm:col-span-2" : ""}
-              >
-                <div
-                  className={`flex h-full flex-col gap-4 rounded-2xl border border-black/5 bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,0.04)] ${
-                    isLarge ? "sm:flex-row sm:items-center sm:gap-8" : ""
-                  }`}
-                >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#A87B3F]/10 text-[#A87B3F]">
+              <ScrollReveal key={item.title} delayMs={i * 100}>
+                <div className="h-full rounded-2xl border border-black/5 bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#A87B3F]/10 text-[#A87B3F]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <div>
-                    <h3 className="text-base font-semibold">{feature.title}</h3>
-                    <p className="mt-1.5 text-sm text-neutral-600">{feature.body}</p>
-                    {i === 3 && (
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {LANG_CODES.map((code) => (
-                          <span
-                            key={code}
-                            className="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-500"
-                          >
-                            {code}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    {i === 0 && (
-                      <div className="mt-4 hidden sm:block">
-                        <svg viewBox="0 0 160 70" className="h-16 w-36 text-[#A87B3F]/40" aria-hidden="true">
-                          <path
-                            d="M10 50 Q 30 10 55 45 T 100 35 T 150 20"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
-                          <circle cx="55" cy="45" r="4" fill="currentColor" />
-                          <circle cx="100" cy="35" r="4" fill="currentColor" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
+                  <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                  <p className="mt-1.5 text-sm text-neutral-600">{item.body}</p>
                 </div>
               </ScrollReveal>
             );
           })}
+        </div>
+      </section>
+
+      {/* ===== Ce qui est inclus ===== */}
+      <section id="fonctionnalites" className="bg-[#EFEBE3] px-5 py-20 sm:px-8 sm:py-28">
+        <div className="mx-auto max-w-4xl">
+          <ScrollReveal>
+            <h2 className="font-serif text-3xl sm:text-4xl">{c.includedTitle}</h2>
+          </ScrollReveal>
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {c.includedItems.map((item, i) => {
+              const Icon = INCLUDED_ICONS[i] ?? Check;
+              return (
+                <ScrollReveal key={item} delayMs={(i % 4) * 90}>
+                  <div className="flex items-start gap-3 rounded-2xl bg-white px-5 py-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                    <Icon className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#A87B3F]" aria-hidden="true" />
+                    <span className="text-sm text-[#1A1C20]">{item}</span>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+          <ScrollReveal delayMs={300}>
+            <div className="mt-6 flex flex-wrap gap-1.5">
+              {LANG_CODES.map((code) => (
+                <span
+                  key={code}
+                  className="rounded-md bg-white px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-500"
+                >
+                  {code}
+                </span>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -308,23 +272,7 @@ export function LandingPage({ appLocale }: { appLocale: Lang }) {
             </ul>
           </ScrollReveal>
           <ScrollReveal delayMs={150}>
-            <ConsignmentMockup />
-          </ScrollReveal>
-        </div>
-
-        <div className="mx-auto mt-16 max-w-4xl border-t border-white/10 pt-16 text-center">
-          <ScrollReveal>
-            <h3 className="font-serif text-2xl sm:text-3xl">{c.videoConsignmentTitle}</h3>
-            <p className="mt-3 text-white/70">{c.videoConsignmentSubtitle}</p>
-          </ScrollReveal>
-          <ScrollReveal delayMs={150}>
-            <div className="mt-10">
-              <DemoVideoPlayer
-                src="/video/demo-depot-vente.mp4"
-                poster="/video/demo-depot-vente-poster.jpg"
-                comingSoonLabel={c.videoComingSoon}
-              />
-            </div>
+            <PhoneStage screens={CONSIGNMENT_SCREENS} />
           </ScrollReveal>
         </div>
       </section>

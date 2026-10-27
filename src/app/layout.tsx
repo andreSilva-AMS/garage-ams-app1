@@ -19,8 +19,9 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://receptcar.com"),
   title: { default: "ReceptCar", template: "%s — ReceptCar" },
-  description: "Réception véhicule et véhicules de prêt, multi-garage",
+  description: "Réception véhicule digitale pour garages, carrosseries et dépôts-ventes, multi-garage",
   icons: {
     icon: [
       { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

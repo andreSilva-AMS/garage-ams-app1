@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "ReceptCar",
     short_name: "ReceptCar",
-    description: "Réception véhicule et véhicules de prêt, multi-garage",
+    description: "Réception véhicule digitale pour garages, carrosseries et dépôts-ventes, multi-garage",
     start_url: "/dashboard",
     display: "standalone",
     background_color: "#eef0f2",

@@ -2,13 +2,13 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Routes accessibles sans être connecté.
-const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth", "/forgot-password", "/terms", "/privacy"];
+const PUBLIC_PATHS = ["/login", "/signup", "/join", "/auth", "/forgot-password", "/terms", "/privacy", "/cookies"];
 
 // Parmi les routes publiques, celles qu'un utilisateur déjà connecté doit
-// aussi pouvoir consulter (pas de redirection vers /dashboard) : les CGU et
-// la politique de confidentialité concernent tout le monde, pas seulement
-// les visiteurs non connectés.
-const ALWAYS_ACCESSIBLE_PATHS = ["/terms", "/privacy"];
+// aussi pouvoir consulter (pas de redirection vers /dashboard) : les CGU, la
+// politique de confidentialité et la page cookies concernent tout le monde,
+// pas seulement les visiteurs non connectés.
+const ALWAYS_ACCESSIBLE_PATHS = ["/terms", "/privacy", "/cookies"];
 
 // Déconnexion automatique après 2h d'inactivité (aucune requête
 // authentifiée), sans exception ni réglage utilisateur : un seul
